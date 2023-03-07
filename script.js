@@ -6,6 +6,7 @@ class playTurnCl {
   constructor(players) {
     this.players = players;
     this.currentPlayer;
+    this.gameDirection;
   }
 
   randomInt(min, max) {
@@ -30,7 +31,8 @@ class playTurnCl {
   }
 
   playYaLeft(currentPlayer) {
-    console.log(`${currentPlayer.name} fait un Ya vers la gauche`);
+    this.gameDirection = "left";
+    console.log(`${currentPlayer.name} does a Ya towards the ${this.gameDirection}`);
     const indexOfCurrentPlayer = this.players.indexOf(this.currentPlayer);
     console.log("indexOfCurrentPlayer", indexOfCurrentPlayer);
     if (indexOfCurrentPlayer === 0) {
@@ -44,7 +46,8 @@ class playTurnCl {
   }
 
   playYaRight(currentPlayer) {
-    console.log(`${currentPlayer.name} fait un Ya vers la droite`);
+    this.gameDirection = "right";
+    console.log(`${currentPlayer.name} does a Ya towards the ${this.gameDirection}`);
     const indexOfCurrentPlayer = this.players.indexOf(this.currentPlayer);
     console.log("indexOfCurrentPlayer", indexOfCurrentPlayer);
     if (indexOfCurrentPlayer === this.players.length - 1) {
