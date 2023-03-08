@@ -32,42 +32,76 @@ class playTurnCl {
   firstPlayerLaunchGame() {
     const rand1 = this.randomInt(0, 2);
     if (rand1 === 1) {
-      this.playYaLeft(this.currentPlayer);
+      this.gameDirection = "left";
     } else {
-      this.playYaRight(this.currentPlayer);
+      this.gameDirection = "right";
+    }
+    this.playYa(this.currentPlayer);
+  }
+
+  changePlayer(currentPlayer, direction) {
+    const indexOfCurrentPlayer = this.players.indexOf(currentPlayer);
+
+    if (direction === "left") {
+      if (indexOfCurrentPlayer === 0) {
+        console.log("on repart à la fin de l'array");
+        this.currentPlayer = this.players[this.players.length - 1];
+      } else {
+        console.log("le tour passe au joueur à gauche");
+        this.currentPlayer = this.players[indexOfCurrentPlayer - 1];
+      }
+      console.log("joueur actuel après changement:", this.currentPlayer);
+    }
+
+    if (direction === "right") {
+      if (indexOfCurrentPlayer === this.players.length - 1) {
+        console.log("on repart au début de l'array");
+        this.currentPlayer = this.players[0];
+      } else {
+        console.log("le tour passe au joueur à droite");
+        this.currentPlayer = this.players[indexOfCurrentPlayer + 1];
+      }
+      console.log("joueur actuel après changement:", this.currentPlayer.name);
     }
   }
 
-  playYaLeft(currentPlayer) {
-    this.gameDirection = "left";
+  playYa(currentPlayer) {
     console.log(`${currentPlayer.name} does a Ya towards the ${this.gameDirection}`);
-    const indexOfCurrentPlayer = this.players.indexOf(this.currentPlayer);
-    console.log("indexOfCurrentPlayer", indexOfCurrentPlayer);
-    if (indexOfCurrentPlayer === 0) {
-      console.log("on repart à la fin de l'array");
-      this.currentPlayer = this.players[this.players.length - 1];
-    } else {
-      console.log("le tour passe au joueur à gauche");
-      this.currentPlayer = this.players[indexOfCurrentPlayer - 1];
-    }
-    console.log("joueur actuel:", this.currentPlayer);
+
+    // We change the current player
+    this.changePlayer(currentPlayer, this.gameDirection);
+
+    // We trigger the action of the next player
     this.actionDecisionMaking(this.currentPlayer);
   }
 
-  playYaRight(currentPlayer) {
-    this.gameDirection = "right";
-    console.log(`${currentPlayer.name} does a Ya towards the ${this.gameDirection}`);
-    const indexOfCurrentPlayer = this.players.indexOf(this.currentPlayer);
-    console.log("indexOfCurrentPlayer", indexOfCurrentPlayer);
-    if (indexOfCurrentPlayer === this.players.length - 1) {
-      console.log("on repart au début de l'array");
-      this.currentPlayer = this.players[0];
-    } else {
-      console.log("le tour passe au joueur à droite");
-      this.currentPlayer = this.players[indexOfCurrentPlayer + 1];
-    }
-    console.log("joueur actuel:", this.currentPlayer.name);
-    this.actionDecisionMaking(this.currentPlayer);
+  decisionTree(currentPlayer, randomNumber) {
+    // We put a delay for the game not to be rushed
+    setTimeout(
+      (currentPlayer, randomNumber) => {
+        if (randomNumber === 1) {
+          console.log(`${currentPlayer.name} has chosen to Zap`);
+        } else if (randomNumber === 2) {
+          console.log(`${currentPlayer.name} has chosen to "Je laisse"`);
+        } else if (randomNumber === 3) {
+          console.log(`${currentPlayer.name} has chosen to "Vade Retro"`);
+        } else if (randomNumber === 4) {
+          console.log(`${currentPlayer.name} has chosen to "Honcky Tonk"`);
+        } else if (randomNumber === 5) {
+          console.log(`${currentPlayer.name} has chosen to "Hold Down"`);
+        } else if (randomNumber === 6) {
+          console.log(`${currentPlayer.name} has chosen to "Peter"`);
+        } else if (randomNumber === 7) {
+          console.log(`${currentPlayer.name} has chosen to "Hip Hip Hip"`);
+        } else {
+          console.log(`${currentPlayer.name} has chosen to Ya to the ${this.gameDirection}`);
+          this.playYa(currentPlayer);
+        }
+      },
+      2000,
+      currentPlayer,
+      randomNumber
+    );
   }
 
   actionDecisionMaking(currentPlayer) {
@@ -82,25 +116,7 @@ class playTurnCl {
     console.log(`${currentPlayer.name} is ${currentPlayer.riskProfile} and got ${randomNumber} as a random number`);
 
     // Assign an action to the player
-    if (randomNumber === 1) {
-      console.log(`${currentPlayer.name} has chosen to Zap`);
-    } else if (randomNumber === 2) {
-      console.log(`${currentPlayer.name} has chosen to "Je laisse"`);
-    } else if (randomNumber === 3) {
-      console.log(`${currentPlayer.name} has chosen to "Vade Retro"`);
-    } else if (randomNumber === 4) {
-      console.log(`${currentPlayer.name} has chosen to "Honcky Tonk"`);
-    } else if (randomNumber === 5) {
-      console.log(`${currentPlayer.name} has chosen to "Hold Down"`);
-    } else if (randomNumber === 6) {
-      console.log(`${currentPlayer.name} has chosen to "Peter"`);
-    } else if (randomNumber === 7) {
-      console.log(`${currentPlayer.name} has chosen to "Hip Hip Hip"`);
-    } else {
-      console.log(`${currentPlayer.name} has chosen to Ya to the ${this.gameDirection}`);
-      if (this.gameDirection === "left") this.playYaLeft(currentPlayer);
-      if (this.gameDirection === "right") this.playYaRight(currentPlayer);
-    }
+    this.decisionTree(currentPlayer, randomNumber);
   }
 }
 
