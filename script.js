@@ -1,12 +1,18 @@
 "use strict";
 
-const players = [{ name: "Patrick" }, { name: "Jean-Claude" }, { name: "Claudine" }, { name: "Martine" }];
+const players = [
+  { name: "Patrick", riskProfile: "bold" },
+  { name: "Jean-Claude", riskProfile: "cautious" },
+  { name: "Claudine", riskProfile: "bold" },
+  { name: "Martine", riskProfile: "average" },
+  { name: "Michel", riskProfile: "average" },
+];
 
 class playTurnCl {
   constructor(players) {
     this.players = players;
     this.currentPlayer;
-    this.gameDirection;
+    this.gameDirection = "";
   }
 
   randomInt(min, max) {
@@ -14,6 +20,8 @@ class playTurnCl {
   }
 
   choseFirstPlayer() {
+    // The direction of the game is re-initialized
+    this.gameDirection = "";
     // We create a random integer
     const indexOfFirstPlayer = this.randomInt(-1, this.players.length - 1);
     // We chose a player from the array
@@ -39,10 +47,11 @@ class playTurnCl {
       console.log("on repart à la fin de l'array");
       this.currentPlayer = this.players[this.players.length - 1];
     } else {
-      console.log("test ok pour gauche");
+      console.log("le tour passe au joueur à gauche");
       this.currentPlayer = this.players[indexOfCurrentPlayer - 1];
     }
     console.log("joueur actuel:", this.currentPlayer);
+    this.actionDecisionMaking(this.currentPlayer);
   }
 
   playYaRight(currentPlayer) {
@@ -54,10 +63,44 @@ class playTurnCl {
       console.log("on repart au début de l'array");
       this.currentPlayer = this.players[0];
     } else {
-      console.log("test ok pour droite");
+      console.log("le tour passe au joueur à droite");
       this.currentPlayer = this.players[indexOfCurrentPlayer + 1];
     }
-    console.log("joueur actuel:", this.currentPlayer);
+    console.log("joueur actuel:", this.currentPlayer.name);
+    this.actionDecisionMaking(this.currentPlayer);
+  }
+
+  actionDecisionMaking(currentPlayer) {
+    // Define different reactions depending on the players profile.
+    let max;
+    if (currentPlayer.riskProfile === "cautious") max = 20;
+    if (currentPlayer.riskProfile === "average") max = 15;
+    if (currentPlayer.riskProfile === "bold") max = 10;
+
+    // Define a random number to help choose an option
+    const randomNumber = this.randomInt(0, max);
+    console.log(`${currentPlayer.name} is ${currentPlayer.riskProfile} and got ${randomNumber} as a random number`);
+
+    // Assign an action to the player
+    if (randomNumber === 1) {
+      console.log(`${currentPlayer.name} has chosen to Zap`);
+    } else if (randomNumber === 2) {
+      console.log(`${currentPlayer.name} has chosen to "Je laisse"`);
+    } else if (randomNumber === 3) {
+      console.log(`${currentPlayer.name} has chosen to "Vade Retro"`);
+    } else if (randomNumber === 4) {
+      console.log(`${currentPlayer.name} has chosen to "Honcky Tonk"`);
+    } else if (randomNumber === 5) {
+      console.log(`${currentPlayer.name} has chosen to "Hold Down"`);
+    } else if (randomNumber === 6) {
+      console.log(`${currentPlayer.name} has chosen to "Peter"`);
+    } else if (randomNumber === 7) {
+      console.log(`${currentPlayer.name} has chosen to "Hip Hip Hip"`);
+    } else {
+      console.log(`${currentPlayer.name} has chosen to Ya to the ${this.gameDirection}`);
+      if (this.gameDirection === "left") this.playYaLeft(currentPlayer);
+      if (this.gameDirection === "right") this.playYaRight(currentPlayer);
+    }
   }
 }
 
