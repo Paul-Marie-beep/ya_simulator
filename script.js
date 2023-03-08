@@ -65,6 +65,17 @@ class playTurnCl {
     }
   }
 
+  playHoldDown(currentPlayer) {
+    // We change the direction of the game
+    this.gameDirection === "left" ? (this.gameDirection = "right") : (this.gameDirection = "left");
+    // We select a new current player
+    this.changePlayer(currentPlayer, this.gameDirection);
+    // Trigger another action
+    this.actionDecisionMaking(this.currentPlayer);
+  }
+
+  playPeterPan() {}
+
   playYa(currentPlayer) {
     console.log(`${currentPlayer.name} does a Ya towards the ${this.gameDirection}`);
 
@@ -89,6 +100,7 @@ class playTurnCl {
           console.log(`${currentPlayer.name} has chosen to "Honcky Tonk"`);
         } else if (randomNumber === 5) {
           console.log(`${currentPlayer.name} has chosen to "Hold Down"`);
+          this.playHoldDown(currentPlayer);
         } else if (randomNumber === 6) {
           console.log(`${currentPlayer.name} has chosen to "Peter"`);
         } else if (randomNumber === 7) {
