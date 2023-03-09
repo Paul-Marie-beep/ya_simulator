@@ -1,0 +1,23 @@
+{
+  "name": "ya_simulator",
+  "version": "1.0.0",
+  "description": "",
+  "default": "index.html",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "parcel index.html"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Paul-Marie-beep/ya_simulator.git"
+  },
+  "author": "PMM",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Paul-Marie-beep/ya_simulator/issues"
+  },
+  "homepage": "https://github.com/Paul-Marie-beep/ya_simulator#readme",
+  "devDependencies": {
+    "parcel": "^2.8.3"
+  }
+}
