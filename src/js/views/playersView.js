@@ -1,7 +1,9 @@
 class playersView {
-  _playerBox = document.querySelector(".player_grid");
+  _playerGrid = document.querySelector(".player_grid");
   renderPlayers(currentPlayers) {
     console.log("currentPlayers", currentPlayers);
+    console.log("player grid", this._playerGrid);
+
     let html = "";
     currentPlayers.forEach((el) => {
       html =
@@ -13,7 +15,7 @@ class playersView {
         </div>
       `;
     });
-    this._playerBox.innerHTML = html;
+    this._playerGrid.innerHTML = html;
   }
 }
 
