@@ -1,0 +1,17 @@
+.player {
+  margin-top: 5rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  &__ball {
+    background-color: gainsboro;
+    height: 1rem;
+    width: 1rem;
+    border-radius: 50px;
+  }
+  &__name {
+    font-family: "Franklin Gothic Medium", "Arial Narrow", Arial, sans-serif;
+    font-weight: bold;
+  }
+}

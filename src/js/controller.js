@@ -1,10 +1,12 @@
-// "use strict";
-
 import * as model from "./model";
+import playersView from "./views/playersView";
 
-// if (module.hot) {
-//   module.hot.accept();
-// }
+if (module.hot) {
+  module.hot.accept();
+}
+
+playersView.renderPlayers(model.currentPlayers);
 
 model.chooseFirstPlayer();
-model.firstPlayerLaunchGame();
+const firstYa = model.firstPlayerLaunchGame();
+const graphRep = model.firstYa;

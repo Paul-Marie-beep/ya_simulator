@@ -1,6 +1,7 @@
 "use strict";
 
 const players = [
+  { name: "Camille", human: true },
   { name: "Patrick", riskProfile: "bold" },
   { name: "Jean-Claude", riskProfile: "cautious" },
   { name: "Claudine", riskProfile: "bold" },
@@ -8,7 +9,7 @@ const players = [
   { name: "Michel", riskProfile: "average" },
 ];
 
-const currentPlayers = players;
+export const currentPlayers = players;
 let currentPlayer;
 let gameDirection;
 
@@ -17,12 +18,18 @@ const randomInt = function (min, max) {
 };
 
 export const chooseFirstPlayer = function () {
-  // The direction of the game is re-initialized
-  gameDirection = "";
   // We create a random integer
   const indexOfFirstPlayer = randomInt(-1, currentPlayers.length - 1);
+
+  // Guard to make sure we don't select the human player
+  if (currentPlayers[indexOfFirstPlayer].human) chooseFirstPlayer();
+
   // We chose a player from the array
   currentPlayer = currentPlayers[indexOfFirstPlayer];
+
+  // The direction of the game is re-initialized
+  gameDirection = "";
+
   console.log("firstPlayer", currentPlayer);
 };
 
@@ -33,10 +40,10 @@ export const firstPlayerLaunchGame = function () {
   } else {
     gameDirection = "right";
   }
-  playYa(currentPlayer);
+  return playYa();
 };
 
-const changePlayer = function (player, direction) {
+export const changePlayer = function (player, direction) {
   const indexOfCurrentPlayer = currentPlayers.indexOf(player);
 
   if (direction === "left") {
@@ -68,17 +75,18 @@ const playHoldDown = function (player) {
   // We select a new current player
   changePlayer(player, gameDirection);
   // Trigger another action
-  this.actionDecisionMaking(currentPlayer);
+  actionDecisionMaking(currentPlayer);
 };
 
-const playYa = function (player) {
-  console.log(`${player.name} does a Ya towards the ${gameDirection}`);
+const playYa = function () {
+  console.log(`${currentPlayer.name} does a Ya towards the ${gameDirection}`);
 
-  // We change the current player
-  changePlayer(player, gameDirection);
+  // // We change the current player
+  // changePlayer(currentPlayer, gameDirection);
 
-  // We trigger the action of the next player
-  actionDecisionMaking(currentPlayer);
+  // // We trigger the action of the next player
+  // actionDecisionMaking(currentPlayer);
+  return;
 };
 
 const decisionTree = function (player, numb) {
@@ -111,12 +119,12 @@ const decisionTree = function (player, numb) {
   );
 };
 
-const actionDecisionMaking = function (player) {
+export const actionDecisionMaking = function () {
   // Define different reactions depending on the players profile.
   let max;
-  if (player.riskProfile === "cautious") max = 20;
-  if (player.riskProfile === "average") max = 15;
-  if (player.riskProfile === "bold") max = 10;
+  if (currentPlayer.riskProfile === "cautious") max = 20;
+  if (currentPlayer.riskProfile === "average") max = 15;
+  if (currentPlayer.riskProfile === "bold") max = 10;
 
   // Define a random number to help choose an option
   const randomNumber = randomInt(0, max);
