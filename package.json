@@ -1,0 +1,19 @@
+{
+  "name": "v2",
+  "version": "1.0.0",
+  "description": "ya simulator",
+  "main": "app.js",
+  "scripts": {
+    "sass": "sass --watch ./src/sass/main.scss:./public/css/style.css",
+    "start": "parcel index.html"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Paul-Marie-beep/ya_simulator/issues"
+  },
+  "dependencies": {
+    "parcel": "^2.9.3",
+    "sass": "^1.64.2"
+  }
+}
