@@ -29,6 +29,7 @@ class buttonsView {
     document.addEventListener("keydown", insideListener);
   }
 
+  // Erases the orders given to the player
   clearCommands() {
     this._commandPanel.innerHTML = "";
   }
@@ -56,6 +57,7 @@ class buttonsView {
     document.addEventListener("keydown", insideListener);
   }
 
+  // This function deals with the reaction of the human player when his name is called after houba houba
   handlePlayerResponseToCall(handler) {
     const insideListener = function (event) {
       if (event.key === "p") {

@@ -4,7 +4,7 @@ import * as model from "../model.js";
 import buttonsView from "../views/buttonsView.js";
 import playersView from "../views/playersView.js";
 
-import { humanOrMachine } from "./gameController.js";
+import { virtualPlayerChoice } from "./gameController.js";
 import { callPlayer, playersToHoubaHouba, relaunchGameAfterHoubaHouba } from "./honkyController.js";
 
 let virtualHouba;
@@ -18,14 +18,14 @@ const checkHumanResponsesToShot = function (keyPressed) {
     console.log("le joueur fait un hold down");
     model.changeDirectionAfterHoldDown();
     model.changePlayer(model.currentPlayer);
-    humanOrMachine();
+    virtualPlayerChoice();
     return;
   }
   if (keyPressed === model.gameDirection) {
     // The player has chosen the right direction for his ya
     console.log("Le joueur a fait un ya dans le bon sens");
     model.changePlayer(model.currentPlayer);
-    humanOrMachine();
+    virtualPlayerChoice();
     return;
   } else {
     //The player has lost the game
@@ -35,6 +35,7 @@ const checkHumanResponsesToShot = function (keyPressed) {
 };
 
 export const handleHumanTurnToPlay = function () {
+  playersView.highlightActivePlayer(model.currentPlayer);
   buttonsView.showShotsCommands();
   buttonsView.handlePlayerResponseToShot(checkHumanResponsesToShot);
 };
@@ -87,7 +88,7 @@ export const checkHumanDesignationOfANewPlayer = function () {
 export const checkReactionToBeingCalled = function (boolean) {
   buttonsView.clearCommands();
   if (boolean) {
-    humanOrMachine();
+    handleHumanTurnToPlay();
   } else {
     console.log("Le joueur a mal dit 'Pouet'");
     console.log("C'est la lose !!! 😵‍💫");
