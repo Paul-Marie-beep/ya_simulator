@@ -3,7 +3,7 @@ import playersView from "../views/playersView";
 
 import { randomInt, defineMax, hasAPlayerCommitedAMistake } from "../helpers";
 import { handleHumanTurnToPlay } from "./buttonsController";
-import { honkyTonkByVirtualPlayer } from "./HonkyTonkController";
+import { honkyTonkByVirtualPlayer } from "./honkyController";
 
 if (module.hot) {
   module.hot.accept();
@@ -43,10 +43,14 @@ export const mistakesWereMade = function (player = model.currentPlayer) {
 
   // Guard function to end the game if only two players have not been eliminated
   if (model.currentPlayers.length === 2) {
+    playersView.renderPlayers(model.currentPlayers);
     console.log(
-      `Il n'y a plus que deux joueurs : ${currentPlayers[0].name} et ${currentPlayers[1].name} donc le jeu est fini`
-      // The game ends here
+      `Il n'y a plus que deux joueurs : ${model.currentPlayers[0].name} et ${model.currentPlayers[1].name} donc le jeu est fini`
     );
+    // The game ends here and the human player has won
+    console.log("🥇🥇🥇 Bravo !! vous avez gagné 🥇🥇🥇");
+    //
+
     return;
   }
   //We wait 4 seconds before re-starting the game
@@ -94,6 +98,7 @@ const virtualPlayerChoice = function (player) {
 };
 
 export const humanOrMachine = function () {
+  playersView.highlightActivePlayer(model.currentPlayer);
   //We check if the player that shall play now is human or not
   if (model.isHumanPlayerInvolved()) {
     //The human player cannot be selected to start the game for the sake of simplicity
@@ -103,7 +108,6 @@ export const humanOrMachine = function () {
   } else {
     console.log(`C'est au tour de ${model.currentPlayer.name} de jouer. Que va-t-il se passer ?`);
     // if the player is virtual, then it automatically plays its turn
-    playersView.highlightActivePlayer(model.currentPlayer);
     // Make the virtual player decide which shot he is going to play
     virtualPlayerChoice(model.currentPlayer);
   }

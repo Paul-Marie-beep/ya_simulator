@@ -48,6 +48,11 @@ export const chooseRandomPlayer = function () {
   return currentPlayer;
 };
 
+export const updateCurrentPlayer = function (name) {
+  currentPlayer = currentPlayers.find((player) => player.name === name);
+  return currentPlayer;
+};
+
 export const chooseDirectionForFirstYa = function () {
   //We randomly chose a direction with which the game will start
   const rand1 = randomInt(0, 2);

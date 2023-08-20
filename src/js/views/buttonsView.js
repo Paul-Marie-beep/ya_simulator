@@ -15,6 +15,10 @@ class buttonsView {
       "<p>Cliquez sur le nom d'un joueur pour lui indiquer que c'est à lui de continuer à jouer";
   }
 
+  ShowNameCalledCommands() {
+    this._commandPanel.innerHTML = "<p>Appuyez sur P pour dire 'Pouet'</p>";
+  }
+
   handlePlayerResponseToHonkyTonk(handler) {
     //We want to see if the human player has pressed the right key
     const insideListener = function (event) {
@@ -46,6 +50,21 @@ class buttonsView {
       if (event.key === "h") {
         console.log(event.key);
         handler("h");
+        document.removeEventListener("keydown", insideListener);
+      }
+    };
+    document.addEventListener("keydown", insideListener);
+  }
+
+  handlePlayerResponseToCall(handler) {
+    const insideListener = function (event) {
+      if (event.key === "p") {
+        console.log("Le joueur a pressé la bonne touche");
+        handler(true);
+        document.removeEventListener("keydown", insideListener);
+      } else {
+        console.log("Le joueur n'a pas pressé la bonne touche");
+        handler(false);
         document.removeEventListener("keydown", insideListener);
       }
     };
