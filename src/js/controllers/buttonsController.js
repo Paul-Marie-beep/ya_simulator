@@ -96,6 +96,6 @@ export const checkReactionToBeingCalled = function (boolean) {
 };
 
 export const humanReactionToBeingCalledAfterHoubaHouba = function () {
-  buttonsView.show;
+  buttonsView.ShowNameCalledCommands();
   buttonsView.handlePlayerResponseToCall(checkReactionToBeingCalled);
 };
