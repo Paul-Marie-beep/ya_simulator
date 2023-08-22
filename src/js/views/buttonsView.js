@@ -3,7 +3,7 @@ class buttonsView {
 
   showShotsCommands() {
     this._commandPanel.innerHTML =
-      "<p>Appuyez sur la flèche qui va dans le sens du jeu sur votre clavier</p><p>Ou appuyez sur la touche H pour faire un 'Hold Down'</p><p>Ou appuyez sur truc pour faire Honky Tonk";
+      "<p>Appuyez sur la flèche qui va dans le sens du jeu sur votre clavier</p><p>Ou appuyez sur la touche H pour faire un 'Hold Down'</p><p>Ou appuyez sur la touche O pour faire Honky Tonk";
   }
 
   showHonkyTonkCommands() {
@@ -16,7 +16,7 @@ class buttonsView {
   }
 
   ShowNameCalledCommands() {
-    this._commandPanel.innerHTML = "<p>Appuyez sur P pour dire 'Pouet'</p>";
+    this._commandPanel.innerHTML = "<p>Appuyez sur P pour dire 'Dring'</p>";
   }
 
   handlePlayerResponseToHonkyTonk(handler) {
@@ -37,23 +37,10 @@ class buttonsView {
   // Function to handle the input of the human player regarding which shot he intends to play
   handlePlayerResponseToShot(handler) {
     //We want the key that has has been pressed to go back to the controller
-    console.log("handlePlayerResponseToYa triggered");
     const insideListener = function (event) {
-      if (event.key === "ArrowLeft") {
-        console.log(event.key);
-        handler("left");
-        document.removeEventListener("keydown", insideListener);
-      }
-      if (event.key === "ArrowRight") {
-        console.log(event.key);
-        handler("right");
-        document.removeEventListener("keydown", insideListener);
-      }
-      if (event.key === "h") {
-        console.log(event.key);
-        handler("h");
-        document.removeEventListener("keydown", insideListener);
-      }
+      console.log("le joueur a pressé la touche :", event.key);
+      handler(event.key);
+      document.removeEventListener("keydown", insideListener);
     };
     document.addEventListener("keydown", insideListener);
   }

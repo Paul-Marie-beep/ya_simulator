@@ -9,6 +9,21 @@ import { callPlayer, playersToHoubaHouba, relaunchGameAfterHoubaHouba } from "./
 
 let virtualHouba;
 
+// Function to check that the player has made a ya in the right direction
+const checkDirection = function (direction) {
+  if (direction === model.gameDirection) {
+    // The player has chosen the right direction for his ya
+    console.log("Le joueur a fait un ya dans le bon sens");
+    model.changePlayer(model.currentPlayer);
+    setTimeout(() => {
+      virtualPlayerChoice(model.currentPlayer);
+    }, 2000);
+  } else {
+    //The player has lost the game
+    console.log("C'est la lose !!! 😵‍💫");
+  }
+};
+
 const checkHumanResponsesToShot = function (keyPressed) {
   // We start by  erasing the commands shown to the human player
   buttonsView.clearCommands();
@@ -18,19 +33,21 @@ const checkHumanResponsesToShot = function (keyPressed) {
     console.log("le joueur fait un hold down");
     model.changeDirectionAfterHoldDown();
     model.changePlayer(model.currentPlayer);
-    virtualPlayerChoice(model.currentPlayer);
+    setTimeout(() => {
+      virtualPlayerChoice(model.currentPlayer);
+    }, 2000);
     return;
-  }
-  if (keyPressed === model.gameDirection) {
-    // The player has chosen the right direction for his ya
-    console.log("Le joueur a fait un ya dans le bon sens");
-    model.changePlayer(model.currentPlayer);
-    virtualPlayerChoice(model.currentPlayer);
-    return;
+  } else if (keyPressed === "ArrowLeft") {
+    const dir = "left";
+    checkDirection(dir);
+  } else if (keyPressed === "ArrowRight") {
+    const dir = "right";
+    checkDirection(dir);
+  } else if (keyPressed === "o") {
+    console.log("le joueur a fait un honky tonk");
   } else {
-    //The player has lost the game
+    console.log(`Le joueur a commis une erreur en pressant ${keyPressed}`);
     console.log("C'est la lose !!! 😵‍💫");
-    return;
   }
 };
 

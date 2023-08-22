@@ -24,7 +24,8 @@ export let currentPlayer;
 export let gameDirection;
 
 export const createInitialListOfPlayers = function () {
-  currentPlayers = players;
+  currentPlayers = [];
+  players.forEach((el) => currentPlayers.push(el));
 };
 
 export const chooseFirstPlayer = function () {
@@ -69,36 +70,27 @@ export const updateCurrentPlayers = function (player) {
   console.log("voici le nouvel array des joueurs:", currentPlayers);
 };
 
-export const changePlayer = function (player) {
+export const changePlayer = function (player, increment = 1) {
   const indexOfCurrentPlayer = currentPlayers.indexOf(player);
+  console.log("player :", player, "increment :", increment);
 
+  // We shoud differentiate two cases depending on the direction of the game
   if (gameDirection === "left") {
-    if (indexOfCurrentPlayer === 0) {
-      console.log("on repart à la fin de l'array");
-      currentPlayer = currentPlayers[currentPlayers.length - 1];
+    console.log(`le tour passe au joueur situé ${increment} position(s) vers la gauche`);
+    if (indexOfCurrentPlayer - increment >= 0) {
+      currentPlayer = currentPlayers[indexOfCurrentPlayer - increment];
     } else {
-      console.log("le tour passe au joueur à gauche");
-      currentPlayer = currentPlayers[indexOfCurrentPlayer - 1];
+      currentPlayer = currentPlayers[currentPlayers.length - indexOfCurrentPlayer - 1];
     }
-    console.log("joueur actuel après changement:", currentPlayer);
-  }
-
-  if (gameDirection === "right") {
-    if (indexOfCurrentPlayer === currentPlayers.length - 1) {
-      console.log("on repart au début de l'array");
-      currentPlayer = currentPlayers[0];
+  } else if (gameDirection === "right") {
+    if (indexOfCurrentPlayer + increment <= currentPlayers.length - 1) {
+      currentPlayer = currentPlayers[indexOfCurrentPlayer + increment];
     } else {
-      console.log("le tour passe au joueur à droite");
-      currentPlayer = currentPlayers[indexOfCurrentPlayer + 1];
+      currentPlayer = currentPlayers[increment - (currentPlayers.length - indexOfCurrentPlayer)];
     }
-    console.log(
-      "joueur actuel après changement:",
-      currentPlayer.name,
-      "||",
-      "Is current player human ?",
-      currentPlayer.human
-    );
   }
+  console.log(currentPlayer);
+  console.log("joueur actuel après changement:", currentPlayer.name, "current player human ?", currentPlayer.human);
 };
 
 export const isHumanPlayerInvolved = function () {
