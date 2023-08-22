@@ -93,6 +93,7 @@ export const virtualPlayerChoice = function (player) {
       mistakesWereMade();
       return;
     }
+    console.log("le joueur a bien fait ahi");
     model.changePlayer(player, 2);
   } else {
     console.log(`${player.name} has chosen to ya`);

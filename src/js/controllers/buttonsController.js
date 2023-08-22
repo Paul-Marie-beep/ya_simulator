@@ -41,7 +41,6 @@ const checkHumanResponsesToShot = function (keyPressed) {
     setTimeout(() => {
       virtualPlayerChoice(model.currentPlayer);
     }, 2000);
-    return;
   } else if (keyPressed === "ArrowLeft") {
     const dir = "left";
     checkDirection(dir);
@@ -52,6 +51,12 @@ const checkHumanResponsesToShot = function (keyPressed) {
     console.log("le joueur a fait un honky tonk");
     setTimeout(() => {
       honkyTonkByVirtualPlayer(model.currentPlayer, model.currentPlayers, model.gameDirection);
+    }, 2000);
+  } else if (keyPressed === "a") {
+    console.log("le joueur a fait un ahi");
+    model.changePlayer(model.currentPlayer, 2);
+    setTimeout(() => {
+      virtualPlayerChoice(model.currentPlayer);
     }, 2000);
   } else {
     console.log(`Le joueur a commis une erreur en pressant ${keyPressed}`);

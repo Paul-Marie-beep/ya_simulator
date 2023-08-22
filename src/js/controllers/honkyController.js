@@ -5,6 +5,7 @@ import { mistakesWereMade, humanOrMachine } from "./gameController";
 import { hitOrMissHonkyTonk, hasAPlayerCommitedAMistake } from "../helpers";
 import { humanResponseToHonkyTonk, humanReactionToBeingCalledAfterHoubaHouba } from "./buttonsController";
 import playersView from "../views/playersView";
+import buttonsView from "../views/buttonsView";
 
 export let playersToHoubaHouba;
 
@@ -52,6 +53,8 @@ export const relaunchGameAfterHoubaHouba = function (playerToCallANewPlayer) {
 
 // The function takes over once the human player has clicked on the player that he wishes will continue to play
 export const callPlayer = function (playerName) {
+  // We erase the order that was shown to players
+  buttonsView.clearCommands();
   // in the model, we set the new current  players
   const newPlayer = updateCurrentPlayer(playerName);
   console.log(newPlayer.name, "est le joueur qui a été choisi pour continuer le jeu");
