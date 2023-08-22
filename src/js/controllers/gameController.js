@@ -63,7 +63,7 @@ export const mistakesWereMade = function (player = model.currentPlayer) {
 // This function will make the virtual player chooe between different shots depending on the players profile and then handles the various actions that will follow.
 export const virtualPlayerChoice = function (player) {
   // Highlight the player whose turn it is to play on the graphical representation
-  playersView.highlightActivePlayer(model.currentPlayer);
+  playersView.highlightActivePlayer(player);
 
   // Define a random number to help choose an option
   const randomNumber = randomInt(0, defineMax(player));

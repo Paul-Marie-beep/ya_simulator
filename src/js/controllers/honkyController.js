@@ -14,8 +14,8 @@ const WhoWillHoubaHouba = function (player, currentPlayers, gameDirection) {
   return lookForPlayersReactingToHonkyTonk(indexOfCurrentPlayer, currentPlayers, gameDirection);
 };
 
-// This function will check if the pouet has successfully been uttered by the player.
-const pouetManagement = function (player) {
+// This function will check if the dring has successfully been uttered by the player.
+const dringManagement = function (player) {
   // The player dot should be highlited
   playersView.highlightActivePlayer(player);
   // We differeentiate between the case where a human player should react and the case where a virtual player should react
@@ -47,7 +47,7 @@ export const relaunchGameAfterHoubaHouba = function (playerToCallANewPlayer) {
   const newPlayer = chooseRandomPlayer();
   console.log(`${playerToCallANewPlayer.name} a appelé ${newPlayer.name} après avoir dit Houba Houba`);
   // We then test if the new player has successfully reacted by saying "XXX"
-  pouetManagement(newPlayer);
+  dringManagement(newPlayer);
 };
 
 // The function takes over once the human player has clicked on the player that he wishes will continue to play
@@ -55,8 +55,8 @@ export const callPlayer = function (playerName) {
   // in the model, we set the new current  players
   const newPlayer = updateCurrentPlayer(playerName);
   console.log(newPlayer.name, "est le joueur qui a été choisi pour continuer le jeu");
-  // We shall then check if the chosen player managed to say pouet
-  pouetManagement(newPlayer);
+  // We shall then check if the chosen player managed to say dring
+  dringManagement(newPlayer);
 };
 
 // This function handles the process of the various reactions of players (virtual or human) to a honky tonk shot.

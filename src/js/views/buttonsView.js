@@ -34,6 +34,7 @@ class buttonsView {
     this._commandPanel.innerHTML = "";
   }
 
+  // Function to handle the input of the human player regarding which shot he intends to play
   handlePlayerResponseToShot(handler) {
     //We want the key that has has been pressed to go back to the controller
     console.log("handlePlayerResponseToYa triggered");

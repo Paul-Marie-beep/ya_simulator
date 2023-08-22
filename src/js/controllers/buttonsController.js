@@ -18,14 +18,14 @@ const checkHumanResponsesToShot = function (keyPressed) {
     console.log("le joueur fait un hold down");
     model.changeDirectionAfterHoldDown();
     model.changePlayer(model.currentPlayer);
-    virtualPlayerChoice();
+    virtualPlayerChoice(model.currentPlayer);
     return;
   }
   if (keyPressed === model.gameDirection) {
     // The player has chosen the right direction for his ya
     console.log("Le joueur a fait un ya dans le bon sens");
     model.changePlayer(model.currentPlayer);
-    virtualPlayerChoice();
+    virtualPlayerChoice(model.currentPlayer);
     return;
   } else {
     //The player has lost the game
