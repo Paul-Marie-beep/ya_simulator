@@ -5,7 +5,12 @@ import buttonsView from "../views/buttonsView.js";
 import playersView from "../views/playersView.js";
 
 import { virtualPlayerChoice } from "./gameController.js";
-import { callPlayer, playersToHoubaHouba, relaunchGameAfterHoubaHouba } from "./honkyController.js";
+import {
+  callPlayer,
+  playersToHoubaHouba,
+  relaunchGameAfterHoubaHouba,
+  honkyTonkByVirtualPlayer,
+} from "./honkyController.js";
 
 let virtualHouba;
 
@@ -45,6 +50,9 @@ const checkHumanResponsesToShot = function (keyPressed) {
     checkDirection(dir);
   } else if (keyPressed === "o") {
     console.log("le joueur a fait un honky tonk");
+    setTimeout(() => {
+      honkyTonkByVirtualPlayer(model.currentPlayer, model.currentPlayers, model.gameDirection);
+    }, 2000);
   } else {
     console.log(`Le joueur a commis une erreur en pressant ${keyPressed}`);
     console.log("C'est la lose !!! 😵‍💫");

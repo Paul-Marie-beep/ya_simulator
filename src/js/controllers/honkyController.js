@@ -20,19 +20,19 @@ const dringManagement = function (player) {
   playersView.highlightActivePlayer(player);
   // We differeentiate between the case where a human player should react and the case where a virtual player should react
   if (player.human) {
-    console.log("Vous devez dire Pouet");
+    console.log("Vous devez dire Dring");
     humanReactionToBeingCalledAfterHoubaHouba();
   } else {
     // In the case of a virtual player : 2 cases :
     // 1°) The player reacts successfully
     // 2°) The player does not react successfully
     if (hasAPlayerCommitedAMistake(player, "reaction to honky tonk")) {
-      console.log(`${player.name} a réussi à dire Pouet`);
+      console.log(`${player.name} a réussi à dire Dring`);
       setTimeout(() => {
         humanOrMachine();
       }, 3000);
     } else {
-      console.log(`${player.name} n'a pas réussi à dire Pouet`);
+      console.log(`${player.name} n'a pas réussi à dire Dring`);
       console.log(`${player.name} est éliminé`);
       mistakesWereMade(player);
     }
