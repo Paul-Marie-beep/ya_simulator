@@ -72,15 +72,15 @@ export const updateCurrentPlayers = function (player) {
 
 export const changePlayer = function (player, increment = 1) {
   const indexOfCurrentPlayer = currentPlayers.indexOf(player);
-  console.log("player :", player, "increment :", increment);
+  console.log("player :", player, "index of current player :", indexOfCurrentPlayer, "increment :", increment);
+  console.log(`le tour passe au joueur situé ${increment} position(s) vers la ${gameDirection}`);
 
   // We shoud differentiate two cases depending on the direction of the game
   if (gameDirection === "left") {
-    console.log(`le tour passe au joueur situé ${increment} position(s) vers la gauche`);
     if (indexOfCurrentPlayer - increment >= 0) {
       currentPlayer = currentPlayers[indexOfCurrentPlayer - increment];
     } else {
-      currentPlayer = currentPlayers[currentPlayers.length - indexOfCurrentPlayer - 1];
+      currentPlayer = currentPlayers[currentPlayers.length - increment + indexOfCurrentPlayer];
     }
   } else if (gameDirection === "right") {
     if (indexOfCurrentPlayer + increment <= currentPlayers.length - 1) {

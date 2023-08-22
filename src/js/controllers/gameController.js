@@ -84,6 +84,16 @@ export const virtualPlayerChoice = function (player) {
     console.log(`${player.name} has chosen to honky tonk`);
     honkyTonkByVirtualPlayer(player, model.currentPlayers, model.gameDirection);
     return;
+  } else if (randomNumber > 6 && randomNumber <= 10) {
+    console.log(`${player.name} has chosen to ahi`);
+    console.log("👀 👀 👀 👀 👀 👀 👀 ");
+    // Guard if a mistake has been committed
+    if (hasAPlayerCommitedAMistake(player, "ahi")) {
+      console.log(` 😡😡😡 ${player.name} has failed while trying to ahi. ${player.name} is eliminated 😡😡😡`);
+      mistakesWereMade();
+      return;
+    }
+    model.changePlayer(player, 2);
   } else {
     console.log(`${player.name} has chosen to ya`);
     // Guard to stop the game if a mistake has been committed
