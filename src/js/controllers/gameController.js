@@ -4,6 +4,7 @@ import playersView from "../views/playersView";
 import { randomInt, defineMax, hasAPlayerCommitedAMistake } from "../helpers";
 import { handleHumanTurnToPlay } from "./buttonsController";
 import { honkyTonkByVirtualPlayer } from "./honkyController";
+import { letByVirtualPlayer } from "./letController";
 
 if (module.hot) {
   module.hot.accept();
@@ -86,7 +87,6 @@ export const virtualPlayerChoice = function (player) {
     return;
   } else if (randomNumber > 6 && randomNumber <= 10) {
     console.log(`${player.name} has chosen to ahi`);
-    console.log("👀 👀 👀 👀 👀 👀 👀 ");
     // Guard if a mistake has been committed
     if (hasAPlayerCommitedAMistake(player, "ahi")) {
       console.log(` 😡😡😡 ${player.name} has failed while trying to ahi. ${player.name} is eliminated 😡😡😡`);
@@ -95,6 +95,11 @@ export const virtualPlayerChoice = function (player) {
     }
     console.log("le joueur a bien fait ahi");
     model.changePlayer(player, 2);
+  } else if (randomNumber > 10 && randomNumber <= 15) {
+    console.log(`${player.name} has chosen to let`);
+    console.log("👀 👀 👀 👀 👀 👀 👀 ");
+    letByVirtualPlayer(player);
+    return;
   } else {
     console.log(`${player.name} has chosen to ya`);
     // Guard to stop the game if a mistake has been committed
