@@ -96,6 +96,12 @@ export const virtualPlayerChoice = function (player) {
     console.log("le joueur a bien fait ahi");
     model.changePlayer(player, 2);
   } else if (randomNumber > 10 && randomNumber <= 15) {
+    // Guard to prevent the game from continuing if the player who's trying to let commits a mistake while doing so
+    if (hasAPlayerCommitedAMistake(player, "let")) {
+      console.log(` 😡😡😡 ${player.name} has failed while trying to let. ${player.name} is eliminated 😡😡😡`);
+      mistakesWereMade();
+      return;
+    }
     console.log(`${player.name} has chosen to let`);
     console.log("👀 👀 👀 👀 👀 👀 👀 ");
     letByVirtualPlayer(player);

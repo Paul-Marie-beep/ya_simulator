@@ -16,7 +16,12 @@ class buttonsView {
   }
 
   ShowNameCalledCommands() {
-    this._commandPanel.innerHTML = "<p>Appuyez sur P pour dire 'Dring'</p>";
+    this._commandPanel.innerHTML = "<p>Appuyez sur D pour dire 'Dring'</p>";
+  }
+
+  showLetCommands() {
+    this._commandPanel.innerHTML =
+      "<p> Si vous avez envie de prendre : appuyez sur P pour dire 'Je prends'</p><p>Sinon, n'appuyez sur aucune touche</p>";
   }
 
   handlePlayerResponseToHonkyTonk(handler) {
@@ -48,7 +53,7 @@ class buttonsView {
   // This function deals with the reaction of the human player when his name is called after houba houba
   handlePlayerResponseToCall(handler) {
     const insideListener = function (event) {
-      if (event.key === "p") {
+      if (event.key === "d") {
         console.log("Le joueur a pressé la bonne touche");
         handler(true);
         document.removeEventListener("keydown", insideListener);
@@ -59,6 +64,19 @@ class buttonsView {
       }
     };
     document.addEventListener("keydown", insideListener);
+  }
+
+  handlePlayerResponseToLet(handler, reactionTime) {
+    console.log("test reaction time", reactionTime);
+    const insideListener = function (event) {
+      console.log(`Le joueur a appuyé sur la touche ${event.key}`);
+      handler(event.key);
+      document.removeEventListener("keydown", insideListener);
+    };
+    document.addEventListener("keydown", insideListener);
+    setTimeout(() => {
+      document.removeEventListener("keydown", insideListener);
+    }, reactionTime);
   }
 }
 

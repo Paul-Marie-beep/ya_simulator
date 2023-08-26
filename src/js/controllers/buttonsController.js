@@ -13,6 +13,7 @@ import {
 } from "./honkyController.js";
 
 let virtualHouba;
+export let hasTheHumanPlayerTriedToTake;
 
 // Function to check that the player has made a ya in the right direction
 const checkDirection = function (direction) {
@@ -81,7 +82,7 @@ const checkHumanResponsesToHonkyTonk = function (keyPressed) {
     // If both player  managed to Houba Houba
     if (!virtualHouba) {
       console.log(
-        `${playersToHoubaHouba[0].name} & ${playersToHoubaHouba[1].name} ont tous les deux réussi à faire houba houba}`
+        `${playersToHoubaHouba[0].name} & ${playersToHoubaHouba[1].name} ont tous les deux réussi à faire houba houba.`
       );
       // If both players are succesful at houba houba then the second player shall choose a new player to continue the game
       if (playersToHoubaHouba[1].human) {
@@ -128,4 +129,25 @@ export const checkReactionToBeingCalled = function (boolean) {
 export const humanReactionToBeingCalledAfterHoubaHouba = function () {
   buttonsView.ShowNameCalledCommands();
   buttonsView.handlePlayerResponseToCall(checkReactionToBeingCalled);
+};
+
+export const checkHumanReactionToLet = function (key) {
+  buttonsView.clearCommands();
+  if (key === "p") {
+    console.log("Le joueur a bien dit 'Je prends'");
+    // We need to specify that the current player is now the human player
+    model.updateCurrentPlayer("Camille");
+    handleHumanTurnToPlay();
+  } else {
+    console.log("Le joueur a mal dit 'Je prends'");
+    console.log("C'est la lose !!! 😵‍💫");
+  }
+  hasTheHumanPlayerTriedToTake = true;
+};
+
+export const humanReactionToLet = function (reactionTime) {
+  buttonsView.showLetCommands();
+  buttonsView.handlePlayerResponseToLet(checkHumanReactionToLet, reactionTime);
+  // If a let shot has already been played, we should reset hasTheHumanPlayerTryToTake to false so that tha play action is not blocked.
+  hasTheHumanPlayerTriedToTake = false;
 };
