@@ -3,7 +3,7 @@ class buttonsView {
 
   showShotsCommands() {
     this._commandPanel.innerHTML =
-      "<p>Appuyez sur la flèche qui va dans le sens du jeu sur votre clavier</p><p>Ou appuyez sur la touche H pour faire un 'Hold Down'</p><p>Ou appuyez sur la touche O pour faire Honky Tonk</p><p>Ou appuyez sur la touche A pour faire Ahi";
+      "<p>Appuyez sur la flèche qui va dans le sens du jeu sur votre clavier</p><p>Ou appuyez sur la touche H pour faire un 'Hold Down'</p><p>Ou appuyez sur la touche O pour faire Honky Tonk</p><p>Ou appuyez sur la touche A pour faire Ahi</p><p>Ou appuyez sur L pour 'Je laisse'";
   }
 
   showHonkyTonkCommands() {

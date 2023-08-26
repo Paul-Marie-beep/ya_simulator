@@ -11,6 +11,7 @@ import {
   relaunchGameAfterHoubaHouba,
   honkyTonkByVirtualPlayer,
 } from "./honkyController.js";
+import { letByVirtualPlayer } from "./letController.js";
 
 let virtualHouba;
 export let hasTheHumanPlayerTriedToTake;
@@ -59,6 +60,9 @@ const checkHumanResponsesToShot = function (keyPressed) {
     setTimeout(() => {
       virtualPlayerChoice(model.currentPlayer);
     }, 2000);
+  } else if (keyPressed === "l") {
+    console.log("Le joueur a dit 'Je laisse'");
+    letByVirtualPlayer(model.currentPlayer);
   } else {
     console.log(`Le joueur a commis une erreur en pressant ${keyPressed}`);
     console.log("C'est la lose !!! 😵‍💫");
@@ -142,6 +146,7 @@ export const checkHumanReactionToLet = function (key) {
     console.log("Le joueur a mal dit 'Je prends'");
     console.log("C'est la lose !!! 😵‍💫");
   }
+  // This variable indicates that an action has been undertaken by the human player and that there therefore is no need for a virtual player to step in
   hasTheHumanPlayerTriedToTake = true;
 };
 
