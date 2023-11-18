@@ -106,6 +106,9 @@ export const virtualPlayerChoice = function (player) {
     console.log("👀 👀 👀 👀 👀 👀 👀 ");
     letByVirtualPlayer(player);
     return;
+  } else if (randomNumber > 15 && randomNumber <= 18) {
+    console.log(`${player.name} has chosen to Vade Retro`);
+    return;
   } else {
     console.log(`${player.name} has chosen to ya`);
     // Guard to stop the game if a mistake has been committed

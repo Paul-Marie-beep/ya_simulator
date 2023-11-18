@@ -19,7 +19,7 @@ const WhoWillHoubaHouba = function (player, currentPlayers, gameDirection) {
 const dringManagement = function (player) {
   // The player dot should be highlited
   playersView.highlightActivePlayer(player);
-  // We differeentiate between the case where a human player should react and the case where a virtual player should react
+  // We differentiate between the case where a human player should react and the case where a virtual player should react
   if (player.human) {
     console.log("Vous devez dire Dring");
     humanReactionToBeingCalledAfterHoubaHouba();

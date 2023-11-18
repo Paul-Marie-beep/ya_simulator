@@ -3,9 +3,9 @@ export const randomInt = function (min, max) {
 };
 
 export const defineMax = function (currentPlayer) {
-  if (currentPlayer.riskProfile === "cautious") return 30;
-  if (currentPlayer.riskProfile === "average") return 25;
-  if (currentPlayer.riskProfile === "bold") return 20;
+  if (currentPlayer.riskProfile === "cautious") return 33;
+  if (currentPlayer.riskProfile === "average") return 28;
+  if (currentPlayer.riskProfile === "bold") return 23;
 };
 
 export const defineRandomNumberToGenerateMistakeChance = function (shotPlayed, currentPlayer) {
