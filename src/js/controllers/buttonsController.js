@@ -4,7 +4,7 @@ import * as model from "../model.js";
 import buttonsView from "../views/buttonsView.js";
 import playersView from "../views/playersView.js";
 
-import { virtualPlayerChoice } from "./gameController.js";
+import { virtualPlayerChoice, mistakesWereMade } from "./gameController.js";
 import {
   callPlayer,
   playersToHoubaHouba,
@@ -114,6 +114,9 @@ export const humanResponseToHonkyTonk = function (houba) {
   buttonsView.showHonkyTonkCommands();
   buttonsView.handlePlayerResponseToHonkyTonk(checkHumanResponsesToHonkyTonk);
 };
+
+// This function allow the player to do sa, ta ou nas via the graphic interface
+export const humanResponseToVadeRetro = function () {};
 
 export const checkHumanDesignationOfANewPlayer = function () {
   buttonsView.showCallNewPlayerCommands();

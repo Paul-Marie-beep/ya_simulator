@@ -10,30 +10,29 @@ import buttonsView from "../views/buttonsView";
 export let playersToHoubaHouba;
 
 // This function will define the players that will have to react to the honky tonk
-const WhoWillHoubaHouba = function (player, currentPlayers, gameDirection) {
-  const indexOfCurrentPlayer = currentPlayers.indexOf(player);
-  return lookForPlayersReactingToHonkyTonk(indexOfCurrentPlayer, currentPlayers, gameDirection);
+const WhoWillHoubaHouba = function () {
+  return lookForPlayersReactingToHonkyTonk();
 };
 
 // This function will check if the dring has successfully been uttered by the player.
-const dringManagement = function (player) {
+export const dringManagement = function (player, shot = "dring") {
   // The player dot should be highlited
   playersView.highlightActivePlayer(player);
   // We differentiate between the case where a human player should react and the case where a virtual player should react
   if (player.human) {
-    console.log("Vous devez dire Dring");
+    console.log(`Vous devez dire "${shot}"`);
     humanReactionToBeingCalledAfterHoubaHouba();
   } else {
     // In the case of a virtual player : 2 cases :
     // 1°) The player reacts successfully
     // 2°) The player does not react successfully
     if (hasAPlayerCommitedAMistake(player, "reaction to honky tonk")) {
-      console.log(`${player.name} a réussi à dire Dring`);
+      console.log(`${player.name} a réussi à dire ${shot}`);
       setTimeout(() => {
         humanOrMachine();
       }, 3000);
     } else {
-      console.log(`${player.name} n'a pas réussi à dire Dring`);
+      console.log(`${player.name} n'a pas réussi à dire ${shot}`);
       console.log(`${player.name} est éliminé`);
       mistakesWereMade(player);
     }
@@ -47,7 +46,7 @@ export const relaunchGameAfterHoubaHouba = function (playerToCallANewPlayer) {
   // A player is randomly selected
   const newPlayer = chooseRandomPlayer();
   console.log(`${playerToCallANewPlayer.name} a appelé ${newPlayer.name} après avoir dit Houba Houba`);
-  // We then test if the new player has successfully reacted by saying "XXX"
+  // We then test if the new player has successfully reacted by saying "Dring"
   dringManagement(newPlayer);
 };
 
@@ -71,10 +70,10 @@ const reactionsToHonkyTonk = function (playersReactingToHonkyTonk) {
   } else {
     // Case where none of the players who have to say houba houba are human
 
-    // houba0 et houba1 are booleans that tell us if the player has successfully reacted to the honky tonk situation
+    // houba0 et houba1 are booleans that tell us if the virtual player has successfully reacted to the honky tonk situation
     // the booleans are true if a mistake has been committed and false otherwise
-    const houba0 = hitOrMissHonkyTonk(playersReactingToHonkyTonk[0]);
-    const houba1 = hitOrMissHonkyTonk(playersReactingToHonkyTonk[1]);
+    const houba0 = hitOrMissHonkyTonk(playersReactingToHonkyTonk[0], "Houba Houba");
+    const houba1 = hitOrMissHonkyTonk(playersReactingToHonkyTonk[1], "Houba Houba");
 
     if (houba0 && houba1) {
       // If both players are mistaken, they are both eliminated
@@ -101,9 +100,9 @@ const reactionsToHonkyTonk = function (playersReactingToHonkyTonk) {
   }
 };
 
-export const honkyTonkByVirtualPlayer = function (player, currentPlayers, gameDirection) {
+export const honkyTonkByVirtualPlayer = function () {
   // First we want to understand who are the players who will have to react to the honky tonk shot
-  playersToHoubaHouba = WhoWillHoubaHouba(player, currentPlayers, gameDirection);
+  playersToHoubaHouba = WhoWillHoubaHouba();
 
   // Then we check if the virtual players involved managed to do Houba Houba
   reactionsToHonkyTonk(playersToHoubaHouba);

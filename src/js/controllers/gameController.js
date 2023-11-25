@@ -4,6 +4,7 @@ import playersView from "../views/playersView";
 import { randomInt, defineMax, hasAPlayerCommitedAMistake } from "../helpers";
 import { handleHumanTurnToPlay } from "./buttonsController";
 import { honkyTonkByVirtualPlayer } from "./honkyController";
+import { vadeRetroByVirtualPlayer } from "./vadeRetroController";
 import { letByVirtualPlayer } from "./letController";
 
 if (module.hot) {
@@ -103,11 +104,11 @@ export const virtualPlayerChoice = function (player) {
       return;
     }
     console.log(`${player.name} has chosen to let`);
-    console.log("👀 👀 👀 👀 👀 👀 👀 ");
     letByVirtualPlayer(player);
     return;
-  } else if (randomNumber > 15 && randomNumber <= 18) {
+  } else if (randomNumber > 15 && randomNumber <= 180) {
     console.log(`${player.name} has chosen to Vade Retro`);
+    vadeRetroByVirtualPlayer(player, model.currentPlayers, model.gameDirection);
     return;
   } else {
     console.log(`${player.name} has chosen to ya`);

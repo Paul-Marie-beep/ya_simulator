@@ -32,9 +32,9 @@ export const defineRandomNumberToGenerateMistakeChance = function (shotPlayed, c
       return 195;
     } else if (currentPlayer.skill === "average") {
       return 60;
+    } else if (currentPlayer.skill === "high") {
+      return 25;
     }
-  } else if (currentPlayer.skill === "high") {
-    return 25;
   }
   if (shotPlayed === "reaction to honky tonk" || shotPlayed === "take") {
     if (currentPlayer.skill === "low") {
@@ -60,12 +60,11 @@ export const hasAPlayerCommitedAMistake = function (player = currentPlayer, shot
 };
 
 // This function checks if the player have been successful specifically when doing houba houba when doing houba houba and returns a boolean
-export const hitOrMissHonkyTonk = function (playerReactingToHonkyTonk) {
-  // Case where the player is virtual
-  console.log(`${playerReactingToHonkyTonk.name} va devoir faire "Houba Houba"`);
+export const hitOrMissHonkyTonk = function (playerReactingToShot, shot) {
+  console.log(`${playerReactingToShot.name} va devoir faire "${shot}"`);
 
-  if (hasAPlayerCommitedAMistake(playerReactingToHonkyTonk, "reaction to honky tonk")) {
-    console.log(`${playerReactingToHonkyTonk.name} has made a mistake while doing "Houba Houba"`);
+  if (hasAPlayerCommitedAMistake(playerReactingToShot, "reaction to honky tonk")) {
+    console.log(`${playerReactingToShot.name} has made a mistake while doing "${shot}"`);
     return true;
   } else {
     return false;
