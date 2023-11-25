@@ -66,7 +66,13 @@ const reactionsToHonkyTonk = function (playersReactingToHonkyTonk) {
   //Case when one of the player involved is human
   if (playersReactingToHonkyTonk[0].human || playersReactingToHonkyTonk[1].human) {
     // We check that the virtual player has managed to do Houba Houba.
-    humanResponseToHonkyTonk(hitOrMissHonkyTonk(playersReactingToHonkyTonk[1]));
+    // hitOrMissHonkyTonk will return a boolean telling us if the virtual player has managed to houba houba.
+    humanResponseToHonkyTonk(
+      hitOrMissHonkyTonk(
+        playersReactingToHonkyTonk.find((el) => el.human === false),
+        "Houba Houba"
+      )
+    );
   } else {
     // Case where none of the players who have to say houba houba are human
 
