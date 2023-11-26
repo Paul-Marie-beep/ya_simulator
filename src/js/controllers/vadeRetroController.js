@@ -39,50 +39,36 @@ const reactionsToVadeRetro = function (playersReactingToVadeRetro) {
       hasAnyVirtualPlayerFailedToSatanas = true;
     }
     console.log("Attention, on a un humain dans l'histoire qui doit réagit à Vade Retro");
-    humanResponseToVadeRetro();
+    humanResponseToVadeRetro(hasAnyVirtualPlayerFailedToSatanas);
   } else {
-    // Case where none of the players who have to say houba houba are human
+    // Case where none of the players who have to say sa, ta or nas are human
 
-    // sa, ta and nas are booleans that tell us if the virtual player has successfully reacted to the honky tonk situation
+    // The parameters of the hitOrMissHonkyTonk functions are booleans that tell us if the virtual player has successfully reacted to the honky tonk situation
     // the booleans are true if a mistake has been committed and false otherwise
-    const sa = hitOrMissHonkyTonk(playersReactingToVadeRetro[0], "Sa");
-    const ta = hitOrMissHonkyTonk(playersReactingToVadeRetro[1], "Ta");
-    const nas = hitOrMissHonkyTonk(playersReactingToVadeRetro[2], "Nas");
-
-    // If the three players involved have committed a mistake, they are all eliminated
-    if (sa && ta && nas) {
+    if (!hitOrMissHonkyTonk(playersReactingToVadeRetro[0], "Sa")) {
+      if (!hitOrMissHonkyTonk(playersReactingToVadeRetro[1], "Ta")) {
+        if (!hitOrMissHonkyTonk(playersReactingToVadeRetro[2], "Nas")) {
+          // If the three players said what they had to say successfully, we shall then relaunch the game
+          console.log(
+            `${playersReactingToVadeRetro[0].name} a réussi a faire "Sa", ${playersReactingToVadeRetro[1].name} a réussi a faire "Ta" et ${playersReactingToVadeRetro[2].name} a réussi a faire "Nas"`
+          );
+          relaunchGameAfterVadeRetro(playersReactingToVadeRetro[1]);
+        } else {
+          // If the player who has to say Nas cannot do it, he must leave the game
+          console.log(`${playersReactingToVadeRetro[2].name} n'a pas réussi à dire "Nas". `);
+          mistakesWereMade(playersReactingToVadeRetro[2]);
+        }
+      } else {
+        // If the player who has to say Ta cannot do it, he must leave the game
+        console.log(`${playersReactingToVadeRetro[1].name} n'a pas réussi à dire "Ta". `);
+        mistakesWereMade(playersReactingToVadeRetro[1]);
+      }
+    } else {
+      // If the player who has to say sa cannot do it, he must leave the game
+      console.log(`${playersReactingToVadeRetro[0].name} n'a pas réussi à dire "Sa".`);
       mistakesWereMade(playersReactingToVadeRetro[0]);
-      mistakesWereMade(playersReactingToVadeRetro[1]);
-      mistakesWereMade(playersReactingToVadeRetro[2]);
-    } else if (!sa && !ta && !nas) {
-      // case where all three players are succesful, we must relaunch the game by calling another player
-      console.log(
-        `${playersReactingToVadeRetro[0].name} a réussi a faire "Sa", ${playersReactingToVadeRetro[1].name} a réussi a faire "Ta" et ${playersReactingToVadeRetro[2].name} a réussi a faire "Nas"`
-      );
-      relaunchGameAfterVadeRetro(playersReactingToVadeRetro[1]);
-    } else if (sa && !ta && !nas) {
-      // The first player has not been succesful but the other two have
-      console.log(
-        `${playersReactingToVadeRetro[0].name} n'a pas réussi a faire "Sa" mais ${playersReactingToVadeRetro[1].name} a réussi a faire "Ta" et ${playersReactingToVadeRetro[2].name} a réussi a faire "Nas"`
-      );
-      // Since a mistake has been committed, the elimination of the first player is triggered
-      mistakesWereMade(playersReactingToVadeRetro[0]);
-    } else if (!sa && ta && !nas) {
-      // The second player has not been succesful but the other two have
-      console.log(
-        `${playersReactingToVadeRetro[1].name} n'a pas réussi a faire "Ta" mais ${playersReactingToVadeRetro[0].name} a réussi a faire "Sa" et ${playersReactingToVadeRetro[2].name} a réussi a faire "Nas"`
-      );
-      // Since a mistake has been committed, the elimination of the first player is triggered
-      mistakesWereMade(playersReactingToVadeRetro[1]);
-    } else if (!sa && !ta && nas) {
-      // The third player has not been succesful but the other two have
-      console.log(
-        `${playersReactingToVadeRetro[2].name} n'a pas réussi a faire "Nas" mais ${playersReactingToVadeRetro[0].name} a réussi a faire "Sa" et ${playersReactingToVadeRetro[1].name} a réussi a faire "Ta"`
-      );
-      // Since a mistake has been committed, the elimination of the first player is triggered
-      mistakesWereMade(playersReactingToVadeRetro[2]);
     }
-  }
+  } ///////////////////////////////////////////////////////////:///////////////////////////////////::
 };
 
 export const vadeRetroByVirtualPlayer = function () {
