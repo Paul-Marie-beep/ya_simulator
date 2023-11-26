@@ -10,6 +10,11 @@ class buttonsView {
     this._commandPanel.innerHTML = "<p>Appuyez sur la touche B pour faire 'Houba Houba'</p>";
   }
 
+  showVadeRetroCommands() {
+    this._commandPanel.innerHTML =
+      "<p>Appuyez sur la touche S pour dire Sa</br>Appuyez sur la touche T pour dire Ta</br>Appuyez sur la touche N pour dire Nas</p>";
+  }
+
   showCallNewPlayerCommands() {
     this._commandPanel.innerHTML =
       "<p>Cliquez sur le nom d'un joueur pour lui indiquer que c'est à lui de continuer à jouer";
@@ -28,6 +33,17 @@ class buttonsView {
     //We want to see if the human player has pressed the right key
     const insideListener = function (event) {
       console.log(event.key);
+      handler(event.key);
+      document.removeEventListener("keydown", insideListener);
+    };
+    document.addEventListener("keydown", insideListener);
+  }
+
+  handlePlayerResponseToVadeRetro(handler) {
+    //We want to see if the human player has pressed the right key
+    const insideListener = function (event) {
+      console.log(event.key);
+      console.log("le joueur a pressé la touche :", event.key);
       handler(event.key);
       document.removeEventListener("keydown", insideListener);
     };

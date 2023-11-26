@@ -11,9 +11,11 @@ import {
   relaunchGameAfterHoubaHouba,
   honkyTonkByVirtualPlayer,
 } from "./honkyController.js";
+import { playersToSatanas } from "./vadeRetroController.js";
 import { letByVirtualPlayer } from "./letController.js";
 
 let virtualHouba;
+let virtualSatanas;
 export let hasTheHumanPlayerTriedToTake;
 
 // Function to check that the player has made a ya in the right direction
@@ -108,15 +110,54 @@ const checkHumanResponsesToHonkyTonk = function (keyPressed) {
   }
 };
 
+const hasTheHumanPlayerSuccesfullyDoneSatanas = function (keyPressed) {
+  const index = playersToSatanas.indexOf((player) => player.human === true);
+  if (
+    (index === 0 && keyPressed === "s") ||
+    (index === 1 && keyPressed === "t") ||
+    (index === 2 && keyPressed === "n")
+  ) {
+    return true;
+  }
+};
+
+const checkHumanResponsesToVadeRetro = function (keyPressed) {
+  // We start by erasing the commands shown to the human player
+  buttonsView.clearCommands();
+
+  // Let us define if the human player has reacted succesfully
+  if (hasTheHumanPlayerSuccesfullyDoneSatanas(keyPressed)) {
+    console.log("Le joueur a bien réagi en faisant Sa, Ta ou Nas");
+    // Case where all three player said the right thing
+    if (!virtualSatanas) {
+      console.log(
+        `${playersToSatanas[0].name}, ${playersToSatanas[1].name} et ${playersToSatanas[2].name} ont bien dit respectivement Sa, Ta et Nas`
+      );
+
+      //We shall then relaunch the game by making the second player involved designate a new player
+      if (playersToSatanas[1].human) {
+      } else {
+      }
+    }
+  }
+
+  // first case the player reacts succesfully;
+};
+
 // This function allow the player to do Houba Houba via the graphic interface
 export const humanResponseToHonkyTonk = function (houba) {
+  // virtualHouba stores the information wether the virtual player involved
   virtualHouba = houba;
   buttonsView.showHonkyTonkCommands();
   buttonsView.handlePlayerResponseToHonkyTonk(checkHumanResponsesToHonkyTonk);
 };
 
 // This function allow the player to do sa, ta ou nas via the graphic interface
-export const humanResponseToVadeRetro = function () {};
+export const humanResponseToVadeRetro = function (satanas) {
+  virtualSatanas = satanas;
+  buttonsView.showVadeRetroCommands();
+  buttonsView.handlePlayerResponseToVadeRetro(checkHumanResponsesToVadeRetro);
+};
 
 export const checkHumanDesignationOfANewPlayer = function () {
   buttonsView.showCallNewPlayerCommands();

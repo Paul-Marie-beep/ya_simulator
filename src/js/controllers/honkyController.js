@@ -69,7 +69,7 @@ const reactionsToHonkyTonk = function (playersReactingToHonkyTonk) {
     // hitOrMissHonkyTonk will return a boolean telling us if the virtual player has managed to houba houba.
     humanResponseToHonkyTonk(
       hitOrMissHonkyTonk(
-        playersReactingToHonkyTonk.find((el) => el.human === false),
+        playersReactingToHonkyTonk.find((player) => player.human === false),
         "Houba Houba"
       )
     );
