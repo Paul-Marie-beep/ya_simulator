@@ -32,19 +32,19 @@ class playersView {
     this._playerGrid.innerHTML = html;
   }
 
-  handleHumanChoiceOfANewPlayer(handler) {
+  handleHumanChoiceOfANewPlayer(handler, shot) {
     //We want the human player to click on the new player with which he want to continue the game
     // We then want this view to return the name of the player who should carry on playing to the controller
 
     const insideListener = function (event) {
       event.preventDefault();
       if (event.target.classList.contains("player")) {
-        handler(event.target.dataset.name);
+        handler(event.target.dataset.name, shot);
         document.querySelector(".wrapper").removeEventListener("click", insideListener);
       }
       //If the click is not on the name but on the ball, we still want the name of player to be sent back to the controller
       if (event.target.classList.contains("child")) {
-        handler(event.target.parentNode.dataset.name);
+        handler(event.target.parentNode.dataset.name, shot);
         document.querySelector(".wrapper").removeEventListener("click", insideListener);
       }
     };

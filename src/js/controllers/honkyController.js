@@ -14,25 +14,36 @@ const WhoWillHoubaHouba = function () {
   return lookForPlayersReactingToHonkyTonk();
 };
 
+const defineNoise = function (shot) {
+  if (shot === "honky") {
+    return "Dring";
+  } else if (shot === "vade") {
+    return "Je brûle.";
+  }
+};
+
 // This function will check if the dring has successfully been uttered by the player.
-export const dringManagement = function (player, shot = "dring") {
-  // The player dot should be highlited
+export const dringManagement = function (player, shot) {
+  // We must define what the player will have to say depending on the shot currently being played
+  const noise = defineNoise(shot);
+
+  // The player dot should be highlighted
   playersView.highlightActivePlayer(player);
   // We differentiate between the case where a human player should react and the case where a virtual player should react
   if (player.human) {
-    console.log(`Vous devez dire "${shot}"`);
-    humanReactionToBeingCalledAfterHoubaHouba();
+    console.log(`Vous devez dire "${noise}"`);
+    humanReactionToBeingCalledAfterHoubaHouba(noise);
   } else {
     // In the case of a virtual player : 2 cases :
     // 1°) The player reacts successfully
     // 2°) The player does not react successfully
     if (hasAPlayerCommitedAMistake(player, "reaction to honky tonk")) {
-      console.log(`${player.name} a réussi à dire ${shot}`);
+      console.log(`${player.name} a réussi à dire ${noise}`);
       setTimeout(() => {
         humanOrMachine();
       }, 3000);
     } else {
-      console.log(`${player.name} n'a pas réussi à dire ${shot}`);
+      console.log(`${player.name} n'a pas réussi à dire ${noise}`);
       console.log(`${player.name} est éliminé`);
       mistakesWereMade(player);
     }
@@ -47,18 +58,18 @@ export const relaunchGameAfterHoubaHouba = function (playerToCallANewPlayer) {
   const newPlayer = chooseRandomPlayer();
   console.log(`${playerToCallANewPlayer.name} a appelé ${newPlayer.name} après avoir dit Houba Houba`);
   // We then test if the new player has successfully reacted by saying "Dring"
-  dringManagement(newPlayer);
+  dringManagement(newPlayer, "honky");
 };
 
 // The function takes over once the human player has clicked on the player that he wishes will continue to play
-export const callPlayer = function (playerName) {
+export const callPlayer = function (playerName, shot) {
   // We erase the order that was shown to players
   buttonsView.clearCommands();
   // in the model, we set the new current  players
   const newPlayer = updateCurrentPlayer(playerName);
   console.log(newPlayer.name, "est le joueur qui a été choisi pour continuer le jeu");
-  // We shall then check if the chosen player managed to say dring
-  dringManagement(newPlayer);
+  // We shall then check if the chosen player managed to say dring (or 'je brûle' in case of vade retro)
+  dringManagement(newPlayer, shot);
 };
 
 // This function handles the process of the various reactions of players (virtual or human) to a honky tonk shot.

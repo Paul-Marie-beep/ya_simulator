@@ -11,7 +11,13 @@ import {
   relaunchGameAfterHoubaHouba,
   honkyTonkByVirtualPlayer,
 } from "./honkyController.js";
-import { playersToSatanas, relaunchGameAfterVadeRetro, checkForSatanas, sayings } from "./vadeRetroController.js";
+import {
+  playersToSatanas,
+  relaunchGameAfterVadeRetro,
+  checkForSatanas,
+  sayings,
+  vadeRetroByVirtualPlayer,
+} from "./vadeRetroController.js";
 import { letByVirtualPlayer } from "./letController.js";
 
 let virtualHouba;
@@ -53,7 +59,7 @@ const checkHumanResponsesToShot = function (keyPressed) {
   } else if (keyPressed === "o") {
     console.log("le joueur a fait un honky tonk");
     setTimeout(() => {
-      honkyTonkByVirtualPlayer(model.currentPlayer, model.currentPlayers, model.gameDirection);
+      honkyTonkByVirtualPlayer();
     }, 2000);
   } else if (keyPressed === "a") {
     console.log("le joueur a fait un ahi");
@@ -64,6 +70,11 @@ const checkHumanResponsesToShot = function (keyPressed) {
   } else if (keyPressed === "l") {
     console.log("Le joueur a dit 'Je laisse'");
     letByVirtualPlayer(model.currentPlayer);
+  } else if (keyPressed === "v") {
+    console.log("Le joueur dit 'Vade Retro'");
+    setTimeout(() => {
+      vadeRetroByVirtualPlayer();
+    }, 2000);
   } else {
     console.log(`Le joueur a commis une erreur en pressant ${keyPressed}`);
     console.log("C'est la lose !!! 😵‍💫");
@@ -91,7 +102,7 @@ const checkHumanResponsesToHonkyTonk = function (keyPressed) {
       );
       // If both players are succesful at houba houba then the second player shall choose a new player to continue the game
       if (playersToHoubaHouba[1].human) {
-        checkHumanDesignationOfANewPlayer();
+        checkHumanDesignationOfANewPlayer("honky");
       } else {
         relaunchGameAfterHoubaHouba(playersToHoubaHouba[1]);
       }
@@ -157,24 +168,24 @@ export const humanResponseToVadeRetro = function (saying) {
   buttonsView.handlePlayerResponseToVadeRetro(checkHumanResponsesToVadeRetro);
 };
 
-export const checkHumanDesignationOfANewPlayer = function () {
+export const checkHumanDesignationOfANewPlayer = function (shot) {
   buttonsView.showCallNewPlayerCommands();
-  playersView.handleHumanChoiceOfANewPlayer(callPlayer);
+  playersView.handleHumanChoiceOfANewPlayer(callPlayer, shot);
 };
 
-export const checkReactionToBeingCalled = function (boolean) {
+export const checkReactionToBeingCalled = function (boolean, noise) {
   buttonsView.clearCommands();
   if (boolean) {
     handleHumanTurnToPlay();
   } else {
-    console.log("Le joueur a mal dit 'Pouet'");
+    console.log(`Le joueur a mal dit ${noise}`);
     console.log("C'est la lose !!! 😵‍💫");
   }
 };
 
-export const humanReactionToBeingCalledAfterHoubaHouba = function () {
-  buttonsView.ShowNameCalledCommands();
-  buttonsView.handlePlayerResponseToCall(checkReactionToBeingCalled);
+export const humanReactionToBeingCalledAfterHoubaHouba = function (noise) {
+  buttonsView.ShowNameCalledCommands(noise);
+  buttonsView.handlePlayerResponseToCall(checkReactionToBeingCalled, noise);
 };
 
 export const checkHumanReactionToLet = function (key) {

@@ -19,8 +19,8 @@ class buttonsView {
       "<p>Cliquez sur le nom d'un joueur pour lui indiquer que c'est à lui de continuer à jouer";
   }
 
-  ShowNameCalledCommands() {
-    this._commandPanel.innerHTML = "<p>Appuyez sur D pour dire 'Dring'</p>";
+  ShowNameCalledCommands(noise) {
+    this._commandPanel.innerHTML = `<p>Appuyez sur D pour dire ${noise}</p>`;
   }
 
   showLetCommands() {
@@ -66,15 +66,15 @@ class buttonsView {
   }
 
   // This function deals with the reaction of the human player when his name is called after houba houba
-  handlePlayerResponseToCall(handler) {
+  handlePlayerResponseToCall(handler, noise) {
     const insideListener = function (event) {
       if (event.key === "d") {
         console.log("Le joueur a pressé la bonne touche");
-        handler(true);
+        handler(true, noise);
         document.removeEventListener("keydown", insideListener);
       } else {
         console.log("Le joueur n'a pas pressé la bonne touche");
-        handler(false);
+        handler(false, noise);
         document.removeEventListener("keydown", insideListener);
       }
     };

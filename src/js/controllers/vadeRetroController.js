@@ -4,7 +4,7 @@ import { lookForPlayersReactingToVadeRetro, chooseRandomPlayer } from "../model"
 import { hitOrMissHonkyTonk } from "../helpers";
 import { dringManagement } from "./honkyController";
 import { mistakesWereMade } from "./gameController";
-import { humanResponseToVadeRetro } from "./buttonsController";
+import { humanResponseToVadeRetro, checkHumanDesignationOfANewPlayer } from "./buttonsController";
 
 export let playersToSatanas;
 export const sayings = ["Sa", "Ta", "Nas"];
@@ -21,7 +21,7 @@ export const relaunchGameAfterVadeRetro = function (playerToCallANewPlayer) {
   console.log(`${playerToCallANewPlayer.name} a appelé ${newPlayer.name} après avoir dit "Ta"`);
 
   // We then test if the new player has successfully reacted by saying "Dring"
-  dringManagement(newPlayer, "Je brûle");
+  dringManagement(newPlayer, "vade");
 };
 
 export const checkForSatanas = function (player = playersToSatanas[0], saying = sayings[0], i = 0) {
@@ -39,7 +39,13 @@ export const checkForSatanas = function (player = playersToSatanas[0], saying = 
       console.log(`${player.name} a réussi à faire "${saying}"`);
       // No need to carry on testing the reactions if 3 people have reacted successfully. We shall then move on
       if (i >= 2) {
-        relaunchGameAfterVadeRetro(playersToSatanas[1]);
+        // Two cases : The player who said ta is human or not
+        if (playersToSatanas[1].human) {
+          // We are now going to take advantage of the fact that we already coded the part where we designate a new player for the konky tonk shot and use it instead od coding something specific
+          checkHumanDesignationOfANewPlayer("vade");
+        } else {
+          relaunchGameAfterVadeRetro(playersToSatanas[1]);
+        }
       } else {
         checkForSatanas(playersToSatanas[i + 1], sayings[i + 1], i + 1);
       }
