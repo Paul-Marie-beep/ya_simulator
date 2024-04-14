@@ -152,7 +152,7 @@ export const lookForPlayersReactingToVadeRetro = function () {
       return [
         currentPlayers[currentPlayers.length - 1],
         currentPlayers[currentPlayers.length - 2],
-        currentPlayers[indexOfCurrentPlayer - 3],
+        currentPlayers[currentPlayers.length - 3],
       ];
   } else {
     if (indexOfCurrentPlayer <= currentPlayers.length - 4)
