@@ -15,7 +15,6 @@ import { playersToSatanas, relaunchGameAfterVadeRetro, checkForSatanas, sayings 
 import { letByVirtualPlayer } from "./letController.js";
 
 let virtualHouba;
-let index;
 export let hasTheHumanPlayerTriedToTake;
 
 // Function to check that the player has made a ya in the right direction
@@ -110,14 +109,7 @@ const checkHumanResponsesToHonkyTonk = function (keyPressed) {
   }
 };
 
-const defineIndex = function () {
-  index = playersToSatanas.findIndex((player) => player.human === true);
-};
-
-const hasTheHumanPlayerSuccesfullyDoneSatanas = function (keyPressed) {
-  // We will reuse the index elsewhere, hence the use of a separate function to define it.
-  defineIndex();
-
+const hasTheHumanPlayerSuccesfullyDoneSatanas = function (keyPressed, index) {
   if (
     (index === 0 && keyPressed === "s") ||
     (index === 1 && keyPressed === "t") ||
@@ -131,13 +123,16 @@ const checkHumanResponsesToVadeRetro = function (keyPressed) {
   // We start by erasing the commands shown to the human player
   buttonsView.clearCommands();
 
+  // We need to know the position of the humain player in the array of the players who are going to react to Vade Retro
+  const index = playersToSatanas.findIndex((player) => player.human === true);
+
   // Let us define if the human player has reacted succesfully
   // first case the player reacts succesfully;
-  if (hasTheHumanPlayerSuccesfullyDoneSatanas(keyPressed)) {
+  if (hasTheHumanPlayerSuccesfullyDoneSatanas(keyPressed, index)) {
     console.log("Le joueur a bien réagi en faisant Sa, Ta ou Nas");
     if (index === 2) {
       // If the human player is to say nas, we then shall ask the player who said ta to choose a player to call
-      relaunchGameAfterVadeRetro(playersToSatanas(1));
+      relaunchGameAfterVadeRetro(playersToSatanas[1]);
     } else {
       checkForSatanas(playersToSatanas[index + 1], sayings[index + 1], index + 1);
     }

@@ -7,8 +7,7 @@ import { mistakesWereMade } from "./gameController";
 import { humanResponseToVadeRetro } from "./buttonsController";
 
 export let playersToSatanas;
-let humanIndex;
-export const sayings = ["sa", "ta", "nas"];
+export const sayings = ["Sa", "Ta", "Nas"];
 
 const whoWillSatanas = function () {
   return lookForPlayersReactingToVadeRetro();
@@ -28,7 +27,6 @@ export const relaunchGameAfterVadeRetro = function (playerToCallANewPlayer) {
 export const checkForSatanas = function (player = playersToSatanas[0], saying = sayings[0], i = 0) {
   // We shall check at each time if the player involved is human or not
   if (player.human) {
-    // humanIndex = i;
     humanResponseToVadeRetro(saying);
   } else {
     // The parameters of the hitOrMissHonkyTonk functions are booleans that tell us if the virtual player has successfully reacted to the honky tonk situation
@@ -42,7 +40,7 @@ export const checkForSatanas = function (player = playersToSatanas[0], saying = 
       if (i >= 2) {
         relaunchGameAfterVadeRetro(playersToSatanas[1]);
       } else {
-        checkForSatanas(playersToSatanas[i + 1], saying[i + 1], i + 1);
+        checkForSatanas(playersToSatanas[i + 1], sayings[i + 1], i + 1);
       }
     }
   }
