@@ -10,9 +10,8 @@ class buttonsView {
     this._commandPanel.innerHTML = "<p>Appuyez sur la touche B pour faire 'Houba Houba'</p>";
   }
 
-  showVadeRetroCommands() {
-    this._commandPanel.innerHTML =
-      "<p>Appuyez sur la touche S pour dire Sa</br>Appuyez sur la touche T pour dire Ta</br>Appuyez sur la touche N pour dire Nas</p>";
+  showVadeRetroCommands(saying) {
+    this._commandPanel.innerHTML = `<p>Vous devez dire ${saying}</p></br><p>Appuyez sur la touche S pour dire Sa</br>Appuyez sur la touche T pour dire Ta</br>Appuyez sur la touche N pour dire Nas</p>`;
   }
 
   showCallNewPlayerCommands() {

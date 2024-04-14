@@ -11,11 +11,11 @@ import {
   relaunchGameAfterHoubaHouba,
   honkyTonkByVirtualPlayer,
 } from "./honkyController.js";
-import { playersToSatanas } from "./vadeRetroController.js";
+import { playersToSatanas, relaunchGameAfterVadeRetro, checkForSatanas, sayings } from "./vadeRetroController.js";
 import { letByVirtualPlayer } from "./letController.js";
 
 let virtualHouba;
-let virtualSatanas;
+let index;
 export let hasTheHumanPlayerTriedToTake;
 
 // Function to check that the player has made a ya in the right direction
@@ -110,8 +110,14 @@ const checkHumanResponsesToHonkyTonk = function (keyPressed) {
   }
 };
 
+const defineIndex = function () {
+  index = playersToSatanas.findIndex((player) => player.human === true);
+};
+
 const hasTheHumanPlayerSuccesfullyDoneSatanas = function (keyPressed) {
-  const index = playersToSatanas.indexOf((player) => player.human === true);
+  // We will reuse the index elsewhere, hence the use of a separate function to define it.
+  defineIndex();
+
   if (
     (index === 0 && keyPressed === "s") ||
     (index === 1 && keyPressed === "t") ||
@@ -126,22 +132,20 @@ const checkHumanResponsesToVadeRetro = function (keyPressed) {
   buttonsView.clearCommands();
 
   // Let us define if the human player has reacted succesfully
+  // first case the player reacts succesfully;
   if (hasTheHumanPlayerSuccesfullyDoneSatanas(keyPressed)) {
     console.log("Le joueur a bien réagi en faisant Sa, Ta ou Nas");
-    // Case where all three player said the right thing
-    if (!virtualSatanas) {
-      console.log(
-        `${playersToSatanas[0].name}, ${playersToSatanas[1].name} et ${playersToSatanas[2].name} ont bien dit respectivement Sa, Ta et Nas`
-      );
-
-      //We shall then relaunch the game by making the second player involved designate a new player
-      if (playersToSatanas[1].human) {
-      } else {
-      }
+    if (index === 2) {
+      // If the human player is to say nas, we then shall ask the player who said ta to choose a player to call
+      relaunchGameAfterVadeRetro(playersToSatanas(1));
+    } else {
+      checkForSatanas(playersToSatanas[index + 1], sayings[index + 1], index + 1);
     }
+  } else {
+    // Case where the player reacted unsuccessfully
+    console.log("Le joueur a mal dit 'Sa', 'Ta' ou 'Nas'");
+    console.log("C'est la lose !!! 😵‍💫");
   }
-
-  // first case the player reacts succesfully;
 };
 
 // This function allow the player to do Houba Houba via the graphic interface
@@ -153,9 +157,8 @@ export const humanResponseToHonkyTonk = function (houba) {
 };
 
 // This function allow the player to do sa, ta ou nas via the graphic interface
-export const humanResponseToVadeRetro = function (satanas) {
-  virtualSatanas = satanas;
-  buttonsView.showVadeRetroCommands();
+export const humanResponseToVadeRetro = function (saying) {
+  buttonsView.showVadeRetroCommands(saying);
   buttonsView.handlePlayerResponseToVadeRetro(checkHumanResponsesToVadeRetro);
 };
 
