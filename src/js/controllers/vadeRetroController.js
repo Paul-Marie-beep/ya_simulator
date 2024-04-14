@@ -32,10 +32,11 @@ export const checkForSatanas = function (player = playersToSatanas[0], saying = 
     // The parameters of the hitOrMissHonkyTonk functions are booleans that tell us if the virtual player has successfully reacted to the honky tonk situation
     // the booleans are true if a mistake has been committed and false otherwise
     if (hitOrMissHonkyTonk(player, saying)) {
-      console.log(`${playersToSatanas[i].name} n'a pas réussi à faire "${sayings[i]}"`);
+      console.log(`${player.name} n'a pas réussi à faire "${saying}"`);
       mistakesWereMade(player);
     } else {
-      console.log(`${playersToSatanas[i].name} a réussi à faire "${sayings[i]}"`);
+      // Case where the player reacted successfully
+      console.log(`${player.name} a réussi à faire "${saying}"`);
       // No need to carry on testing the reactions if 3 people have reacted successfully. We shall then move on
       if (i >= 2) {
         relaunchGameAfterVadeRetro(playersToSatanas[1]);

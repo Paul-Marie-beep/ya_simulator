@@ -94,7 +94,7 @@ export const virtualPlayerChoice = function (player) {
       mistakesWereMade();
       return;
     }
-    console.log("le joueur a bien fait ahi");
+    console.log(`${player.name} a bien fait ahi`);
     model.changePlayer(player, 2);
   } else if (randomNumber > 10 && randomNumber <= 15) {
     // Guard to prevent the game from continuing if the player who's trying to let commits a mistake while doing so
