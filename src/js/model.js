@@ -1,6 +1,6 @@
 "use strict";
 
-import { randomInt } from "./helpers";
+import { honkyTonkHelper, randomInt, vadeRetroHelper } from "./helpers";
 
 // const players = [
 //   { numero: 1, name: "Camille", human: true, zapped: false  },
@@ -43,7 +43,7 @@ export const chooseFirstPlayer = function () {
 };
 
 export const chooseRandomPlayer = function (player = "") {
-  // For the zap shot, we need the possibility for a random player to select a player that is not himself
+  // For the zap shot, we need the impossibility for a  player to randomly select himself
   const transitArray = currentPlayers.filter((pl) => pl !== player);
 
   // Case where a player has to be selected after, let's say, Honky Tonk or Vade Retro. Therefore, the human player is also part of the equation this time
@@ -110,68 +110,14 @@ export const changeDirectionAfterHoldDown = function () {
 };
 
 export const lookForPlayersReactingToHonkyTonk = function () {
-  const indexOfCurrentPlayer = currentPlayers.indexOf(currentPlayer);
-
   // We want to return an array of players who will have to houba houba
-  if (gameDirection === "left") {
-    if (indexOfCurrentPlayer >= 2)
-      return [currentPlayers[indexOfCurrentPlayer - 1], currentPlayers[indexOfCurrentPlayer - 2]];
-    if (indexOfCurrentPlayer === 1)
-      return [currentPlayers[indexOfCurrentPlayer - 1], currentPlayers[currentPlayers.length - 1]];
-    if (indexOfCurrentPlayer === 0)
-      return [currentPlayers[currentPlayers.length - 1], currentPlayers[currentPlayers.length - 2]];
-  } else {
-    if (indexOfCurrentPlayer <= currentPlayers.length - 3)
-      return [currentPlayers[indexOfCurrentPlayer + 1], currentPlayers[indexOfCurrentPlayer + 2]];
-    if (indexOfCurrentPlayer === currentPlayers.length - 2)
-      return [currentPlayers[indexOfCurrentPlayer + 1], currentPlayers[0]];
-    if (indexOfCurrentPlayer === currentPlayers.length - 1) return [currentPlayers[0], currentPlayers[1]];
-  }
+  return honkyTonkHelper(gameDirection, currentPlayers, currentPlayer);
 };
 
 export const lookForPlayersReactingToVadeRetro = function () {
-  const indexOfCurrentPlayer = currentPlayers.indexOf(currentPlayer);
-
   // We want to return an array of players who will have to sa ta nas
-  if (gameDirection === "left") {
-    if (indexOfCurrentPlayer >= 3)
-      return [
-        currentPlayers[indexOfCurrentPlayer - 1],
-        currentPlayers[indexOfCurrentPlayer - 2],
-        currentPlayers[indexOfCurrentPlayer - 3],
-      ];
-    if (indexOfCurrentPlayer === 2)
-      return [
-        currentPlayers[indexOfCurrentPlayer - 1],
-        currentPlayers[indexOfCurrentPlayer - 2],
-        currentPlayers[currentPlayers.length - 1],
-      ];
-    if (indexOfCurrentPlayer === 1)
-      return [
-        currentPlayers[indexOfCurrentPlayer - 1],
-        currentPlayers[currentPlayers.length - 1],
-        currentPlayers[currentPlayers.length - 2],
-      ];
-    if (indexOfCurrentPlayer === 0)
-      return [
-        currentPlayers[currentPlayers.length - 1],
-        currentPlayers[currentPlayers.length - 2],
-        currentPlayers[currentPlayers.length - 3],
-      ];
-  } else {
-    if (indexOfCurrentPlayer <= currentPlayers.length - 4)
-      return [
-        currentPlayers[indexOfCurrentPlayer + 1],
-        currentPlayers[indexOfCurrentPlayer + 2],
-        currentPlayers[indexOfCurrentPlayer + 3],
-      ];
-    if (indexOfCurrentPlayer === currentPlayers.length - 3)
-      return [currentPlayers[indexOfCurrentPlayer + 1], currentPlayers[indexOfCurrentPlayer + 2], currentPlayers[0]];
-    if (indexOfCurrentPlayer === currentPlayers.length - 2)
-      return [currentPlayers[indexOfCurrentPlayer + 1], currentPlayers[0], currentPlayers[1]];
-    if (indexOfCurrentPlayer === currentPlayers.length - 1)
-      return [currentPlayers[0], currentPlayers[1], currentPlayers[2]];
-  }
+
+  return vadeRetroHelper(gameDirection, currentPlayers, currentPlayer);
 };
 
 export const updateListOfZappedPlayers = function (obj) {

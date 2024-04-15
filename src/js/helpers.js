@@ -1,3 +1,5 @@
+import { currentPlayer, gameDirection } from "./model";
+
 export const randomInt = function (min, max) {
   return Math.floor(Math.random() * (max - min) + 1) + min;
 };
@@ -68,5 +70,67 @@ export const hitOrMissHonkyTonk = function (playerReactingToShot, shot) {
     return true;
   } else {
     return false;
+  }
+};
+
+export const honkyTonkHelper = function (gameDirection, currentPlayers, currentPlayer) {
+  const indexOfCurrentPlayer = currentPlayers.indexOf(currentPlayer);
+  if (gameDirection === "left") {
+    if (indexOfCurrentPlayer >= 2)
+      return [currentPlayers[indexOfCurrentPlayer - 1], currentPlayers[indexOfCurrentPlayer - 2]];
+    if (indexOfCurrentPlayer === 1)
+      return [currentPlayers[indexOfCurrentPlayer - 1], currentPlayers[currentPlayers.length - 1]];
+    if (indexOfCurrentPlayer === 0)
+      return [currentPlayers[currentPlayers.length - 1], currentPlayers[currentPlayers.length - 2]];
+  } else {
+    if (indexOfCurrentPlayer <= currentPlayers.length - 3)
+      return [currentPlayers[indexOfCurrentPlayer + 1], currentPlayers[indexOfCurrentPlayer + 2]];
+    if (indexOfCurrentPlayer === currentPlayers.length - 2)
+      return [currentPlayers[indexOfCurrentPlayer + 1], currentPlayers[0]];
+    if (indexOfCurrentPlayer === currentPlayers.length - 1) return [currentPlayers[0], currentPlayers[1]];
+  }
+};
+
+export const vadeRetroHelper = function (gameDirection, currentPlayers, currentPlayer) {
+  const indexOfCurrentPlayer = currentPlayers.indexOf(currentPlayer);
+
+  if (gameDirection === "left") {
+    if (indexOfCurrentPlayer >= 3)
+      return [
+        currentPlayers[indexOfCurrentPlayer - 1],
+        currentPlayers[indexOfCurrentPlayer - 2],
+        currentPlayers[indexOfCurrentPlayer - 3],
+      ];
+    if (indexOfCurrentPlayer === 2)
+      return [
+        currentPlayers[indexOfCurrentPlayer - 1],
+        currentPlayers[indexOfCurrentPlayer - 2],
+        currentPlayers[currentPlayers.length - 1],
+      ];
+    if (indexOfCurrentPlayer === 1)
+      return [
+        currentPlayers[indexOfCurrentPlayer - 1],
+        currentPlayers[currentPlayers.length - 1],
+        currentPlayers[currentPlayers.length - 2],
+      ];
+    if (indexOfCurrentPlayer === 0)
+      return [
+        currentPlayers[currentPlayers.length - 1],
+        currentPlayers[currentPlayers.length - 2],
+        currentPlayers[currentPlayers.length - 3],
+      ];
+  } else {
+    if (indexOfCurrentPlayer <= currentPlayers.length - 4)
+      return [
+        currentPlayers[indexOfCurrentPlayer + 1],
+        currentPlayers[indexOfCurrentPlayer + 2],
+        currentPlayers[indexOfCurrentPlayer + 3],
+      ];
+    if (indexOfCurrentPlayer === currentPlayers.length - 3)
+      return [currentPlayers[indexOfCurrentPlayer + 1], currentPlayers[indexOfCurrentPlayer + 2], currentPlayers[0]];
+    if (indexOfCurrentPlayer === currentPlayers.length - 2)
+      return [currentPlayers[indexOfCurrentPlayer + 1], currentPlayers[0], currentPlayers[1]];
+    if (indexOfCurrentPlayer === currentPlayers.length - 1)
+      return [currentPlayers[0], currentPlayers[1], currentPlayers[2]];
   }
 };
