@@ -3,25 +3,26 @@
 import { randomInt } from "./helpers";
 
 // const players = [
-//   { numero: 1, name: "Camille", human: true },
-//   { numero: 2, name: "Patrick", riskProfile: "bold", skill: "low", human: false },
-//   { numero: 3, name: "Jean-Claude", riskProfile: "cautious", skill: "low", human: false },
-//   { numero: 4, name: "Claudine", riskProfile: "bold", skill: "average", human: false },
-//   { numero: 5, name: "Martine", riskProfile: "average", skill: "average", human: false },
-//   { numero: 6, name: "Michel", riskProfile: "average", skill: "high", human: false },
+//   { numero: 1, name: "Camille", human: true, zapped: false  },
+//   { numero: 2, name: "Patrick", riskProfile: "bold", skill: "low", human: false, zapped: false  },
+//   { numero: 3, name: "Jean-Claude", riskProfile: "cautious", skill: "low", human: false, zapped: false  },
+//   { numero: 4, name: "Claudine", riskProfile: "bold", skill: "average", human: false, zapped: false  },
+//   { numero: 5, name: "Martine", riskProfile: "average", skill: "average", human: false, zapped: false  },
+//   { numero: 6, name: "Michel", riskProfile: "average", skill: "high", human: false, zapped: false  },
 // ];
 const players = [
-  { numero: 1, name: "Camille", human: true },
-  { numero: 2, name: "Patrick", riskProfile: "bold", skill: "high", human: false },
-  { numero: 3, name: "Jean-Claude", riskProfile: "cautious", skill: "high", human: false },
-  { numero: 4, name: "Claudine", riskProfile: "bold", skill: "high", human: false },
-  { numero: 5, name: "Martine", riskProfile: "average", skill: "high", human: false },
-  { numero: 6, name: "Michel", riskProfile: "average", skill: "high", human: false },
+  { numero: 1, name: "Camille", human: true, zapped: false },
+  { numero: 2, name: "Patrick", riskProfile: "bold", skill: "high", human: false, zapped: false },
+  { numero: 3, name: "Jean-Claude", riskProfile: "cautious", skill: "high", human: false, zapped: false },
+  { numero: 4, name: "Claudine", riskProfile: "bold", skill: "high", human: false, zapped: false },
+  { numero: 5, name: "Martine", riskProfile: "average", skill: "high", human: false, zapped: false },
+  { numero: 6, name: "Michel", riskProfile: "average", skill: "high", human: false, zapped: false },
 ];
 
 export let currentPlayers;
 export let currentPlayer;
 export let gameDirection;
+export let playerInitiatingAZap;
 
 export const createInitialListOfPlayers = function () {
   currentPlayers = [];
@@ -41,11 +42,14 @@ export const chooseFirstPlayer = function () {
   return currentPlayer;
 };
 
-export const chooseRandomPlayer = function () {
+export const chooseRandomPlayer = function (player = "") {
+  // For the zap shot, we need the possibility for a random player to select a player that is not himself
+  const transitArray = currentPlayers.filter((pl) => pl !== player);
+
   // Case where a player has to be selected after, let's say, Honky Tonk or Vade Retro. Therefore, the human player is also part of the equation this time
   // The game direction is not modified, hence the need for another function
-  let indexOfNewPlayer = randomInt(1, currentPlayers.length - 1);
-  currentPlayer = currentPlayers[indexOfNewPlayer];
+  let indexOfNewPlayer = randomInt(0, transitArray.length - 1);
+  currentPlayer = transitArray[indexOfNewPlayer];
   return currentPlayer;
 };
 
@@ -168,4 +172,26 @@ export const lookForPlayersReactingToVadeRetro = function () {
     if (indexOfCurrentPlayer === currentPlayers.length - 1)
       return [currentPlayers[0], currentPlayers[1], currentPlayers[2]];
   }
+};
+
+export const updateListOfZappedPlayers = function (obj) {
+  const playerZapped = currentPlayers.find((player) => player === obj);
+  playerZapped.zapped = true;
+  console.log("🐹🐹 Test zap update 🐹🐹", currentPlayers);
+};
+
+export const unzapAllPlayers = function () {
+  currentPlayers.forEach((player) => (player.zapped = false));
+};
+
+export const firstPlayerToZap = function (player) {
+  updateListOfZappedPlayers(player);
+  playerInitiatingAZap = player;
+};
+
+export const endOfZap = function () {
+  // Reset the name of the first player to zap
+  playerInitiatingAZap = "";
+  // set that no players have not been zapped
+  unzapAllPlayers();
 };

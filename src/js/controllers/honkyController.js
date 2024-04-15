@@ -44,7 +44,7 @@ export const dringManagement = function (player, shot) {
       }, 3000);
     } else {
       console.log(`${player.name} n'a pas réussi à dire ${noise}`);
-      console.log(`${player.name} est éliminé`);
+      console.log(`😡😡😡${player.name} est éliminé😡😡😡`);
       mistakesWereMade(player);
     }
   }

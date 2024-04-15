@@ -6,6 +6,7 @@ import { handleHumanTurnToPlay } from "./buttonsController";
 import { honkyTonkByVirtualPlayer } from "./honkyController";
 import { vadeRetroByVirtualPlayer } from "./vadeRetroController";
 import { letByVirtualPlayer } from "./letController";
+import { zapByVirtualPlayer } from "./zapController";
 
 if (module.hot) {
   module.hot.accept();
@@ -38,7 +39,7 @@ const startGame = function () {
 
 export const mistakesWereMade = function (player = model.currentPlayer) {
   // What happens if a player makes a mistake ?
-  console.log(`${player.name} has commited a mistake and must leave the game`);
+  console.log(`${player.name} has committed a mistake and must leave the game`);
 
   // Get rid of the player that has commited a mistake
   model.updateCurrentPlayers(player);
@@ -63,7 +64,7 @@ export const mistakesWereMade = function (player = model.currentPlayer) {
 };
 
 // This function will make the virtual player chooe between different shots depending on the players profile and then handles the various actions that will follow.
-export const virtualPlayerChoice = function (player) {
+export const virtualPlayerChoice = function (player, zapPossible = true) {
   // Highlight the player whose turn it is to play on the graphical representation
   playersView.highlightActivePlayer(player);
 
@@ -84,7 +85,7 @@ export const virtualPlayerChoice = function (player) {
     model.changePlayer(player);
   } else if (randomNumber > 3 && randomNumber <= 6) {
     console.log(`${player.name} has chosen to honky tonk`);
-    honkyTonkByVirtualPlayer(player, model.currentPlayers, model.gameDirection);
+    honkyTonkByVirtualPlayer();
     return;
   } else if (randomNumber > 6 && randomNumber <= 10) {
     console.log(`${player.name} has chosen to ahi`);
@@ -106,10 +107,23 @@ export const virtualPlayerChoice = function (player) {
     console.log(`${player.name} has chosen to let`);
     letByVirtualPlayer(player);
     return;
-  } else if (randomNumber > 15 && randomNumber <= 180) {
+  } else if (randomNumber > 15 && randomNumber <= 18) {
     console.log(`${player.name} has chosen to Vade Retro`);
-    vadeRetroByVirtualPlayer(player, model.currentPlayers, model.gameDirection);
+    vadeRetroByVirtualPlayer();
     return;
+  } else if (randomNumber > 18 && randomNumber <= 200) {
+    // condtionality to prevent a player who said "Je prends" after being zapped to zap afterwards
+    if (zapPossible) {
+      console.log(`${player.name} has chosen to Zap`);
+      // We shall aknowledge the fact that a zap sequence has been initiated
+      model.firstPlayerToZap(player);
+      zapByVirtualPlayer(player);
+      return;
+    } else {
+      console.log("Zap denied");
+      virtualPlayerChoice(player, false);
+      return;
+    }
   } else {
     console.log(`${player.name} has chosen to ya`);
     // Guard to stop the game if a mistake has been committed
