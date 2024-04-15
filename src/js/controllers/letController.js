@@ -27,7 +27,7 @@ export const letByVirtualPlayer = function (player) {
 
     // TEST POUR SAVOIR SI NEW PLAYER A REUSSI dire je prends
     if (hasAPlayerCommitedAMistake(newPlayer, "take")) {
-      console.log(` 😡😡😡 ${newPlayerplayer.name} n'a pas réussi à dire "Je prends" et est éliminé`);
+      console.log(` 😡😡😡 ${newPlayer.name} n'a pas réussi à dire "Je prends" et est éliminé`);
       mistakesWereMade();
     }
 
