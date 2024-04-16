@@ -24,37 +24,38 @@ const eraseZapConditions = function () {
   endOfZap();
 };
 
+export const carryOnZapProcess = function (playerZapped) {
+  playersView.highlightActivePlayer(playerZapped);
+  updateListOfZappedPlayers(playerZapped);
+  zapCounter++;
+  console.log("zapCounter :", zapCounter);
+  updateCurrentPlayer(playerZapped.name);
+};
+
 // The player which has just been zapped shall decide whether he wants to zap or not
 export const toZapOrNotToZap = function (playerZapped) {
   // We shall state that the player that's been zapped is now the current player
-  updateCurrentPlayer(playerZapped.name);
   console.log("🐭🐭Test currentPlayer🐭🐭", currentPlayer);
   const rand = randomInt(0, 100);
   if (rand <= 90) {
     // Case where a player elected to zap another player
-    setTimeout(() => {
-      playersView.highlightActivePlayer(playerZapped);
-      zapCounter++;
-      console.log("zapCounter :", zapCounter);
-      zapByVirtualPlayer(playerZapped);
-    }, 2000);
+
+    zapByVirtualPlayer(playerZapped);
   } else {
-    setTimeout(() => {
-      // Case where a player chose to start another round without zapping
-      console.log(`${playerZapped.name} dit 'Je prends'`);
-      // We shall unzap all players.
-      eraseZapConditions();
-      // There is a real chance that the player electing not to zap will commit a mistake !!
-      if (hasAPlayerCommitedAMistake(playerZapped, "take")) {
-        console.log(`${playerZapped.name} n'a pas réussi à dire 'Je prends'`);
-        console.log(`${playerZapped.name} est éliminé`);
-        mistakesWereMade(playerZapped);
-      } else {
-        // Case where no mistake has been committed
-        // The second parameter is to make it impossible for a player to zap after having said 'Je prends'
-        virtualPlayerChoice(playerZapped, false);
-      }
-    }, 2000);
+    // Case where a player chose to start another round without zapping
+    console.log(`${playerZapped.name} dit 'Je prends'`);
+    // We shall unzap all players.
+    eraseZapConditions();
+    // There is a real chance that the player electing not to zap will commit a mistake !!
+    if (hasAPlayerCommitedAMistake(playerZapped, "take")) {
+      console.log(`${playerZapped.name} n'a pas réussi à dire 'Je prends'`);
+      console.log(`${playerZapped.name} est éliminé`);
+      mistakesWereMade(playerZapped);
+    } else {
+      // Case where no mistake has been committed
+      // The second parameter is to make it impossible for a player to zap after having said 'Je prends'
+      virtualPlayerChoice(playerZapped, false);
+    }
   }
 };
 
@@ -81,10 +82,10 @@ const lastZap = function (player, playerZapped) {
 const humanZap = function (playerZapped) {
   console.log("playerZapped humanZap:", playerZapped);
 
-  updateCurrentPlayer(playerZapped.name);
-  updateListOfZappedPlayers(playerZapped);
-  playersView.highlightActivePlayer(playerZapped);
-  zapCounter++;
+  carryOnZapProcess(playerZapped);
+  setTimeout(() => {
+    humanResponseToZap();
+  }, 2000);
   humanResponseToZap();
 };
 
@@ -115,15 +116,8 @@ export const zapByVirtualPlayer = function (player) {
     humanZap(playerZapped);
     return;
   }
-  updateListOfZappedPlayers(playerZapped);
-  toZapOrNotToZap(playerZapped);
-};
-
-export const carryOnZapProcess = function (playerZapped) {
-  playersView.highlightActivePlayer(playerZapped);
-  updateListOfZappedPlayers(playerZapped);
-  zapCounter++;
+  carryOnZapProcess(playerZapped);
   setTimeout(() => {
     toZapOrNotToZap(playerZapped);
-  }, 1000);
+  }, 2000);
 };

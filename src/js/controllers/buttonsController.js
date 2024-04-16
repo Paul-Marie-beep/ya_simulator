@@ -228,5 +228,8 @@ export const checkIfHumanZapGoneWell = function (name) {
     console.log(`${name} n'a pas encore été zappé`);
     // We then let the zapped virtual player carry on with the game
     carryOnZapProcess(playerZapped);
+    setTimeout(() => {
+      toZapOrNotToZap(playerZapped);
+    }, 2000);
   }
 };
