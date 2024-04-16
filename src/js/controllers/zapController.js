@@ -60,7 +60,7 @@ export const toZapOrNotToZap = function (playerZapped) {
 };
 
 const lastZap = function (player, playerZapped) {
-  if (playerZapped.name === playerInitiatingAZap.name) {
+  if (playerZapped.numero === playerInitiatingAZap.numero) {
     // Case where the player manages to zap the first player ta have zapped
     console.log(`${player.name} a réussi à zapper le premier joueur à avoir zappé : ${playerInitiatingAZap.name}`);
     console.log(`C'est donc à ${playerInitiatingAZap.name} de reprendre le jeu`);
