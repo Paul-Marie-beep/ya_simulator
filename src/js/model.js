@@ -130,9 +130,14 @@ export const unzapAllPlayers = function () {
   currentPlayers.forEach((player) => (player.zapped = false));
 };
 
-export const firstPlayerToZap = function (player) {
-  updateListOfZappedPlayers(player);
-  playerInitiatingAZap = player;
+export const recordFirstPlayerToZap = function (player = "human") {
+  // Two separate case : the player who initiates a zap is human or isn't
+  if (player === "human") {
+    console.log("TRIG");
+    playerInitiatingAZap = currentPlayers.find((obj) => obj.human === true);
+  } else {
+    playerInitiatingAZap = player;
+  }
 };
 
 export const endOfZap = function () {

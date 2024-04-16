@@ -116,7 +116,8 @@ export const virtualPlayerChoice = function (player, zapPossible = true) {
     if (zapPossible) {
       console.log(`${player.name} has chosen to Zap`);
       // We shall aknowledge the fact that a zap sequence has been initiated
-      model.firstPlayerToZap(player);
+      model.updateListOfZappedPlayers(player);
+      model.recordFirstPlayerToZap(player);
       zapByVirtualPlayer(player);
       return;
     } else {
