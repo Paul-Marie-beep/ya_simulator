@@ -39,46 +39,56 @@ const checkDirection = function (direction) {
   }
 };
 
-const checkHumanResponsesToShot = function (keyPressed) {
+const checkHumanResponsesToShot = function (keyPressed, type) {
   // We start by  erasing the commands shown to the human player
   buttonsView.clearCommands();
-  // This function waits for the key that the player has pressed to check if he has lost or if the game can continue;
-  if (keyPressed === "h") {
-    // The player has chosen to play a hold down => the game direction is changing
-    console.log("le joueur fait un hold down");
-    model.changeDirectionAfterHoldDown();
-    model.changePlayer(model.currentPlayer);
+  // Two cases, a shot chosen via a key that is pressed or the name of a player to be zapped that is chosen by clicking on a name.
+  if (type === "key") {
+    // This function waits for the key that the player has pressed to check if he has lost or if the game can continue;
+    if (keyPressed === "h") {
+      // The player has chosen to play a hold down => the game direction is changing
+      console.log("le joueur fait un hold down");
+      model.changeDirectionAfterHoldDown();
+      model.changePlayer(model.currentPlayer);
+      setTimeout(() => {
+        virtualPlayerChoice(model.currentPlayer);
+      }, 2000);
+    } else if (keyPressed === "ArrowLeft") {
+      const dir = "left";
+      checkDirection(dir);
+    } else if (keyPressed === "ArrowRight") {
+      const dir = "right";
+      checkDirection(dir);
+    } else if (keyPressed === "o") {
+      console.log("le joueur a fait un honky tonk");
+      setTimeout(() => {
+        honkyTonkByVirtualPlayer();
+      }, 2000);
+    } else if (keyPressed === "a") {
+      console.log("le joueur a fait un ahi");
+      model.changePlayer(model.currentPlayer, 2);
+      setTimeout(() => {
+        virtualPlayerChoice(model.currentPlayer);
+      }, 2000);
+    } else if (keyPressed === "l") {
+      console.log("Le joueur a dit 'Je laisse'");
+      letByVirtualPlayer(model.currentPlayer);
+    } else if (keyPressed === "v") {
+      console.log("Le joueur dit 'Vade Retro'");
+      setTimeout(() => {
+        vadeRetroByVirtualPlayer();
+      }, 2000);
+    } else {
+      console.log(`Le joueur a commis une erreur en pressant ${keyPressed}`);
+      console.log("C'est la lose !!! 😵‍💫");
+    }
+  } else if (type === "click") {
+    console.log(`Vous avez choisi de zapper ${keyPressed}`);
+    const playerZapped = model.extractPlayer(keyPressed);
+    carryOnZapProcess(playerZapped);
     setTimeout(() => {
-      virtualPlayerChoice(model.currentPlayer);
+      toZapOrNotToZap(playerZapped);
     }, 2000);
-  } else if (keyPressed === "ArrowLeft") {
-    const dir = "left";
-    checkDirection(dir);
-  } else if (keyPressed === "ArrowRight") {
-    const dir = "right";
-    checkDirection(dir);
-  } else if (keyPressed === "o") {
-    console.log("le joueur a fait un honky tonk");
-    setTimeout(() => {
-      honkyTonkByVirtualPlayer();
-    }, 2000);
-  } else if (keyPressed === "a") {
-    console.log("le joueur a fait un ahi");
-    model.changePlayer(model.currentPlayer, 2);
-    setTimeout(() => {
-      virtualPlayerChoice(model.currentPlayer);
-    }, 2000);
-  } else if (keyPressed === "l") {
-    console.log("Le joueur a dit 'Je laisse'");
-    letByVirtualPlayer(model.currentPlayer);
-  } else if (keyPressed === "v") {
-    console.log("Le joueur dit 'Vade Retro'");
-    setTimeout(() => {
-      vadeRetroByVirtualPlayer();
-    }, 2000);
-  } else {
-    console.log(`Le joueur a commis une erreur en pressant ${keyPressed}`);
-    console.log("C'est la lose !!! 😵‍💫");
   }
 };
 

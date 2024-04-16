@@ -3,7 +3,7 @@ class buttonsView {
 
   showShotsCommands() {
     this._commandPanel.innerHTML =
-      "<p>Appuyez sur la flèche qui va dans le sens du jeu sur votre clavier</p><p>Ou appuyez sur la touche H pour faire un 'Hold Down'</p><p>Ou appuyez sur la touche O pour faire Honky Tonk</p><p>Ou appuyez sur la touche A pour faire Ahi</p><p>Ou appuyez sur L pour 'Je laisse'</p><p>Ou appuyez sur V pour 'Vade Retro'</p>";
+      "<p>Appuyez sur la flèche qui va dans le sens du jeu sur votre clavier</p><p>Ou appuyez sur la touche H pour faire un 'Hold Down'</p><p>Ou appuyez sur la touche O pour faire Honky Tonk</p><p>Ou appuyez sur la touche A pour faire Ahi</p><p>Ou appuyez sur L pour 'Je laisse'</p><p>Ou appuyez sur V pour 'Vade Retro'</p><p>Ou cliquez sur le nom d'un autre joueur pour le zapper</p>";
   }
 
   showHonkyTonkCommands() {
@@ -61,12 +61,29 @@ class buttonsView {
   // Function to handle the input of the human player regarding which shot he intends to play
   handlePlayerResponseToShot(handler) {
     //We want the key that has has been pressed to go back to the controller
-    const insideListener = function (event) {
+    const insideKeyListener = function (event) {
       console.log("le joueur a pressé la touche :", event.key);
-      handler(event.key);
-      document.removeEventListener("keydown", insideListener);
+      handler(event.key, "key");
+      document.removeEventListener("keydown", insideKeyListener);
+      document.querySelector(".wrapper").removeEventListener("click", insideClickListener);
     };
-    document.addEventListener("keydown", insideListener);
+    // We want the name of the player that's been zapped to go back to the controller
+    const insideClickListener = function (event) {
+      event.preventDefault();
+      if (event.target.classList.contains("player")) {
+        handler(event.target.dataset.name, "click");
+        document.querySelector(".wrapper").removeEventListener("click", insideClickListener);
+        document.removeEventListener("keydown", insideKeyListener);
+      }
+      //If the click is not on the name but on the ball, we still want the name of player to be sent back to the controller
+      if (event.target.classList.contains("child")) {
+        handler(event.target.parentNode.dataset.name, "click");
+        document.querySelector(".wrapper").removeEventListener("click", insideClickListener);
+        document.removeEventListener("keydown", insideKeyListener);
+      }
+    };
+    document.addEventListener("keydown", insideKeyListener);
+    document.querySelector(".wrapper").addEventListener("click", insideClickListener);
   }
 
   // This function deals with the reaction of the human player when his name is called after houba houba
