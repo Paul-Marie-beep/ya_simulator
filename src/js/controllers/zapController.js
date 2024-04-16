@@ -15,12 +15,12 @@ import playersView from "../views/playersView";
 import { humanResponseToZap } from "./buttonsController";
 
 // We want to be able to monitor if all players have been zapped. Hence a counter.
-let zapCounter = 1;
+let zapCounter = 0;
 
 // Function to erase the parameters in the model once the zap sequence is finished
 const eraseZapConditions = function () {
   // reset the zap counter
-  zapCounter = 1;
+  zapCounter = 0;
   endOfZap();
 };
 
@@ -95,7 +95,7 @@ export const zapByVirtualPlayer = function (player) {
   const playerZapped = chooseRandomPlayer(player);
 
   // Guard function to handle the situation where everyone has previously been zapped the last zap situation;
-  if (zapCounter === currentPlayers.length) {
+  if (zapCounter === currentPlayers.length - 1) {
     console.log("Tous les joueurs ont été zappés !!!");
     lastZap(player, playerZapped);
     return;
