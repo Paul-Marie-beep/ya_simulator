@@ -28,6 +28,10 @@ class buttonsView {
       "<p> Si vous avez envie de prendre : appuyez sur P pour dire 'Je prends'</p><p>Sinon, n'appuyez sur aucune touche</p>";
   }
 
+  showZapCommands() {
+    this._commandPanel.innerHTML = "<p>Cliquez sur le nom d'un joueur pour le zapper</p>";
+  }
+
   handlePlayerResponseToHonkyTonk(handler) {
     //We want to see if the human player has pressed the right key
     const insideListener = function (event) {

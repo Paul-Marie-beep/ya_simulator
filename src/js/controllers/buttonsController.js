@@ -19,6 +19,7 @@ import {
   vadeRetroByVirtualPlayer,
 } from "./vadeRetroController.js";
 import { letByVirtualPlayer } from "./letController.js";
+import { carryOnZapProcess, toZapOrNotToZap } from "./zapController.js";
 
 let virtualHouba;
 export let hasTheHumanPlayerTriedToTake;
@@ -208,4 +209,24 @@ export const humanReactionToLet = function (reactionTime) {
   buttonsView.handlePlayerResponseToLet(checkHumanReactionToLet, reactionTime);
   // If a let shot has already been played, we should reset hasTheHumanPlayerTryToTake to false so that tha play action is not blocked.
   hasTheHumanPlayerTriedToTake = false;
+};
+
+export const humanResponseToZap = function () {
+  buttonsView.showZapCommands();
+  playersView.handleHumanChoiceOfANewPlayer(checkIfHumanZapGoneWell);
+};
+
+export const checkIfHumanZapGoneWell = function (name) {
+  console.log(`Vous avez choisi de zapper ${name}`);
+  // We shall convert the name we got from the click of the player in to an object from the model
+  const playerZapped = model.extractPlayer(name);
+  // 2 cases : the chosen player has already benne zapped or not
+  if (playerZapped.zapped) {
+    console.log(`${name} a déjà été zappé`);
+    console.log("C'est la lose !!! 😵‍💫");
+  } else {
+    console.log(`${name} n'a pas encore été zappé`);
+    // We then let the zapped virtual player carry on with the game
+    carryOnZapProcess(playerZapped);
+  }
 };

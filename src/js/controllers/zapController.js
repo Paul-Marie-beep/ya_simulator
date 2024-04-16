@@ -6,13 +6,13 @@ import {
   currentPlayers,
   endOfZap,
   playerInitiatingAZap,
-  unzapAllPlayers,
   updateCurrentPlayer,
   updateListOfZappedPlayers,
 } from "../model";
 import { mistakesWereMade, virtualPlayerChoice } from "./gameController";
 import { hasAPlayerCommitedAMistake, randomInt } from "../helpers";
 import playersView from "../views/playersView";
+import { humanResponseToZap } from "./buttonsController";
 
 // We want to be able to monitor if all players have been zapped. Hence a counter.
 let zapCounter = 1;
@@ -25,7 +25,7 @@ const eraseZapConditions = function () {
 };
 
 // The player which has just been zapped shall decide whether he wants to zap or not
-const toZapOrNotToZap = function (playerZapped) {
+export const toZapOrNotToZap = function (playerZapped) {
   // We shall state that the player that's been zapped is now the current player
   updateCurrentPlayer(playerZapped.name);
   console.log("🐭🐭Test currentPlayer🐭🐭", currentPlayer);
@@ -67,7 +67,7 @@ const lastZap = function (player, playerZapped) {
     updateCurrentPlayer(playerZapped.name);
     virtualPlayerChoice(playerZapped);
   } else {
-    // Case where the player fails to zap the first player ta have zapped
+    // Case where the player fails to zap the first player to have zapped
     console.log(
       `${player.name} n'a pas réussi à zapper le premier joueur à avoir zappé : ${playerInitiatingAZap.name} puisqu'il a zappé ${playerZapped.name}`
     );
@@ -78,17 +78,30 @@ const lastZap = function (player, playerZapped) {
   eraseZapConditions();
 };
 
+const humanZap = function (playerZapped) {
+  console.log("playerZapped humanZap:", playerZapped);
+
+  updateCurrentPlayer(playerZapped.name);
+  updateListOfZappedPlayers(playerZapped);
+  playersView.highlightActivePlayer(playerZapped);
+  zapCounter++;
+  humanResponseToZap();
+};
+
 export const zapByVirtualPlayer = function (player) {
   // The presence of a parameter allows us to make sure that a player will not zap him or herself
+  // chooseRandomPlayer updates the current player in the model
   const playerZapped = chooseRandomPlayer(player);
 
   // Guard function to handle the situation where everyone has previously been zapped the last zap situation;
-  if (zapCounter === currentPlayers.length - 1) {
+  if (zapCounter === currentPlayers.length) {
     console.log("Tous les joueurs ont été zappés !!!");
     lastZap(player, playerZapped);
     return;
   }
   console.log("🐹🐹 player zapped 🐹🐹 :", playerZapped.name);
+
+  // Guard function to handle a situation in which someone who had previously been zapped is zapped again
   if (playerZapped.zapped) {
     console.log(`${playerZapped.name} a été zappé par ${player.name} alors qu'il avait déjà été zappé`);
     console.log(`${player.name} est donc éliminé`);
@@ -97,8 +110,20 @@ export const zapByVirtualPlayer = function (player) {
     mistakesWereMade(player);
     return;
   }
-  // Guard if the zapped player is human
-  if (playerZapped.human) return;
+  // case where the zapped player is human
+  if (playerZapped.human) {
+    humanZap(playerZapped);
+    return;
+  }
   updateListOfZappedPlayers(playerZapped);
   toZapOrNotToZap(playerZapped);
+};
+
+export const carryOnZapProcess = function (playerZapped) {
+  playersView.highlightActivePlayer(playerZapped);
+  updateListOfZappedPlayers(playerZapped);
+  zapCounter++;
+  setTimeout(() => {
+    toZapOrNotToZap(playerZapped);
+  }, 1000);
 };

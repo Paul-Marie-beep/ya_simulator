@@ -111,7 +111,7 @@ export const virtualPlayerChoice = function (player, zapPossible = true) {
     console.log(`${player.name} has chosen to Vade Retro`);
     vadeRetroByVirtualPlayer();
     return;
-  } else if (randomNumber > 18 && randomNumber <= 200) {
+  } else if (randomNumber > 18 && randomNumber <= 25) {
     // condtionality to prevent a player who said "Je prends" after being zapped to zap afterwards
     if (zapPossible) {
       console.log(`${player.name} has chosen to Zap`);

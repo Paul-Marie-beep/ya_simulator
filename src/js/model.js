@@ -121,8 +121,8 @@ export const lookForPlayersReactingToVadeRetro = function () {
 };
 
 export const updateListOfZappedPlayers = function (obj) {
-  const playerZapped = currentPlayers.find((player) => player === obj);
-  playerZapped.zapped = true;
+  // We must set the zapped property of the zapped player to true to indicated that he's been zapped.
+  currentPlayers.find((player) => player.name === obj.name).zapped = true;
   console.log("🐹🐹 Test zap update 🐹🐹", currentPlayers);
 };
 
@@ -140,4 +140,8 @@ export const endOfZap = function () {
   playerInitiatingAZap = "";
   // set that no players have not been zapped
   unzapAllPlayers();
+};
+
+export const extractPlayer = function (name) {
+  return currentPlayers.find((player) => player.name === name);
 };
