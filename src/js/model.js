@@ -48,7 +48,7 @@ export const chooseRandomPlayer = function (player = "") {
 
   // Case where a player has to be selected after, let's say, Honky Tonk or Vade Retro. Therefore, the human player is also part of the equation this time
   // The game direction is not modified, hence the need for another function
-  let indexOfNewPlayer = randomInt(0, transitArray.length - 1);
+  let indexOfNewPlayer = randomInt(-1, transitArray.length - 1);
   currentPlayer = transitArray[indexOfNewPlayer];
   return currentPlayer;
 };

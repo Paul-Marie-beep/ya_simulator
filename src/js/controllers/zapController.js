@@ -9,7 +9,7 @@ import {
   updateCurrentPlayer,
   updateListOfZappedPlayers,
 } from "../model";
-import { mistakesWereMade, virtualPlayerChoice } from "./gameController";
+import { humanOrMachine, mistakesWereMade, virtualPlayerChoice } from "./gameController";
 import { hasAPlayerCommitedAMistake, randomInt } from "../helpers";
 import playersView from "../views/playersView";
 import { humanResponseToZap } from "./buttonsController";
@@ -66,7 +66,7 @@ const lastZap = function (player, playerZapped) {
     console.log(`C'est donc à ${playerInitiatingAZap.name} de reprendre le jeu`);
     // Back to a normal round
     updateCurrentPlayer(playerZapped.name);
-    virtualPlayerChoice(playerZapped);
+    humanOrMachine();
   } else {
     // Case where the player fails to zap the first player to have zapped
     console.log(

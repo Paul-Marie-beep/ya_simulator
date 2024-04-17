@@ -39,11 +39,13 @@ class playersView {
     const insideListener = function (event) {
       event.preventDefault();
       if (event.target.classList.contains("player")) {
+        console.log("trig 1");
         handler(event.target.dataset.name, shot);
         document.querySelector(".wrapper").removeEventListener("click", insideListener);
       }
       //If the click is not on the name but on the ball, we still want the name of player to be sent back to the controller
       if (event.target.classList.contains("child")) {
+        console.log("trig 2");
         handler(event.target.parentNode.dataset.name, shot);
         document.querySelector(".wrapper").removeEventListener("click", insideListener);
       }
