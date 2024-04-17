@@ -122,7 +122,7 @@ export const lookForPlayersReactingToVadeRetro = function () {
 
 export const updateListOfZappedPlayers = function (obj) {
   // We must set the zapped property of the zapped player to true to indicated that he's been zapped.
-  currentPlayers.find((player) => player.name === obj.name).zapped = true;
+  currentPlayers.find((player) => player.numero === obj.numero).zapped = true;
   console.log("🐹🐹 Test zap update 🐹🐹", currentPlayers);
 };
 

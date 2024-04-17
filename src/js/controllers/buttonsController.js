@@ -84,7 +84,9 @@ const checkHumanResponsesToShot = function (keyPressed, type) {
     }
   } else if (type === "click") {
     console.log(`Vous avez choisi de zapper ${keyPressed}`);
+    model.updateListOfZappedPlayers(model.currentPlayer);
     const playerZapped = model.extractPlayer(keyPressed);
+    console.log("test model.currentPlayer", model.currentPlayer);
     carryOnZapProcess(playerZapped);
     model.recordFirstPlayerToZap();
     setTimeout(() => {
