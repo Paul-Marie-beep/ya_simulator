@@ -81,14 +81,10 @@ const lastZap = function (player, playerZapped) {
 
 const humanZap = function (playerZapped) {
   console.log("playerZapped humanZap:", playerZapped);
-
-  console.log("human zap trig");
-
   carryOnZapProcess(playerZapped);
   setTimeout(() => {
     humanResponseToZap();
   }, 2000);
-  humanResponseToZap();
 };
 
 export const zapByVirtualPlayer = function (player) {

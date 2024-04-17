@@ -92,6 +92,7 @@ const checkHumanResponsesToShot = function (keyPressed, type) {
     }
   } else if (type === "click") {
     console.log(`Vous avez choisi de zapper ${keyPressed}`);
+    // We must record that if the human player initiated the zap, he or she has to be considered as "zapped"
     model.updateListOfZappedPlayers(model.currentPlayer);
     const playerZapped = model.extractPlayer(keyPressed);
     // Guard to prevent a human player frome zapping him or herself
