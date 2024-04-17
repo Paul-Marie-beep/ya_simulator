@@ -39,6 +39,14 @@ const checkDirection = function (direction) {
   }
 };
 
+const checkIfTheHumanPlayerHasZappedHimself = function (playerZapped) {
+  if (playerZapped.numero === model.currentPlayer.numero) {
+    return true;
+  } else {
+    return false;
+  }
+};
+
 const checkHumanResponsesToShot = function (keyPressed, type) {
   // We start by  erasing the commands shown to the human player
   buttonsView.clearCommands();
@@ -86,6 +94,12 @@ const checkHumanResponsesToShot = function (keyPressed, type) {
     console.log(`Vous avez choisi de zapper ${keyPressed}`);
     model.updateListOfZappedPlayers(model.currentPlayer);
     const playerZapped = model.extractPlayer(keyPressed);
+    // Guard to prevent a human player frome zapping him or herself
+    if (checkIfTheHumanPlayerHasZappedHimself(playerZapped)) {
+      console.log("Vous ne pouvez pas vous zapper vous-même");
+      console.log("C'est la lose !!! 😵‍💫");
+      return;
+    }
     console.log("test model.currentPlayer", model.currentPlayer);
     carryOnZapProcess(playerZapped);
     model.recordFirstPlayerToZap();
@@ -233,7 +247,16 @@ export const checkIfHumanZapGoneWell = function (name) {
   console.log(`Vous avez choisi de zapper ${name}`);
   // We shall convert the name we got from the click of the player in to an object from the model
   const playerZapped = model.extractPlayer(name);
+
+  // Guard to prevent a human player frome zapping him or herself
+  if (checkIfTheHumanPlayerHasZappedHimself(playerZapped)) {
+    console.log("Vous ne pouvez pas vous zapper vous-même");
+    console.log("C'est la lose !!! 😵‍💫");
+    return;
+  }
+
   // 2 cases : the chosen player has already benne zapped or not
+
   if (playerZapped.zapped) {
     console.log(`${name} a déjà été zappé`);
     console.log("C'est la lose !!! 😵‍💫");
