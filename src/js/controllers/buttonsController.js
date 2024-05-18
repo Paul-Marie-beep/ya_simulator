@@ -245,6 +245,9 @@ export const humanResponseToZap = function () {
 };
 
 export const checkIfHumanZapGoneWell = function (name) {
+  // Dont show the instructions any more
+  buttonsView.clearCommands();
+
   console.log(`Vous avez choisi de zapper ${name}`);
   // We shall convert the name we got from the click of the player in to an object from the model
   const playerZapped = model.extractPlayer(name);
