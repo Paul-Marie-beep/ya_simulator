@@ -122,7 +122,7 @@ export const virtualPlayerChoice = function (player, zapPossible = true) {
       return;
     }
     console.log(`${player.name} has chosen to let`);
-    eventsDisplay.virtualPlayerShotAnnouncement(player.name, "Let");
+    eventsDisplay.virtualPlayerShotAnnouncement(player.name, "Je laisse.");
     letByVirtualPlayer(player);
     return;
   } else if (randomNumber > 15 && randomNumber <= 18) {
@@ -170,9 +170,12 @@ export const humanOrMachine = function () {
     //The human player cannot be selected to start the game for the sake of simplicity
     //What happens if the human player is selected in the course of the game
     console.log("C'est au tour du joueur humain de jouer");
+    eventsDisplay.drawHumanPlayerAttention();
     handleHumanTurnToPlay();
   } else {
     console.log(`C'est au tour de ${model.currentPlayer.name} de jouer. Que va-t-il se passer ?`);
+    // Let the human player know whose player's turn it is to play
+    eventsDisplay.playerChangeAnnouncement(model.currentPlayer.name);
     // if the player is virtual, then it automatically plays its turn
     // Make the virtual player decide which shot he is going to play
     virtualPlayerChoice(model.currentPlayer);

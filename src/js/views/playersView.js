@@ -35,7 +35,7 @@ class playersView {
 
   renderEvents(eventDescription, type) {
     const html = `<p class= "wrapper__tell--${type}" >${eventDescription}</p>`;
-    this.__eventsDisplay.insertAdjacentHTML("beforeend", html);
+    this.__eventsDisplay.insertAdjacentHTML("afterbegin", html);
   }
 
   handleHumanChoiceOfANewPlayer(handler, shot) {
