@@ -1,10 +1,37 @@
+$display-border: 1px solid#0ff;
+
 .wrapper {
-  display: grid;
-  width: 40%;
-  height: 30rem;
-  grid-template-columns: repeat(5, 1fr);
-  grid-auto-rows: minmax(100px, auto);
-  margin: auto;
+  display: flex;
+  &__show {
+    display: grid;
+    width: 40%;
+    height: 30rem;
+    grid-template-columns: repeat(5, 1fr);
+    grid-auto-rows: minmax(100px, auto);
+    margin: auto;
+    border: $display-border;
+  }
+  &__tell {
+    border: $display-border;
+    background-color: rgb(192, 244, 244);
+    font-family: "Trebuchet MS", "Lucida Sans Unicode", "Lucida Grande", "Lucida Sans", Arial, sans-serif;
+    color: white;
+    &--start {
+      background-color: deepskyblue;
+    }
+    &--event {
+      background-color: rgb(4, 213, 213);
+    }
+    &--mistake {
+      background-color: orange;
+    }
+    &--elimination {
+      background-color: red;
+    }
+    &--attention {
+      background-color: purple;
+    }
+  }
 }
 
 .player {

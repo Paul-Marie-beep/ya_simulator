@@ -134,3 +134,8 @@ export const vadeRetroHelper = function (gameDirection, currentPlayers, currentP
       return [currentPlayers[0], currentPlayers[1], currentPlayers[2]];
   }
 };
+
+export const translateDirection = function (gameDirection) {
+  if (gameDirection === "left") return "gauche";
+  if (gameDirection === "right") return "droite";
+};

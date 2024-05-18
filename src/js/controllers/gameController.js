@@ -1,7 +1,8 @@
 import * as model from "../model";
+import * as eventsDisplay from "./eventsDisplayController";
 import playersView from "../views/playersView";
 
-import { randomInt, defineMax, hasAPlayerCommitedAMistake } from "../helpers";
+import { randomInt, defineMax, hasAPlayerCommitedAMistake, translateDirection } from "../helpers";
 import { handleHumanTurnToPlay } from "./buttonsController";
 import { honkyTonkByVirtualPlayer } from "./honkyController";
 import { vadeRetroByVirtualPlayer } from "./vadeRetroController";
@@ -28,18 +29,28 @@ const startGame = function () {
   // We show the players on scren
   showPlayers(model.currentPlayers, firstPlayer);
 
+  // We let the human player know the name of the first player
+  eventsDisplay.gameStartAnnouncement(firstPlayer.name);
+
   // Select randomly the direction towards which the game will start
   model.chooseDirectionForFirstYa();
 
   // Launch the game with a ya
   // Change the console log by a graphic representation in a view in the future
-  console.log(`${firstPlayer.name} commence le jeu en faisant un ya vers la ${model.gameDirection}`);
+  console.log(
+    `${firstPlayer.name} commence le jeu en faisant un ya vers la ${translateDirection(model.gameDirection)}`
+  );
+  // As a matter of fact,  This is the future view
+  eventsDisplay.firstShotAnnouncement(firstPlayer.name, translateDirection(model.gameDirection));
   model.changePlayer(firstPlayer);
 };
 
 export const mistakesWereMade = function (player = model.currentPlayer) {
   // What happens if a player makes a mistake ?
   console.log(`${player.name} has committed a mistake and must leave the game`);
+
+  // Let the player know that one of his challengers has just been eliminated
+  eventsDisplay.virtualPlayerEliminationAnnouncement(player.name);
 
   // Get rid of the player that has commited a mistake
   model.updateCurrentPlayers(player);
@@ -75,23 +86,28 @@ export const virtualPlayerChoice = function (player, zapPossible = true) {
   // Depending on this random number, we then select a shot for the virtual player to play
   if (randomNumber <= 3) {
     console.log(`${player.name} has chosen to hold down`);
+    eventsDisplay.virtualPlayerShotAnnouncement(player.name, "Hold Down");
     model.changeDirectionAfterHoldDown();
     // Guard to stop the game if a mistake has been committed
     if (hasAPlayerCommitedAMistake(player, "hold down")) {
       console.log(` 😡😡😡 ${player.name} has failed while trying to hold down. ${player.name} is eliminated 😡😡😡`);
+      eventsDisplay.virtualPlayerMistakeWarning(player.name, "Hold Down");
       mistakesWereMade();
       return;
     }
     model.changePlayer(player);
   } else if (randomNumber > 3 && randomNumber <= 6) {
     console.log(`${player.name} has chosen to honky tonk`);
+    eventsDisplay.virtualPlayerShotAnnouncement(player.name, "Honky Tonk");
     honkyTonkByVirtualPlayer();
     return;
   } else if (randomNumber > 6 && randomNumber <= 10) {
     console.log(`${player.name} has chosen to ahi`);
+    eventsDisplay.virtualPlayerShotAnnouncement(player.name, "Ahi");
     // Guard if a mistake has been committed
     if (hasAPlayerCommitedAMistake(player, "ahi")) {
       console.log(` 😡😡😡 ${player.name} has failed while trying to ahi. ${player.name} is eliminated 😡😡😡`);
+      eventsDisplay.virtualPlayerMistakeWarning(player.name, "Ahi");
       mistakesWereMade();
       return;
     }
@@ -101,20 +117,24 @@ export const virtualPlayerChoice = function (player, zapPossible = true) {
     // Guard to prevent the game from continuing if the player who's trying to let commits a mistake while doing so
     if (hasAPlayerCommitedAMistake(player, "let")) {
       console.log(` 😡😡😡 ${player.name} has failed while trying to let. ${player.name} is eliminated 😡😡😡`);
+      eventsDisplay.virtualPlayerMistakeWarning(player.name, "Let");
       mistakesWereMade();
       return;
     }
     console.log(`${player.name} has chosen to let`);
+    eventsDisplay.virtualPlayerShotAnnouncement(player.name, "Let");
     letByVirtualPlayer(player);
     return;
   } else if (randomNumber > 15 && randomNumber <= 18) {
     console.log(`${player.name} has chosen to Vade Retro`);
+    eventsDisplay.virtualPlayerShotAnnouncement(player.name, "Vade Retro");
     vadeRetroByVirtualPlayer();
     return;
   } else if (randomNumber > 18 && randomNumber <= 25) {
     // condtionality to prevent a player who said "Je prends" after being zapped to zap afterwards
     if (zapPossible) {
       console.log(`${player.name} has chosen to Zap`);
+      eventsDisplay.virtualPlayerShotAnnouncement(player.name, "Zap");
       // We shall aknowledge the fact that a zap sequence has been initiated
       model.updateListOfZappedPlayers(player);
       model.recordFirstPlayerToZap(player);
@@ -127,9 +147,12 @@ export const virtualPlayerChoice = function (player, zapPossible = true) {
     }
   } else {
     console.log(`${player.name} has chosen to ya`);
+    eventsDisplay.virtualPlayerShotAnnouncement(player.name, "Ya");
+
     // Guard to stop the game if a mistake has been committed
     if (hasAPlayerCommitedAMistake(player, "ya")) {
       console.log(`😡😡😡 ${player.name} has failed while trying to ya. ${player.name} is eliminated 😡😡😡`);
+      eventsDisplay.virtualPlayerMistakeWarning(player.name, "Ya");
       mistakesWereMade();
       return;
     }

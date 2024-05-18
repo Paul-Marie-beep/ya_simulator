@@ -1,5 +1,6 @@
 class playersView {
   _playerGrid = "";
+  __eventsDisplay = document.querySelector(".wrapper__tell");
 
   highlightActivePlayer(currentPlayer) {
     document.querySelectorAll(".player__ball").forEach((div) => {
@@ -9,7 +10,7 @@ class playersView {
   }
 
   renderPlayers(currentPlayers) {
-    this._playerGrid = document.querySelector(".wrapper");
+    this._playerGrid = document.querySelector(".wrapper__show");
 
     let html = "";
 
@@ -32,6 +33,11 @@ class playersView {
     this._playerGrid.innerHTML = html;
   }
 
+  renderEvents(eventDescription, type) {
+    const html = `<p class= "wrapper__tell--${type}" >${eventDescription}</p>`;
+    this.__eventsDisplay.insertAdjacentHTML("beforeend", html);
+  }
+
   handleHumanChoiceOfANewPlayer(handler, shot) {
     //We want the human player to click on the new player with which he want to continue the game
     // We then want this view to return the name of the player who should carry on playing to the controller
@@ -40,15 +46,15 @@ class playersView {
       event.preventDefault();
       if (event.target.classList.contains("player")) {
         handler(event.target.dataset.name, shot);
-        document.querySelector(".wrapper").removeEventListener("click", insideListener);
+        document.querySelector(".wrapper__show").removeEventListener("click", insideListener);
       }
       //If the click is not on the name but on the ball, we still want the name of player to be sent back to the controller
       if (event.target.classList.contains("child")) {
         handler(event.target.parentNode.dataset.name, shot);
-        document.querySelector(".wrapper").removeEventListener("click", insideListener);
+        document.querySelector(".wrapper__show").removeEventListener("click", insideListener);
       }
     };
-    document.querySelector(".wrapper").addEventListener("click", insideListener);
+    document.querySelector(".wrapper__show").addEventListener("click", insideListener);
   }
 }
 
