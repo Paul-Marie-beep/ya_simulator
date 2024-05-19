@@ -106,7 +106,7 @@ export const zapByVirtualPlayer = function (player) {
     return;
   }
   console.log("🐹🐹 player zapped 🐹🐹 :", playerZapped.name);
-
+  eventsDisplay.zapAnnouncement(player.name, playerZapped.name);
   // Guard function to handle a situation in which someone who had previously been zapped is zapped again
   if (playerZapped.zapped) {
     console.log(`${playerZapped.name} a été zappé par ${player.name} alors qu'il avait déjà été zappé`);

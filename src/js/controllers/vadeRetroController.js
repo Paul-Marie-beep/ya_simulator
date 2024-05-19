@@ -66,7 +66,8 @@ export const vadeRetroByVirtualPlayer = function () {
   playersToSatanas = whoWillSatanas();
   console.log("👁️ Voici les joueurs qui vont devoir faire Sa Ta Nas :", playersToSatanas);
   eventsdisplay.serviceMessage(
-    `👁️ Voici les joueurs qui vont devoir dire Sa, Ta et Nas : ${playersToSatanas[0].name}, ${playersToSatanas[1].name}, ${playersToSatanas[2].name}`
+    `👁️ Voici les joueurs qui vont devoir dire Sa, Ta et Nas : ${playersToSatanas[0].name}, ${playersToSatanas[1].name} et ${playersToSatanas[2].name}`,
+    "player-change"
   );
 
   // Then we check if the virtual players involved managed to do Sa/Ta/Nas
