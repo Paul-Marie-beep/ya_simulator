@@ -3,7 +3,7 @@ class buttonsView {
 
   showShotsCommands() {
     this._commandPanel.innerHTML =
-      "<p>C'est à votre tour de jouer</p><p>Appuyez sur Tab pour découvrir les différentes commandes</p>";
+      "<p>C'est à votre tour de jouer</p><p>Appuyez sur Entrée pour découvrir les différentes commandes</p>";
   }
 
   showHonkyTonkCommands() {
@@ -62,6 +62,9 @@ class buttonsView {
   handlePlayerResponseToShot(handler) {
     //We want the key that has has been pressed to go back to the controller
     const insideKeyListener = function (event) {
+      // Guard to prevent the function to be triggered if the player only want to see the commands
+      if (event.key === "Enter") return;
+
       console.log("le joueur a pressé la touche :", event.key);
       handler(event.key, "key");
       document.removeEventListener("keydown", insideKeyListener);
@@ -89,6 +92,9 @@ class buttonsView {
   // This function deals with the reaction of the human player when his name is called after houba houba
   handlePlayerResponseToCall(handler, noise) {
     const insideListener = function (event) {
+      // Guard to prevent the function to be triggered if the player only want to see the commands
+      if (event.key === "Enter") return;
+
       if (event.key === "d") {
         console.log("Le joueur a pressé la bonne touche");
         handler(true, noise);
@@ -105,6 +111,9 @@ class buttonsView {
   handlePlayerResponseToLet(handler, reactionTime) {
     console.log("test reaction time", reactionTime);
     const insideListener = function (event) {
+      // Guard to prevent the function to be triggered if the player only want to see the commands
+      if (event.key === "Enter") return;
+
       console.log(`Le joueur a appuyé sur la touche ${event.key}`);
       handler(event.key);
       document.removeEventListener("keydown", insideListener);
@@ -113,6 +122,26 @@ class buttonsView {
     setTimeout(() => {
       document.removeEventListener("keydown", insideListener);
     }, reactionTime);
+  }
+
+  showCommandsToPlayer() {
+    // This function makes sure that the popup will not be visible any more when the exit button is clicked on
+    const insideInsideListener = function (event) {
+      if (event.target.classList.contains("exit-button")) {
+        document.querySelector(".popup-instructions").style.display = "none";
+        document.removeEventListener("click", insideInsideListener);
+      }
+    };
+
+    const insideListener = function (event) {
+      console.log(`Le joueur a appuyé sur la touche ${event.key}`);
+      // If the human player presses enter, he shall be shown the commands
+      if (event.key === "Enter") {
+        document.querySelector(".popup-instructions").style.display = "flex";
+        document.addEventListener("click", insideInsideListener);
+      }
+    };
+    document.addEventListener("keydown", insideListener);
   }
 }
 

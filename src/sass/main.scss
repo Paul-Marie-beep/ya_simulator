@@ -68,10 +68,12 @@ body {
     height: 1rem;
     width: 1rem;
     border-radius: 50px;
+    cursor: pointer;
   }
   &__name {
     font-family: "Franklin Gothic Medium", "Arial Narrow", Arial, sans-serif;
     font-weight: bold;
+    cursor: pointer;
   }
   &--1 {
     grid-column: 3;
@@ -120,7 +122,7 @@ body {
 }
 
 .popup-instructions {
-  display: flex;
+  display: none;
   flex-direction: column;
   justify-content: space-between;
   position: fixed;
@@ -176,5 +178,8 @@ body {
   }
   &:hover {
     background-color: rgb(185, 4, 4);
+  }
+  &:active {
+    transform: scale(1.1);
   }
 }

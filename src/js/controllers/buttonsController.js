@@ -117,8 +117,14 @@ const checkHumanResponsesToShot = function (keyPressed, type) {
   }
 };
 
+export const triggerCommandsPopup = function() {
+   // Show the popup if needed
+   buttonsView.showCommandsToPlayer();
+};
+
 export const handleHumanTurnToPlay = function () {
   playersView.highlightActivePlayer(model.currentPlayer);
+  // Offer the human player the possibility to see the various commands
   buttonsView.showShotsCommands();
   buttonsView.handlePlayerResponseToShot(checkHumanResponsesToShot);
 };

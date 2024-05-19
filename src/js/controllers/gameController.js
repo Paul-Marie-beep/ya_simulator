@@ -3,7 +3,7 @@ import * as eventsDisplay from "./eventsDisplayController";
 import playersView from "../views/playersView";
 
 import { randomInt, defineMax, hasAPlayerCommitedAMistake, translateDirection } from "../helpers";
-import { handleHumanTurnToPlay } from "./buttonsController";
+import { handleHumanTurnToPlay, triggerCommandsPopup } from "./buttonsController";
 import { honkyTonkByVirtualPlayer } from "./honkyController";
 import { vadeRetroByVirtualPlayer } from "./vadeRetroController";
 import { letByVirtualPlayer } from "./letController";
@@ -43,6 +43,9 @@ const startGame = function () {
   // As a matter of fact,  This is the future view
   eventsDisplay.firstShotAnnouncement(firstPlayer.name, translateDirection(model.gameDirection));
   model.changePlayer(firstPlayer);
+
+  // we allow the player to see the various commands by pressing Enter
+  triggerCommandsPopup();
 };
 
 export const mistakesWereMade = function (player = model.currentPlayer) {
