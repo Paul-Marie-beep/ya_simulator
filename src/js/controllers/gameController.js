@@ -99,7 +99,9 @@ export const virtualPlayerChoice = function (player, zapPossible = true) {
   } else if (randomNumber > 3 && randomNumber <= 6) {
     console.log(`${player.name} has chosen to honky tonk`);
     eventsDisplay.virtualPlayerShotAnnouncement(player.name, "Honky Tonk");
-    honkyTonkByVirtualPlayer();
+    setTimeout(() => {
+      honkyTonkByVirtualPlayer();
+    }, 2000);
     return;
   } else if (randomNumber > 6 && randomNumber <= 10) {
     console.log(`${player.name} has chosen to ahi`);
