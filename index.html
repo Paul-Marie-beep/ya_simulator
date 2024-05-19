@@ -8,27 +8,43 @@
     <title>Document</title>
   </head>
   <body>
-    <div class="game">
+    <section class="game">
       <div class="wrapper">
         <div class="wrapper__show"></div>
         <div class="wrapper__tell"></div>
       </div>
       <div class="commands__contextual"></div>
-    </div>
-    <div class="popup-instructions">
-      <div class="popup-instructions__container">
-        <div class="exit-button"></div>
+    </section>
+    <section class="popups">
+      <div class="popup-instructions">
+        <div class="popup-instructions__container">
+          <div class="exit-button"></div>
+        </div>
+        <div class="popup-instructions__text">
+          <p>Appuyez sur la flèche qui va dans le sens du jeu sur votre clavier pour faire un "Ya" dans le bon sens.</p>
+          <p>Ou appuyez sur H pour faire un "Hold Down"</p>
+          <p>Ou appuyez sur O pour faire "Honky Tonk"</p>
+          <p>Ou appuyez sur A pour faire "Ahi"</p>
+          <p>Ou appuyez sur L pour "Je laisse"</p>
+          <p>Ou appuyez sur V pour "Vade Retro"</p>
+          <p>Ou cliquez sur le nom d'un autre joueur pour le zapper</p>
+        </div>
       </div>
-      <div class="popup popup-instructions__text">
-        <p>Appuyez sur la flèche qui va dans le sens du jeu sur votre clavier pour faire un "Ya" dans le bon sens.</p>
-        <p>Ou appuyez sur H pour faire un "Hold Down"</p>
-        <p>Ou appuyez sur O pour faire "Honky Tonk"</p>
-        <p>Ou appuyez sur A pour faire "Ahi"</p>
-        <p>Ou appuyez sur L pour "Je laisse"</p>
-        <p>Ou appuyez sur V pour "Vade Retro"</p>
-        <p>Ou cliquez sur le nom d'un autre joueur pour le zapper</p>
+      <div class="popup-welcome">
+        <div class="welcome-text">
+          <h1>Bienvenue sur le Ya Simulator</h1>
+          <p>Tu t'apprètes à relever un défi dont peu sont sortis vivants</p>
+        </div>
+        <form class="form">
+          <label class="form__label">Quel est ton nom, jeune fou ?</label>
+          <input class="form__input" placeholder="Enzo" />
+        </form>
+        <div class="start">
+          <p class="start__text">Clique sur le bouton ci-dessous pour commencer ton aventure</p>
+          <div class="start__button">START !!</div>
+        </div>
       </div>
-    </div>
+    </section>
   </body>
   <script type="module" src="./app.js"></script>
 </html>
