@@ -209,14 +209,14 @@ body {
 }
 
 .form {
-  margin-top: 7rem;
+  margin-top: 10rem;
   &__input {
     border-radius: 5px;
   }
 }
 
 .start {
-  margin-top: 7rem;
+  margin-top: 10rem;
   &__button {
     width: 10rem;
     padding-top: 1rem;
@@ -227,6 +227,7 @@ body {
     font-weight: 800;
     font-size: 2rem;
     margin: auto;
+    margin-top: 3rem;
     cursor: pointer;
     border-radius: 10px;
     &:hover {
