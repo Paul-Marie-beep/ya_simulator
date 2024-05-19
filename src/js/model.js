@@ -24,9 +24,12 @@ export let currentPlayer;
 export let gameDirection;
 export let playerInitiatingAZap;
 
-export const createInitialListOfPlayers = function () {
+export const createInitialListOfPlayers = function (patro) {
   currentPlayers = [];
   players.forEach((el) => currentPlayers.push(el));
+  currentPlayers[0].name = patro;
+  console.log("vérif que le nom du joueur humain est bien pris en compte", currentPlayers[0].name);
+  console.log("vérif que le nom du joueur humain est bien pris en compte", currentPlayers);
 };
 
 export const chooseFirstPlayer = function () {

@@ -1,3 +1,3 @@
-import { initializeGame } from "./src/js/controllers/gameController";
+import { waitForStartInput } from "./src/js/controllers/welcomeController";
 
-initializeGame();
+waitForStartInput();
