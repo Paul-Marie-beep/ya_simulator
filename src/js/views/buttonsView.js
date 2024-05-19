@@ -32,11 +32,11 @@ class buttonsView {
     this._commandPanel.innerHTML = "<p>Cliquez sur le nom d'un joueur pour le zapper</p>";
   }
 
-  handlePlayerResponseToHonkyTonk(handler) {
+  handlePlayerResponseToHonkyTonk(handler, playersReactingToHonkyTonk) {
     //We want to see if the human player has pressed the right key
     const insideListener = function (event) {
       console.log(event.key);
-      handler(event.key);
+      handler(event.key, playersReactingToHonkyTonk);
       document.removeEventListener("keydown", insideListener);
     };
     document.addEventListener("keydown", insideListener);

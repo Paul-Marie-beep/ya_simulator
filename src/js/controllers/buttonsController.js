@@ -5,12 +5,7 @@ import buttonsView from "../views/buttonsView.js";
 import playersView from "../views/playersView.js";
 
 import { virtualPlayerChoice, mistakesWereMade } from "./gameController.js";
-import {
-  callPlayer,
-  playersToHoubaHouba,
-  relaunchGameAfterHoubaHouba,
-  honkyTonkByVirtualPlayer,
-} from "./honkyController.js";
+import { callPlayer, relaunchGameAfterHoubaHouba, honkyTonkByVirtualPlayer } from "./honkyController.js";
 import {
   playersToSatanas,
   relaunchGameAfterVadeRetro,
@@ -117,7 +112,7 @@ export const handleHumanTurnToPlay = function () {
 };
 
 // This function checks that Houba Houba has been done successfully
-const checkHumanResponsesToHonkyTonk = function (keyPressed) {
+const checkHumanResponsesToHonkyTonk = function (keyPressed, playersToHoubaHouba) {
   // We start by  erasing the commands shown to the human player
   buttonsView.clearCommands();
 
@@ -184,11 +179,11 @@ const checkHumanResponsesToVadeRetro = function (keyPressed) {
 };
 
 // This function allow the player to do Houba Houba via the graphic interface
-export const humanResponseToHonkyTonk = function (houba) {
+export const humanResponseToHonkyTonk = function (houba, playersReactingToHonkyTonk) {
   // virtualHouba stores the information wether the virtual player involved
   virtualHouba = houba;
   buttonsView.showHonkyTonkCommands();
-  buttonsView.handlePlayerResponseToHonkyTonk(checkHumanResponsesToHonkyTonk);
+  buttonsView.handlePlayerResponseToHonkyTonk(checkHumanResponsesToHonkyTonk, playersReactingToHonkyTonk);
 };
 
 // This function allow the player to do sa, ta ou nas via the graphic interface

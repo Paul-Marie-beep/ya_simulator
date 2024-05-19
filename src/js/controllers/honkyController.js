@@ -7,8 +7,6 @@ import { humanResponseToHonkyTonk, humanReactionToBeingCalledAfterHoubaHouba } f
 import playersView from "../views/playersView";
 import buttonsView from "../views/buttonsView";
 
-export let playersToHoubaHouba;
-
 // This function will define the players that will have to react to the honky tonk
 const WhoWillHoubaHouba = function () {
   return lookForPlayersReactingToHonkyTonk();
@@ -82,7 +80,8 @@ const reactionsToHonkyTonk = function (playersReactingToHonkyTonk) {
       hitOrMissHonkyTonk(
         playersReactingToHonkyTonk.find((player) => player.human === false),
         "Houba Houba"
-      )
+      ),
+      playersReactingToHonkyTonk
     );
   } else {
     // Case where none of the players who have to say houba houba are human
@@ -119,7 +118,7 @@ const reactionsToHonkyTonk = function (playersReactingToHonkyTonk) {
 
 export const honkyTonkByVirtualPlayer = function () {
   // First we want to understand who are the players who will have to react to the honky tonk shot
-  playersToHoubaHouba = WhoWillHoubaHouba();
+  const playersToHoubaHouba = WhoWillHoubaHouba();
 
   // Then we check if the virtual players involved managed to do Houba Houba
   reactionsToHonkyTonk(playersToHoubaHouba);
