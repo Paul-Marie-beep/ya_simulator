@@ -1,4 +1,5 @@
 $display-border: 1px solid#0ff;
+$button-size: 2rem;
 
 * {
   box-sizing: border-box;
@@ -118,26 +119,62 @@ body {
   }
 }
 
-.popup {
-  &__instructions {
+.popup-instructions {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  position: fixed;
+  top: 3rem;
+  left: 15rem;
+  z-index: 2;
+  width: 70%;
+  height: 80%;
+  background-color: cadetblue;
+  color: wheat;
+  font-family: "Lucida Sans", "Lucida Sans Regular", "Lucida Grande", "Lucida Sans Unicode", Geneva, Verdana, sans-serif;
+  font-size: 1.5rem;
+  border: 1px solid sandybrown;
+  border-radius: 10px;
+  text-align: center;
+  &__container {
+    display: flex;
+    justify-content: right;
+    height: $button-size;
+    margin-top: 0.5rem;
+  }
+  &__text {
+    margin: auto;
     display: flex;
     flex-direction: column;
-    position: fixed;
-    top: 3rem;
-    left: 15rem;
-    z-index: 2;
-    width: 70%;
-    height: 80%;
-    background-color: cadetblue;
-    color: wheat;
-    font-family: "Lucida Sans", "Lucida Sans Regular", "Lucida Grande", "Lucida Sans Unicode", Geneva, Verdana,
-      sans-serif;
-    font-size: 1.5rem;
-    border: 1px solid sandybrown;
-    border-radius: 2px;
-    text-align: center;
-    & p {
-      margin: auto;
-    }
+    justify-content: space-around;
+  }
+}
+
+.exit-button {
+  position: relative;
+  height: $button-size;
+  width: $button-size;
+  background-color: red;
+  border-radius: 5px;
+  margin-right: 0.5rem;
+  cursor: pointer;
+  &::before,
+  &::after {
+    content: "";
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 60%;
+    height: 2px;
+    background-color: white;
+  }
+  &::before {
+    transform: translate(-50%, -50%) rotate(45deg);
+  }
+  &::after {
+    transform: translate(-50%, -50%) rotate(-45deg);
+  }
+  &:hover {
+    background-color: rgb(185, 4, 4);
   }
 }
