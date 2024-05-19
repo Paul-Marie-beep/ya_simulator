@@ -1,5 +1,7 @@
 "use strict";
 
+import * as eventsDisplay from "./eventsDisplayController";
+
 import { lookForPlayersReactingToHonkyTonk, chooseRandomPlayer, updateCurrentPlayer } from "../model";
 import { mistakesWereMade, humanOrMachine } from "./gameController";
 import { hitOrMissHonkyTonk, hasAPlayerCommitedAMistake } from "../helpers";
@@ -35,13 +37,16 @@ export const dringManagement = function (player, shot) {
     // In the case of a virtual player : 2 cases :
     // 1°) The player reacts successfully
     // 2°) The player does not react successfully
-    if (hasAPlayerCommitedAMistake(player, "reaction to honky tonk")) {
+    if (!hasAPlayerCommitedAMistake(player, "reaction to honky tonk")) {
       console.log(`${player.name} a réussi à dire ${noise}`);
+      // we shall let the human player know what's happening
+      eventsDisplay.virtualPlayerShotAnnouncement(player.name, noise);
       setTimeout(() => {
         humanOrMachine();
       }, 3000);
     } else {
       console.log(`${player.name} n'a pas réussi à dire ${noise}`);
+      eventsDisplay.virtualPlayerMistakeWarning(player.name, noise);
       console.log(`😡😡😡${player.name} est éliminé😡😡😡`);
       mistakesWereMade(player);
     }
@@ -51,10 +56,12 @@ export const dringManagement = function (player, shot) {
 // This function will choose automatically a new player to start a new turn after honky tonk
 export const relaunchGameAfterHoubaHouba = function (playerToCallANewPlayer) {
   console.log(`${playerToCallANewPlayer.name} doit désormais désigner quelqu'un pour devenir le nouveau joueur`);
+  eventsDisplay.playerHavingToDesignateAnotherPlayerAnnouncement(playerToCallANewPlayer.name);
 
   // A player is randomly selected
   const newPlayer = chooseRandomPlayer();
   console.log(`${playerToCallANewPlayer.name} a appelé ${newPlayer.name} après avoir dit Houba Houba`);
+  eventsDisplay.chosenPlayerNameAnnoucement(playerToCallANewPlayer.name, newPlayer.name, "Houba Houba");
   // We then test if the new player has successfully reacted by saying "Dring"
   dringManagement(newPlayer, "honky");
 };
@@ -95,23 +102,31 @@ const reactionsToHonkyTonk = function (playersReactingToHonkyTonk) {
       // If both players are mistaken, they are both eliminated
       mistakesWereMade(playersReactingToHonkyTonk[0]);
       mistakesWereMade(playersReactingToHonkyTonk[1]);
+      eventsDisplay.virtualPlayerMistakeWarning(playersReactingToHonkyTonk[0].name, "Houba Houba");
+      eventsDisplay.virtualPlayerMistakeWarning(playersReactingToHonkyTonk[1].name, "Houba Houba");
     } else if (!houba0 && !houba1) {
       // case where both players have successfully houba houba. We must then relauch the game by calling another player
       console.log(
         `${playersReactingToHonkyTonk[0].name} & ${playersReactingToHonkyTonk[1].name} ont tous les deux réussi à faire Houba Houba `
       );
+      eventsDisplay.virtualPlayerNoiseAnnouncement(playersReactingToHonkyTonk[0].name, "Houba Houba");
+      eventsDisplay.virtualPlayerNoiseAnnouncement(playersReactingToHonkyTonk[1].name, "Houba Houba");
       relaunchGameAfterHoubaHouba(playersReactingToHonkyTonk[1]);
     } else if (houba0 && !houba1) {
       // The second player has been succesful at houba houba but the first has not
       console.log(`${playersReactingToHonkyTonk[1].name} has achieved Houba Houba`);
+      eventsDisplay.virtualPlayerMistakeWarning(playersReactingToHonkyTonk[0].name, "Houba Houba");
+      eventsDisplay.virtualPlayerNoiseAnnouncement(playersReactingToHonkyTonk[1].name, "Houba Houba");
       // Since a mistake has been committed, the elimination of the first player to houba houba is triggered
 
       mistakesWereMade(playersReactingToHonkyTonk[0]);
     } else if (!houba0 && houba1) {
       // The second player has committed a mistake and must be eliminated but the first player managed to do it
+      console.log(`${playersReactingToHonkyTonk[0].name} has achieved Houba Houba`);
+      eventsDisplay.virtualPlayerNoiseAnnouncement(playersReactingToHonkyTonk[0].name, "Houba Houba");
+      eventsDisplay.virtualPlayerMistakeWarning(playersReactingToHonkyTonk[1].name, "Houba Houba");
       mistakesWereMade(playersReactingToHonkyTonk[1]);
       // The first player has been succesful at houba houba
-      console.log(`${playersReactingToHonkyTonk[0].name} has achieved Houba Houba`);
     }
   }
 };

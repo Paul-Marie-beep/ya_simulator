@@ -1,5 +1,7 @@
 "use strict";
 
+import * as eventsDisplay from "./eventsDisplayController";
+
 import { chooseRandomPlayer } from "../model";
 import { hasAPlayerCommitedAMistake, randomInt } from "../helpers";
 import { virtualPlayerChoice, mistakesWereMade } from "./gameController";
@@ -24,10 +26,12 @@ export const letByVirtualPlayer = function (player) {
     const newPlayer = chooseRandomPlayer(player);
 
     console.log(`${newPlayer.name} a décidé de prendre`);
+    eventsDisplay.virtualPlayerShotAnnouncement(newPlayer.name, "Je prends");
 
     // TEST POUR SAVOIR SI NEW PLAYER A REUSSI dire je prends
     if (hasAPlayerCommitedAMistake(newPlayer, "take")) {
       console.log(` 😡😡😡 ${newPlayer.name} n'a pas réussi à dire "Je prends" et est éliminé`);
+      eventsDisplay.virtualPlayerMistakeWarning(newPlayer.name, "Je prends");
       mistakesWereMade();
     }
 

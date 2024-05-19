@@ -1,5 +1,6 @@
 "use strict";
 
+import * as eventsDisplay from "./eventsDisplayController";
 import {
   chooseRandomPlayer,
   currentPlayer,
@@ -44,11 +45,14 @@ export const toZapOrNotToZap = function (playerZapped) {
   } else {
     // Case where a player chose to start another round without zapping
     console.log(`${playerZapped.name} dit 'Je prends'`);
+    eventsDisplay.virtualPlayerShotAnnouncement(playerZapped.name, "Je prends");
+
     // We shall unzap all players.
     eraseZapConditions();
     // There is a real chance that the player electing not to zap will commit a mistake !!
     if (hasAPlayerCommitedAMistake(playerZapped, "take")) {
       console.log(`${playerZapped.name} n'a pas réussi à dire 'Je prends'`);
+      eventsDisplay.virtualPlayerMistakeWarning(playerZapped.name, "Je prends");
       console.log(`${playerZapped.name} est éliminé`);
       mistakesWereMade(playerZapped);
     } else {
@@ -64,6 +68,7 @@ const lastZap = function (player, playerZapped) {
     // Case where the player manages to zap the first player ta have zapped
     console.log(`${player.name} a réussi à zapper le premier joueur à avoir zappé : ${playerInitiatingAZap.name}`);
     console.log(`C'est donc à ${playerInitiatingAZap.name} de reprendre le jeu`);
+    eventsDisplay.lastZapOkAnnouncement(player.name, playerInitiatingAZap.name);
     // Back to a normal round
     updateCurrentPlayer(playerZapped.name);
     humanOrMachine();
@@ -72,6 +77,7 @@ const lastZap = function (player, playerZapped) {
     console.log(
       `${player.name} n'a pas réussi à zapper le premier joueur à avoir zappé : ${playerInitiatingAZap.name} puisqu'il a zappé ${playerZapped.name}`
     );
+    eventsDisplay.lastZapFailAnnouncement(player.name, playerInitiatingAZap.name, playerZapped.name);
     console.log(`${player.name} est donc éliminé`);
     mistakesWereMade(player);
   }
@@ -95,6 +101,7 @@ export const zapByVirtualPlayer = function (player) {
   // Guard function to handle the situation where everyone has previously been zapped the last zap situation;
   if (zapCounter === currentPlayers.length - 1) {
     console.log("Tous les joueurs ont été zappés !!!");
+    eventsDisplay.serviceMessage("🙉 Tous les joueurs ont été zappés !!!");
     lastZap(player, playerZapped);
     return;
   }
@@ -103,6 +110,7 @@ export const zapByVirtualPlayer = function (player) {
   // Guard function to handle a situation in which someone who had previously been zapped is zapped again
   if (playerZapped.zapped) {
     console.log(`${playerZapped.name} a été zappé par ${player.name} alors qu'il avait déjà été zappé`);
+    eventsDisplay.zapFailAnnouncement(playerZapped.name, player.name);
     console.log(`${player.name} est donc éliminé`);
     // We shall erase  all zap parameters.
     eraseZapConditions();
