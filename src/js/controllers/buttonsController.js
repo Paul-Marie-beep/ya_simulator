@@ -16,6 +16,7 @@ import {
 } from "./vadeRetroController.js";
 import { letByVirtualPlayer } from "./letController.js";
 import { carryOnZapProcess, toZapOrNotToZap } from "./zapController.js";
+import { endGamebyDefeat } from "./farewellController.js";
 
 let virtualHouba;
 export let hasTheHumanPlayerTriedToTake;
@@ -34,6 +35,7 @@ const checkDirection = function (direction) {
     //The player has lost the game
     eventsDisplay.humanPlayerMistakewarning("Ya");
     console.log("C'est la lose !!! 😵‍💫");
+    endGamebyDefeat();
   }
 };
 
@@ -93,6 +95,7 @@ const checkHumanResponsesToShot = function (keyPressed, type) {
       console.log(`Le joueur a commis une erreur en pressant ${keyPressed}`);
       eventsDisplay.humanTypingMistake(keyPressed);
       console.log("C'est la lose !!! 😵‍💫");
+      endGamebyDefeat();
     }
   } else if (type === "click") {
     console.log(`Vous avez choisi de zapper ${keyPressed}`);
@@ -106,6 +109,7 @@ const checkHumanResponsesToShot = function (keyPressed, type) {
       eventsDisplay.serviceMessage("Vous ne pouvez pas vous auto-zapper");
       eventsDisplay.humanPlayerMistakewarning("Zap");
       console.log("C'est la lose !!! 😵‍💫");
+      endGamebyDefeat();
       return;
     }
     console.log("test model.currentPlayer", model.currentPlayer);
@@ -117,9 +121,9 @@ const checkHumanResponsesToShot = function (keyPressed, type) {
   }
 };
 
-export const triggerCommandsPopup = function() {
-   // Show the popup if needed
-   buttonsView.showCommandsToPlayer();
+export const triggerCommandsPopup = function () {
+  // Show the popup if needed
+  buttonsView.showCommandsToPlayer();
 };
 
 export const handleHumanTurnToPlay = function () {
@@ -165,6 +169,7 @@ const checkHumanResponsesToHonkyTonk = function (keyPressed, playersToHoubaHouba
     console.log("Le joueur a mal fait Houba Houba");
     eventsDisplay.humanPlayerMistakewarning("Houba Houba");
     console.log("C'est la lose !!! 😵‍💫");
+    endGamebyDefeat();
   }
 };
 
@@ -201,6 +206,7 @@ const checkHumanResponsesToVadeRetro = function (keyPressed) {
     console.log("Le joueur a mal dit 'Sa', 'Ta' ou 'Nas'");
     eventsDisplay.humanPlayerMistakewarning("Sa, Ta ou Nas");
     console.log("C'est la lose !!! 😵‍💫");
+    endGamebyDefeat();
   }
 };
 
@@ -231,6 +237,7 @@ export const checkReactionToBeingCalled = function (boolean, noise) {
     console.log(`Le joueur a mal dit ${noise}`);
     eventsDisplay.humanPlayerMistakewarning(noise);
     console.log("C'est la lose !!! 😵‍💫");
+    endGamebyDefeat();
   }
 };
 
@@ -251,6 +258,7 @@ export const checkHumanReactionToLet = function (key) {
     console.log("Le joueur a mal dit 'Je prends'");
     eventsDisplay.humanPlayerMistakewarning("Je prends");
     console.log("C'est la lose !!! 😵‍💫");
+    endGamebyDefeat();
   }
   // This variable indicates that an action has been undertaken by the human player and that there therefore is no need for a virtual player to step in
   hasTheHumanPlayerTriedToTake = true;
@@ -283,6 +291,7 @@ export const checkIfHumanZapGoneWell = function (name) {
     eventsDisplay.serviceMessage("Vous ne pouvez pas vous auto-zapper");
     eventsDisplay.humanPlayerMistakewarning("Je prends");
     console.log("C'est la lose !!! 😵‍💫");
+    endGamebyDefeat();
     return;
   }
 
@@ -293,6 +302,7 @@ export const checkIfHumanZapGoneWell = function (name) {
     eventsDisplay.serviceMessage("Vous ne pouvez zapper quelqu'un qui a déjà été zappé");
     eventsDisplay.humanPlayerMistakewarning("Je prends");
     console.log("C'est la lose !!! 😵‍💫");
+    endGamebyDefeat();
   } else {
     console.log(`${name} n'a pas encore été zappé`);
     eventsDisplay.serviceMessage("Vous avez zappé quelqu'un qui n'a pas encore été zappé");
