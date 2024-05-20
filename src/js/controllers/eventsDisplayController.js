@@ -26,7 +26,7 @@ export const virtualPlayerEliminationAnnouncement = function (name) {
 };
 
 export const drawHumanPlayerAttention = function () {
-  playersView.renderEvents("🤯 C'est au tour du joueur humain de jouer", "attention");
+  playersView.renderEvents("🤯 C'est à votre tour de jouer", "attention");
 };
 
 export const playerChangeAnnouncement = function (name) {
