@@ -50,6 +50,7 @@ const startGame = function () {
 };
 
 export const mistakesWereMade = function (player = model.currentPlayer) {
+  // It is not a problem to select players by their names in this case but selecting them by Id would be admittedly better
   // What happens if a player makes a mistake ?
   console.log(`${player.name} has committed a mistake and must leave the game`);
 

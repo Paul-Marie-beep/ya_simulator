@@ -243,7 +243,7 @@ body {
   }
 }
 
-.popup-defeat {
+.popup-endgame {
   position: fixed;
   top: 25%;
   left: 25%;
@@ -253,12 +253,17 @@ body {
   color: white;
   text-align: center;
   z-index: 4;
-  background-image: url("../../assets/seppuku-japanese-history.jpg");
   background-size: cover;
   display: none;
   flex-direction: column;
   justify-content: space-between;
   align-items: center;
+  &--defeat {
+    background-image: url("../../assets/seppuku-japanese-history.jpg");
+  }
+  &--victory {
+    background-image: url("../../assets/victory_image.jpeg");
+  }
   &__text {
     height: 70%;
     & h2 {
@@ -270,7 +275,7 @@ body {
   }
 }
 
-#start-again-button {
+.start-again-button {
   width: fit-content;
   padding-left: 0.5rem;
   padding-right: 0.5rem;
