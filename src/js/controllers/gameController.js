@@ -190,7 +190,9 @@ export const humanOrMachine = function () {
   }
 };
 
-export const initializeGame = function (name) {
+export const initializeGame = function (name = model.humanPlayerName) {
+  // We do not want to see the log of the pas events when we start another game
+  playersView.eraseEvents();
   model.createInitialListOfPlayers(name);
   // The function to create the initial list of players is separated from startGame() so that we can use said function to restart a game after an elimination without re-creating a whole new array of players
   startGame();

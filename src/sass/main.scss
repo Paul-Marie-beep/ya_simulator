@@ -38,8 +38,8 @@ body {
     display: flex;
     flex-direction: column-reverse;
     overflow: auto;
-    max-width: 55%;
-    max-height: 100%;
+    width: 55%;
+    height: 100%;
     &--player-change {
       background-color: deepskyblue;
     }

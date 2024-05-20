@@ -38,6 +38,10 @@ class playersView {
     this.__eventsDisplay.insertAdjacentHTML("afterbegin", html);
   }
 
+  eraseEvents() {
+    this.__eventsDisplay.innerHTML = "";
+  }
+
   handleHumanChoiceOfANewPlayer(handler, shot) {
     //We want the human player to click on the new player with which he want to continue the game
     // We then want this view to return the name of the player who should carry on playing to the controller

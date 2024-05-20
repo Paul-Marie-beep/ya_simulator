@@ -11,7 +11,7 @@ import { honkyTonkHelper, randomInt, vadeRetroHelper } from "./helpers";
 //   { numero: 6, name: "Michel", riskProfile: "average", skill: "high", human: false, zapped: false  },
 // ];
 const players = [
-  { numero: 1, name: "Camille", human: true, zapped: false },
+  { numero: 1, name: "", human: true, zapped: false },
   { numero: 2, name: "Patrick", riskProfile: "bold", skill: "high", human: false, zapped: false },
   { numero: 3, name: "Jean-Claude", riskProfile: "cautious", skill: "high", human: false, zapped: false },
   { numero: 4, name: "Claudine", riskProfile: "bold", skill: "high", human: false, zapped: false },
@@ -23,10 +23,22 @@ export let currentPlayers;
 export let currentPlayer;
 export let gameDirection;
 export let playerInitiatingAZap;
+export let humanPlayerName;
+
+const updateHumanPlayerName = function (patro) {
+  if (humanPlayerName === patro) {
+    return;
+  } else {
+    humanPlayerName = patro;
+  }
+};
 
 export const createInitialListOfPlayers = function (patro) {
   currentPlayers = [];
   players.forEach((el) => currentPlayers.push(el));
+  // register the name of the human player in case we want to stat another game
+  updateHumanPlayerName(patro);
+  // Register the fact that we have got a name for our human player
   currentPlayers[0].name = patro;
   console.log("vérif que le nom du joueur humain est bien pris en compte", currentPlayers[0].name);
   console.log("vérif que le nom du joueur humain est bien pris en compte", currentPlayers);
