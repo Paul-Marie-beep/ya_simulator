@@ -2,8 +2,8 @@
 
 import * as eventsDisplay from "./eventsDisplayController";
 
-import { chooseAPlayerThatIsNotHuman, chooseRandomPlayer } from "../model";
-import { hasAPlayerCommitedAMistake, randomInt } from "../helpers";
+import { chooseAPlayerThatIsNotHuman } from "../model";
+import { hasAPlayerCommitedAMistake } from "../helpers";
 import { virtualPlayerChoice, mistakesWereMade } from "./gameController";
 import buttonsView from "../views/buttonsView";
 

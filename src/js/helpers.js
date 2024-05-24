@@ -1,4 +1,4 @@
-import { currentPlayer, gameDirection } from "./model";
+import { currentPlayer } from "./model";
 
 export const randomInt = function (min, max) {
   return Math.floor(Math.random() * (max - min) + 1) + min;
