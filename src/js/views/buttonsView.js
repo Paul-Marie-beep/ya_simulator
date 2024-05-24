@@ -1,35 +1,37 @@
 class buttonsView {
-  _commandPanel = document.querySelector(".commands__contextual");
+  constructor() {
+    this.commandPanel = document.querySelector(".commands__contextual");
+  }
 
   showShotsCommands() {
-    this._commandPanel.innerHTML =
+    this.commandPanel.innerHTML =
       "<p>C'est à votre tour de jouer</p><p>Appuyez sur Entrée pour découvrir les différentes commandes</p>";
   }
 
   showHonkyTonkCommands() {
-    this._commandPanel.innerHTML = "<p>Appuyez sur la touche B pour faire 'Houba Houba'</p>";
+    this.commandPanel.innerHTML = "<p>Appuyez sur la touche B pour faire 'Houba Houba'</p>";
   }
 
   showVadeRetroCommands(saying) {
-    this._commandPanel.innerHTML = `<p>Vous devez dire ${saying}</p></br><p>Appuyez sur la touche S pour dire Sa</br>Appuyez sur la touche T pour dire Ta</br>Appuyez sur la touche N pour dire Nas</p>`;
+    this.commandPanel.innerHTML = `<p>Vous devez dire ${saying}</p></br><p>Appuyez sur la touche S pour dire Sa</br>Appuyez sur la touche T pour dire Ta</br>Appuyez sur la touche N pour dire Nas</p>`;
   }
 
   showCallNewPlayerCommands() {
-    this._commandPanel.innerHTML =
+    this.commandPanel.innerHTML =
       "<p>Cliquez sur le nom d'un joueur pour lui indiquer que c'est à lui de continuer à jouer";
   }
 
   ShowNameCalledCommands(noise) {
-    this._commandPanel.innerHTML = `<p>Appuyez sur D pour dire ${noise}</p>`;
+    this.commandPanel.innerHTML = `<p>Appuyez sur D pour dire ${noise}</p>`;
   }
 
   showLetCommands() {
-    this._commandPanel.innerHTML =
+    this.commandPanel.innerHTML =
       "<p> Si vous avez envie de prendre : appuyez sur P pour dire 'Je prends'</p><p>Sinon, n'appuyez sur aucune touche</p>";
   }
 
   showZapCommands() {
-    this._commandPanel.innerHTML = "<p>Cliquez sur le nom d'un joueur pour le zapper</p>";
+    this.commandPanel.innerHTML = "<p>Cliquez sur le nom d'un joueur pour le zapper</p>";
   }
 
   handlePlayerResponseToHonkyTonk(handler, playersReactingToHonkyTonk) {
@@ -55,7 +57,7 @@ class buttonsView {
 
   // Erases the orders given to the player
   clearCommands() {
-    this._commandPanel.innerHTML = "";
+    this.commandPanel.innerHTML = "";
   }
 
   // Function to handle the input of the human player regarding which shot he intends to play
@@ -122,6 +124,33 @@ class buttonsView {
     setTimeout(() => {
       document.removeEventListener("keydown", insideListener);
     }, reactionTime);
+  }
+
+  handlePlayerResponseToLet2(handler1, handler2, reactionTime) {
+    console.log("test reaction time", reactionTime);
+
+    // This function handles what happens if the human player presses a key when he or another player has chosen to let
+    const insideListener = function (event) {
+      // Guard to prevent the function to be triggered if the player only want to see the commands
+      if (event.key === "Enter") return;
+      console.log(`Le joueur a appuyé sur la touche ${event.key}`);
+      handler1(event.key);
+      document.removeEventListener("keydown", insideListener);
+      // We need to stop the timer so that no other player can carry on playing afterwards
+      stopTakeTimer();
+    };
+
+    document.addEventListener("keydown", insideListener);
+
+    // We create a timer to trigger the shot of a virtual player in case nobody wants to take
+    const TakeTimer = setTimeout(() => {
+      document.removeEventListener("keydown", insideListener);
+      handler2();
+    }, reactionTime);
+    // We need to be able to stop the timer in case the human player chose to take
+    const stopTakeTimer = function () {
+      clearTimeout(TakeTimer);
+    };
   }
 
   showCommandsToPlayer() {

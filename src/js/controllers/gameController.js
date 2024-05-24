@@ -61,7 +61,7 @@ export const mistakesWereMade = function (player = model.currentPlayer) {
   model.updateCurrentPlayers(player);
 
   // Guard function to end the game if only two players have not been eliminated
-  if (model.currentPlayers.length === 5) {
+  if (model.currentPlayers.length === 2) {
     playersView.renderPlayers(model.currentPlayers);
     console.log(
       `Il n'y a plus que deux joueurs : ${model.currentPlayers[0].name} et ${model.currentPlayers[1].name} donc le jeu est fini`

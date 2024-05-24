@@ -17,6 +17,7 @@ import {
 import { letByVirtualPlayer } from "./letController.js";
 import { carryOnZapProcess, toZapOrNotToZap, eraseZapConditions } from "./zapController.js";
 import { endGamebyDefeat } from "./farewellController.js";
+import { defineReactionTime } from "../helpers.js";
 
 let virtualHouba;
 export let hasTheHumanPlayerTriedToTake;
@@ -97,7 +98,8 @@ const checkHumanResponsesToShot = function (keyPressed, type) {
     } else if (keyPressed === "l") {
       console.log("Le joueur a dit 'Je laisse'");
       eventsDisplay.humanPlayerValidation("Je laisse");
-      letByVirtualPlayer(model.currentPlayer);
+      humanReactionToLet();
+      // letByVirtualPlayer(model.currentPlayer);
     } else if (keyPressed === "v") {
       console.log("Le joueur dit 'Vade Retro'");
       eventsDisplay.humanPlayerValidation("Vade Retro");
@@ -259,7 +261,7 @@ export const eraseHumanCheck = function () {
   hasTheHumanPlayerTriedToTake = "";
 };
 
-export const checkHumanReactionToLet = function (key) {
+export const checkHumanReactionToLet = function (key, go) {
   buttonsView.clearCommands();
   if (key === "p") {
     console.log("Le joueur a bien dit 'Je prends'");
@@ -278,9 +280,14 @@ export const checkHumanReactionToLet = function (key) {
   hasTheHumanPlayerTriedToTake = true;
 };
 
-export const humanReactionToLet = function (reactionTime) {
+export const MakeAVirtualPlayerTake = function () {
+  letByVirtualPlayer(model.currentPlayer);
+};
+
+export const humanReactionToLet = function () {
   buttonsView.showLetCommands();
-  buttonsView.handlePlayerResponseToLet(checkHumanReactionToLet, reactionTime);
+  const reactionTime = defineReactionTime();
+  buttonsView.handlePlayerResponseToLet2(checkHumanReactionToLet, MakeAVirtualPlayerTake, reactionTime);
   // If a let shot has already been played, we should reset hasTheHumanPlayerTryToTake to false so that tha play action is not blocked.
   hasTheHumanPlayerTriedToTake = false;
 };

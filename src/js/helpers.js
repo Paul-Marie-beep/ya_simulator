@@ -139,3 +139,7 @@ export const translateDirection = function (gameDirection) {
   if (gameDirection === "left") return "gauche";
   if (gameDirection === "right") return "droite";
 };
+
+export const defineReactionTime = function () {
+  return randomInt(1, 4) * 1000;
+};
