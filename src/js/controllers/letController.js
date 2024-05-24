@@ -7,7 +7,7 @@ import { hasAPlayerCommitedAMistake, randomInt } from "../helpers";
 import { virtualPlayerChoice, mistakesWereMade } from "./gameController";
 import buttonsView from "../views/buttonsView";
 
-export const letByVirtualPlayer = function (player) {
+export const letByVirtualPlayer = function () {
   // If a virtual player has chosen to take, we need to clear the commands shown to the player
   buttonsView.clearCommands();
 

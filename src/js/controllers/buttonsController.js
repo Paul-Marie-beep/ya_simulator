@@ -15,7 +15,7 @@ import {
   vadeRetroByVirtualPlayer,
 } from "./vadeRetroController.js";
 import { letByVirtualPlayer } from "./letController.js";
-import { carryOnZapProcess, toZapOrNotToZap, eraseZapConditions } from "./zapController.js";
+import { carryOnZapProcess, toZapOrNotToZap, eraseZapConditions, zapCounter, lastZap } from "./zapController.js";
 import { endGamebyDefeat } from "./farewellController.js";
 import { defineReactionTime } from "../helpers.js";
 
@@ -261,7 +261,7 @@ export const eraseHumanCheck = function () {
   hasTheHumanPlayerTriedToTake = "";
 };
 
-export const checkHumanReactionToLet = function (key, go) {
+export const checkHumanReactionToLet = function (key) {
   buttonsView.clearCommands();
   if (key === "p") {
     console.log("Le joueur a bien dit 'Je prends'");
@@ -276,8 +276,6 @@ export const checkHumanReactionToLet = function (key, go) {
     console.log("C'est la lose !!! 😵‍💫");
     endGamebyDefeat();
   }
-  // This variable indicates that an action has been undertaken by the human player and that there therefore is no need for a virtual player to step in
-  hasTheHumanPlayerTriedToTake = true;
 };
 
 export const MakeAVirtualPlayerTake = function () {
@@ -288,8 +286,6 @@ export const humanReactionToLet = function () {
   buttonsView.showLetCommands();
   const reactionTime = defineReactionTime();
   buttonsView.handlePlayerResponseToLet(checkHumanReactionToLet, MakeAVirtualPlayerTake, reactionTime);
-  // If a let shot has already been played, we should reset hasTheHumanPlayerTryToTake to false so that tha play action is not blocked.
-  hasTheHumanPlayerTriedToTake = false;
 };
 
 export const humanResponseToZap = function () {
@@ -309,6 +305,14 @@ export const checkIfHumanZapGoneWell = function (name) {
   // Guard to prevent a human player frome zapping him or herself
   if (checkIfTheHumanPlayerHasZappedHimself(playerZapped)) {
     actIfAHumanPlayerHasZappedhimself();
+    return;
+  }
+
+  // We shall check if we are in a last Zap situation and act accordingly
+  if (zapCounter === model.currentPlayers.lenght - 1) {
+    console.log("Tous les joueurs ont été zappés !!!");
+    eventsDisplay.serviceMessage("🙉 Tous les joueurs ont été zappés !!!");
+    lastZap(model.currentPlayer, playerZapped);
     return;
   }
 

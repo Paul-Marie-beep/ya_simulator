@@ -14,9 +14,10 @@ import { humanOrMachine, mistakesWereMade, virtualPlayerChoice } from "./gameCon
 import { hasAPlayerCommitedAMistake, randomInt } from "../helpers";
 import playersView from "../views/playersView";
 import { humanResponseToZap } from "./buttonsController";
+import { endGamebyDefeat } from "./farewellController";
 
 // We want to be able to monitor if all players have been zapped. Hence a counter.
-let zapCounter = 0;
+export let zapCounter = 0;
 
 // Function to erase the parameters in the model once the zap sequence is finished
 export const eraseZapConditions = function () {
@@ -63,7 +64,7 @@ export const toZapOrNotToZap = function (playerZapped) {
   }
 };
 
-const lastZap = function (player, playerZapped) {
+export const lastZap = function (player, playerZapped) {
   if (playerZapped.numero === playerInitiatingAZap.numero) {
     // Case where the player manages to zap the first player ta have zapped
     console.log(`${player.name} a réussi à zapper le premier joueur à avoir zappé : ${playerInitiatingAZap.name}`);
@@ -71,7 +72,7 @@ const lastZap = function (player, playerZapped) {
     eventsDisplay.lastZapOkAnnouncement(player.name, playerInitiatingAZap.name);
     // Back to a normal round
     updateCurrentPlayer(playerZapped.name);
-    -humanOrMachine();
+    humanOrMachine();
   } else {
     // Case where the player fails to zap the first player to have zapped
     console.log(
@@ -79,10 +80,17 @@ const lastZap = function (player, playerZapped) {
     );
     eventsDisplay.lastZapFailAnnouncement(player.name, playerInitiatingAZap.name, playerZapped.name);
     console.log(`${player.name} est donc éliminé`);
-    mistakesWereMade(player);
+
+    // We shall erase  all zap parameters.
+    eraseZapConditions();
+
+    // Since this function handles all lastZap situations for human or virtual players, we should differentiate depending on the nature of the player
+    if (player.human) {
+      endGamebyDefeat();
+    } else {
+      mistakesWereMade(player);
+    }
   }
-  // We shall erase  all zap parameters.
-  eraseZapConditions();
 };
 
 const humanZap = function (playerZapped) {

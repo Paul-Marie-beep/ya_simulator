@@ -3,10 +3,9 @@ import * as eventsDisplay from "./eventsDisplayController";
 import playersView from "../views/playersView";
 
 import { randomInt, defineMax, hasAPlayerCommitedAMistake, translateDirection } from "../helpers";
-import { handleHumanTurnToPlay, triggerCommandsPopup, eraseHumanCheck } from "./buttonsController";
+import { handleHumanTurnToPlay, triggerCommandsPopup, eraseHumanCheck, humanReactionToLet } from "./buttonsController";
 import { honkyTonkByVirtualPlayer } from "./honkyController";
 import { vadeRetroByVirtualPlayer } from "./vadeRetroController";
-import { letByVirtualPlayer } from "./letController";
 import { zapByVirtualPlayer } from "./zapController";
 import { endGameByVictory } from "./farewellController";
 
@@ -61,7 +60,7 @@ export const mistakesWereMade = function (player = model.currentPlayer) {
   model.updateCurrentPlayers(player);
 
   // Guard function to end the game if only two players have not been eliminated
-  if (model.currentPlayers.length === 2) {
+  if (model.currentPlayers.length === 5) {
     playersView.renderPlayers(model.currentPlayers);
     console.log(
       `Il n'y a plus que deux joueurs : ${model.currentPlayers[0].name} et ${model.currentPlayers[1].name} donc le jeu est fini`
@@ -131,7 +130,7 @@ export const virtualPlayerChoice = function (player, zapPossible = true) {
     }
     console.log(`${player.name} has chosen to let`);
     eventsDisplay.virtualPlayerShotAnnouncement(player.name, "Je laisse.");
-    letByVirtualPlayer(player);
+    humanReactionToLet();
     return;
   } else if (randomNumber > 15 && randomNumber <= 18) {
     console.log(`${player.name} has chosen to Vade Retro`);
