@@ -19,7 +19,7 @@ import { humanResponseToZap } from "./buttonsController";
 let zapCounter = 0;
 
 // Function to erase the parameters in the model once the zap sequence is finished
-const eraseZapConditions = function () {
+export const eraseZapConditions = function () {
   // reset the zap counter
   zapCounter = 0;
   endOfZap();
@@ -71,7 +71,7 @@ const lastZap = function (player, playerZapped) {
     eventsDisplay.lastZapOkAnnouncement(player.name, playerInitiatingAZap.name);
     // Back to a normal round
     updateCurrentPlayer(playerZapped.name);
-    humanOrMachine();
+    -humanOrMachine();
   } else {
     // Case where the player fails to zap the first player to have zapped
     console.log(
@@ -105,7 +105,7 @@ export const zapByVirtualPlayer = function (player) {
     lastZap(player, playerZapped);
     return;
   }
-  console.log("🐹🐹 player zapped 🐹🐹 :", playerZapped.name);
+  console.log("🐹🐹 player zapping 🐹🐹 :", player.name, "🐹🐹 player zapped 🐹🐹 :", playerZapped.name);
   eventsDisplay.zapAnnouncement(player.name, playerZapped.name);
   // Guard function to handle a situation in which someone who had previously been zapped is zapped again
   if (playerZapped.zapped) {

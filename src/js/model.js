@@ -57,6 +57,13 @@ export const chooseFirstPlayer = function () {
   return currentPlayer;
 };
 
+export const chooseAPlayerThatIsNotHuman = function () {
+  let indexOfFirstPlayer = randomInt(1, currentPlayers.length - 1);
+  // We chose a player from the array
+  currentPlayer = currentPlayers[indexOfFirstPlayer];
+  return currentPlayer;
+};
+
 export const chooseRandomPlayer = function (player = "") {
   // For the zap shot, we need the impossibility for a  player to randomly select himself
   const transitArray = currentPlayers.filter((pl) => pl !== player);
@@ -70,6 +77,7 @@ export const chooseRandomPlayer = function (player = "") {
 
 export const updateCurrentPlayer = function (name) {
   currentPlayer = currentPlayers.find((player) => player.name === name);
+  console.log("new current player", currentPlayer);
   return currentPlayer;
 };
 

@@ -3,7 +3,7 @@ import * as eventsDisplay from "./eventsDisplayController";
 import playersView from "../views/playersView";
 
 import { randomInt, defineMax, hasAPlayerCommitedAMistake, translateDirection } from "../helpers";
-import { handleHumanTurnToPlay, triggerCommandsPopup } from "./buttonsController";
+import { handleHumanTurnToPlay, triggerCommandsPopup, eraseHumanCheck } from "./buttonsController";
 import { honkyTonkByVirtualPlayer } from "./honkyController";
 import { vadeRetroByVirtualPlayer } from "./vadeRetroController";
 import { letByVirtualPlayer } from "./letController";
@@ -193,6 +193,7 @@ export const humanOrMachine = function () {
 export const initializeGame = function (name = model.humanPlayerName) {
   // We do not want to see the log of the pas events when we start another game
   playersView.eraseEvents();
+  eraseHumanCheck();
   model.createInitialListOfPlayers(name);
   // The function to create the initial list of players is separated from startGame() so that we can use said function to restart a game after an elimination without re-creating a whole new array of players
   startGame();

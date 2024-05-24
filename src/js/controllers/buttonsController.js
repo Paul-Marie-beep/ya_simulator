@@ -15,7 +15,7 @@ import {
   vadeRetroByVirtualPlayer,
 } from "./vadeRetroController.js";
 import { letByVirtualPlayer } from "./letController.js";
-import { carryOnZapProcess, toZapOrNotToZap } from "./zapController.js";
+import { carryOnZapProcess, toZapOrNotToZap, eraseZapConditions } from "./zapController.js";
 import { endGamebyDefeat } from "./farewellController.js";
 
 let virtualHouba;
@@ -45,6 +45,19 @@ const checkIfTheHumanPlayerHasZappedHimself = function (playerZapped) {
   } else {
     return false;
   }
+};
+
+// Function to terminate the game if a human player tries to zap himself
+// Two potential occurences :
+//   1°) When the human player initiates a zap
+//   2°) When a human player is reacting to a zap
+const actIfAHumanPlayerHasZappedhimself = function () {
+  console.log("Vous ne pouvez pas vous zapper vous-même");
+  eventsDisplay.serviceMessage("Vous ne pouvez pas vous auto-zapper");
+  eventsDisplay.humanPlayerMistakewarning("Zap");
+  console.log("C'est la lose !!! 😵‍💫");
+  eraseZapConditions();
+  endGamebyDefeat();
 };
 
 const checkHumanResponsesToShot = function (keyPressed, type) {
@@ -105,11 +118,7 @@ const checkHumanResponsesToShot = function (keyPressed, type) {
     const playerZapped = model.extractPlayer(keyPressed);
     // Guard to prevent a human player frome zapping him or herself
     if (checkIfTheHumanPlayerHasZappedHimself(playerZapped)) {
-      console.log("Vous ne pouvez pas vous zapper vous-même");
-      eventsDisplay.serviceMessage("Vous ne pouvez pas vous auto-zapper");
-      eventsDisplay.humanPlayerMistakewarning("Zap");
-      console.log("C'est la lose !!! 😵‍💫");
-      endGamebyDefeat();
+      actIfAHumanPlayerHasZappedhimself();
       return;
     }
     console.log("test model.currentPlayer", model.currentPlayer);
@@ -246,13 +255,18 @@ export const humanReactionToBeingCalledAfterHoubaHouba = function (noise) {
   buttonsView.handlePlayerResponseToCall(checkReactionToBeingCalled, noise);
 };
 
+export const eraseHumanCheck = function () {
+  hasTheHumanPlayerTriedToTake = "";
+};
+
 export const checkHumanReactionToLet = function (key) {
   buttonsView.clearCommands();
   if (key === "p") {
     console.log("Le joueur a bien dit 'Je prends'");
     eventsDisplay.humanPlayerValidation("Je prends");
-    // We need to specify that the current player is now the human player
-    model.updateCurrentPlayer("Camille");
+    // We need to specify that the current player is now the human player (hardcoded for now)
+    model.updateCurrentPlayer(`${model.humanPlayerName}`);
+    console.log("test");
     handleHumanTurnToPlay();
   } else {
     console.log("Le joueur a mal dit 'Je prends'");
@@ -287,11 +301,7 @@ export const checkIfHumanZapGoneWell = function (name) {
 
   // Guard to prevent a human player frome zapping him or herself
   if (checkIfTheHumanPlayerHasZappedHimself(playerZapped)) {
-    console.log("Vous ne pouvez pas vous zapper vous-même");
-    eventsDisplay.serviceMessage("Vous ne pouvez pas vous auto-zapper");
-    eventsDisplay.humanPlayerMistakewarning("Je prends");
-    console.log("C'est la lose !!! 😵‍💫");
-    endGamebyDefeat();
+    actIfAHumanPlayerHasZappedhimself();
     return;
   }
 
@@ -302,6 +312,7 @@ export const checkIfHumanZapGoneWell = function (name) {
     eventsDisplay.serviceMessage("Vous ne pouvez zapper quelqu'un qui a déjà été zappé");
     eventsDisplay.humanPlayerMistakewarning("Je prends");
     console.log("C'est la lose !!! 😵‍💫");
+    eraseZapConditions();
     endGamebyDefeat();
   } else {
     console.log(`${name} n'a pas encore été zappé`);

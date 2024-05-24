@@ -2,7 +2,7 @@
 
 import * as eventsDisplay from "./eventsDisplayController";
 
-import { chooseRandomPlayer } from "../model";
+import { chooseAPlayerThatIsNotHuman, chooseRandomPlayer } from "../model";
 import { hasAPlayerCommitedAMistake, randomInt } from "../helpers";
 import { virtualPlayerChoice, mistakesWereMade } from "./gameController";
 import { humanReactionToLet, hasTheHumanPlayerTriedToTake } from "./buttonsController";
@@ -23,7 +23,7 @@ export const letByVirtualPlayer = function (player) {
     buttonsView.clearCommands();
 
     // Let us notice that chooseRandomPlayer changes the current player in the model
-    const newPlayer = chooseRandomPlayer(player);
+    const newPlayer = chooseAPlayerThatIsNotHuman();
 
     console.log(`${newPlayer.name} a décidé de prendre`);
     eventsDisplay.virtualPlayerShotAnnouncement(newPlayer.name, "Je prends");
