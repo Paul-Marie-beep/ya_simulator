@@ -309,7 +309,7 @@ export const checkIfHumanZapGoneWell = function (name) {
   }
 
   // We shall check if we are in a last Zap situation and act accordingly
-  if (zapCounter === model.currentPlayers.lenght - 1) {
+  if (zapCounter === model.currentPlayers.length - 1) {
     console.log("Tous les joueurs ont été zappés !!!");
     eventsDisplay.serviceMessage("🙉 Tous les joueurs ont été zappés !!!");
     lastZap(model.currentPlayer, playerZapped);
