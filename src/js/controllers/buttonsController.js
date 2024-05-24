@@ -287,7 +287,7 @@ export const MakeAVirtualPlayerTake = function () {
 export const humanReactionToLet = function () {
   buttonsView.showLetCommands();
   const reactionTime = defineReactionTime();
-  buttonsView.handlePlayerResponseToLet2(checkHumanReactionToLet, MakeAVirtualPlayerTake, reactionTime);
+  buttonsView.handlePlayerResponseToLet(checkHumanReactionToLet, MakeAVirtualPlayerTake, reactionTime);
   // If a let shot has already been played, we should reset hasTheHumanPlayerTryToTake to false so that tha play action is not blocked.
   hasTheHumanPlayerTriedToTake = false;
 };

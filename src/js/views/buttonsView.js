@@ -110,23 +110,7 @@ class buttonsView {
     document.addEventListener("keydown", insideListener);
   }
 
-  handlePlayerResponseToLet(handler, reactionTime) {
-    console.log("test reaction time", reactionTime);
-    const insideListener = function (event) {
-      // Guard to prevent the function to be triggered if the player only want to see the commands
-      if (event.key === "Enter") return;
-
-      console.log(`Le joueur a appuyé sur la touche ${event.key}`);
-      handler(event.key);
-      document.removeEventListener("keydown", insideListener);
-    };
-    document.addEventListener("keydown", insideListener);
-    setTimeout(() => {
-      document.removeEventListener("keydown", insideListener);
-    }, reactionTime);
-  }
-
-  handlePlayerResponseToLet2(handler1, handler2, reactionTime) {
+  handlePlayerResponseToLet(handler1, handler2, reactionTime) {
     console.log("test reaction time", reactionTime);
 
     // This function handles what happens if the human player presses a key when he or another player has chosen to let
