@@ -8,6 +8,7 @@ import { hitOrMissHonkyTonk, hasAPlayerCommitedAMistake } from "../helpers";
 import { humanResponseToHonkyTonk, humanReactionToBeingCalledAfterHoubaHouba } from "./buttonsController";
 import playersView from "../views/playersView";
 import buttonsView from "../views/buttonsView";
+import { TIMEOUT } from "../config";
 
 // This function will define the players that will have to react to the honky tonk
 const WhoWillHoubaHouba = function () {
@@ -32,7 +33,7 @@ export const dringManagement = function (player, shot) {
   // We differentiate between the case where a human player should react and the case where a virtual player should react
   if (player.human) {
     console.log(`Vous devez dire "${noise}"`);
-    humanReactionToBeingCalledAfterHoubaHouba(noise);
+    setTimeout(() => humanReactionToBeingCalledAfterHoubaHouba(noise), TIMEOUT);
   } else {
     // In the case of a virtual player : 2 cases :
     // 1°) The player reacts successfully
@@ -43,7 +44,7 @@ export const dringManagement = function (player, shot) {
       eventsDisplay.virtualPlayerShotAnnouncement(player.name, noise);
       setTimeout(() => {
         humanOrMachine();
-      }, 3000);
+      }, TIMEOUT);
     } else {
       console.log(`${player.name} n'a pas réussi à dire ${noise}`);
       eventsDisplay.virtualPlayerMistakeWarning(player.name, noise);
@@ -63,7 +64,7 @@ export const relaunchGameAfterHoubaHouba = function (playerToCallANewPlayer) {
   console.log(`${playerToCallANewPlayer.name} a appelé ${newPlayer.name} après avoir dit Houba Houba`);
   eventsDisplay.chosenPlayerNameAnnoucement(playerToCallANewPlayer.name, newPlayer.name, "Houba Houba");
   // We then test if the new player has successfully reacted by saying "Dring"
-  dringManagement(newPlayer, "honky");
+  setTimeout(() => dringManagement(newPlayer, "honky"), TIMEOUT);
 };
 
 // The function takes over once the human player has clicked on the player that he wishes will continue to play
@@ -83,13 +84,15 @@ const reactionsToHonkyTonk = function (playersReactingToHonkyTonk) {
   if (playersReactingToHonkyTonk[0].human || playersReactingToHonkyTonk[1].human) {
     // We check that the virtual player has managed to do Houba Houba.
     // hitOrMissHonkyTonk will return a boolean telling us if the virtual player has managed to houba houba.
-    humanResponseToHonkyTonk(
-      hitOrMissHonkyTonk(
-        playersReactingToHonkyTonk.find((player) => player.human === false),
-        "Houba Houba"
-      ),
-      playersReactingToHonkyTonk
-    );
+    setTimeout(() => {
+      humanResponseToHonkyTonk(
+        hitOrMissHonkyTonk(
+          playersReactingToHonkyTonk.find((player) => player.human === false),
+          "Houba Houba"
+        ),
+        playersReactingToHonkyTonk
+      );
+    }, TIMEOUT);
   } else {
     // Case where none of the players who have to say houba houba are human
 
@@ -100,33 +103,40 @@ const reactionsToHonkyTonk = function (playersReactingToHonkyTonk) {
 
     if (houba0 && houba1) {
       // If both players are mistaken, they are both eliminated
-      mistakesWereMade(playersReactingToHonkyTonk[0]);
-      mistakesWereMade(playersReactingToHonkyTonk[1]);
-      eventsDisplay.virtualPlayerMistakeWarning(playersReactingToHonkyTonk[0].name, "Houba Houba");
-      eventsDisplay.virtualPlayerMistakeWarning(playersReactingToHonkyTonk[1].name, "Houba Houba");
+      setTimeout(() => {
+        mistakesWereMade(playersReactingToHonkyTonk[0]);
+        mistakesWereMade(playersReactingToHonkyTonk[1]);
+        eventsDisplay.virtualPlayerMistakeWarning(playersReactingToHonkyTonk[0].name, "Houba Houba");
+        eventsDisplay.virtualPlayerMistakeWarning(playersReactingToHonkyTonk[1].name, "Houba Houba");
+      }, TIMEOUT - 1000);
     } else if (!houba0 && !houba1) {
       // case where both players have successfully houba houba. We must then relauch the game by calling another player
-      console.log(
-        `${playersReactingToHonkyTonk[0].name} & ${playersReactingToHonkyTonk[1].name} ont tous les deux réussi à faire Houba Houba `
-      );
-      eventsDisplay.virtualPlayerNoiseAnnouncement(playersReactingToHonkyTonk[0].name, "Houba Houba");
-      eventsDisplay.virtualPlayerNoiseAnnouncement(playersReactingToHonkyTonk[1].name, "Houba Houba");
-      relaunchGameAfterHoubaHouba(playersReactingToHonkyTonk[1]);
+      setTimeout(() => {
+        console.log(
+          `${playersReactingToHonkyTonk[0].name} & ${playersReactingToHonkyTonk[1].name} ont tous les deux réussi à faire Houba Houba `
+        );
+        eventsDisplay.virtualPlayerNoiseAnnouncement(playersReactingToHonkyTonk[0].name, "Houba Houba");
+        eventsDisplay.virtualPlayerNoiseAnnouncement(playersReactingToHonkyTonk[1].name, "Houba Houba");
+        relaunchGameAfterHoubaHouba(playersReactingToHonkyTonk[1]);
+      }, TIMEOUT - 1000);
     } else if (houba0 && !houba1) {
       // The second player has been succesful at houba houba but the first has not
-      console.log(`${playersReactingToHonkyTonk[1].name} has achieved Houba Houba`);
-      eventsDisplay.virtualPlayerMistakeWarning(playersReactingToHonkyTonk[0].name, "Houba Houba");
-      eventsDisplay.virtualPlayerNoiseAnnouncement(playersReactingToHonkyTonk[1].name, "Houba Houba");
-      // Since a mistake has been committed, the elimination of the first player to houba houba is triggered
+      setTimeout(() => {
+        console.log(`${playersReactingToHonkyTonk[1].name} has achieved Houba Houba`);
+        eventsDisplay.virtualPlayerMistakeWarning(playersReactingToHonkyTonk[0].name, "Houba Houba");
+        eventsDisplay.virtualPlayerNoiseAnnouncement(playersReactingToHonkyTonk[1].name, "Houba Houba");
+        // Since a mistake has been committed, the elimination of the first player to houba houba is triggered
 
-      mistakesWereMade(playersReactingToHonkyTonk[0]);
+        mistakesWereMade(playersReactingToHonkyTonk[0]);
+      }, TIMEOUT - 1000);
     } else if (!houba0 && houba1) {
       // The second player has committed a mistake and must be eliminated but the first player managed to do it
-      console.log(`${playersReactingToHonkyTonk[0].name} has achieved Houba Houba`);
-      eventsDisplay.virtualPlayerNoiseAnnouncement(playersReactingToHonkyTonk[0].name, "Houba Houba");
-      eventsDisplay.virtualPlayerMistakeWarning(playersReactingToHonkyTonk[1].name, "Houba Houba");
-      mistakesWereMade(playersReactingToHonkyTonk[1]);
-      // The first player has been succesful at houba houba
+      setTimeout(() => {
+        console.log(`${playersReactingToHonkyTonk[0].name} has achieved Houba Houba`);
+        eventsDisplay.virtualPlayerNoiseAnnouncement(playersReactingToHonkyTonk[0].name, "Houba Houba");
+        eventsDisplay.virtualPlayerMistakeWarning(playersReactingToHonkyTonk[1].name, "Houba Houba");
+        mistakesWereMade(playersReactingToHonkyTonk[1]);
+      }, TIMEOUT - 1000);
     }
   }
 };

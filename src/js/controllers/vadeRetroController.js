@@ -7,6 +7,7 @@ import { hitOrMissHonkyTonk } from "../helpers";
 import { dringManagement } from "./honkyController";
 import { mistakesWereMade } from "./gameController";
 import { humanResponseToVadeRetro, checkHumanDesignationOfANewPlayer } from "./buttonsController";
+import { TIMEOUT } from "../config";
 
 export let playersToSatanas;
 export const sayings = ["Sa", "Ta", "Nas"];
@@ -21,42 +22,46 @@ export const relaunchGameAfterVadeRetro = function (playerToCallANewPlayer) {
 
   // A player is randomly selected
   const newPlayer = chooseRandomPlayer();
-  console.log(`${playerToCallANewPlayer.name} a appelé ${newPlayer.name} après avoir dit "Ta"`);
-  eventsdisplay.chosenPlayerNameAnnoucement(playerToCallANewPlayer.name, newPlayer.name, "Ta");
+  setTimeout(() => {
+    console.log(`${playerToCallANewPlayer.name} a appelé ${newPlayer.name} après avoir dit "Ta"`);
+    eventsdisplay.chosenPlayerNameAnnoucement(playerToCallANewPlayer.name, newPlayer.name, "Ta");
 
-  // We then test if the new player has successfully reacted by saying "Dring"
-  dringManagement(newPlayer, "vade");
+    // We then test if the new player has successfully reacted by saying "Dring"
+    dringManagement(newPlayer, "vade");
+  }, TIMEOUT - 1000);
 };
 
 export const checkForSatanas = function (player = playersToSatanas[0], saying = sayings[0], i = 0) {
-  // We shall check at each time if the player involved is human or not
-  if (player.human) {
-    humanResponseToVadeRetro(saying);
-  } else {
-    // The parameters of the hitOrMissHonkyTonk functions are booleans that tell us if the virtual player has successfully reacted to the honky tonk situation
-    // the booleans are true if a mistake has been committed and false otherwise
-    if (hitOrMissHonkyTonk(player, saying)) {
-      console.log(`${player.name} n'a pas réussi à faire "${saying}"`);
-      eventsdisplay.virtualPlayerMistakeWarning(player.name, saying);
-      mistakesWereMade(player);
+  setTimeout(() => {
+    // We shall check at each time if the player involved is human or not
+    if (player.human) {
+      humanResponseToVadeRetro(saying);
     } else {
-      // Case where the player reacted successfully
-      console.log(`${player.name} a réussi à faire "${saying}"`);
-      eventsdisplay.virtualPlayerNoiseAnnouncement(player.name, saying);
-      // No need to carry on testing the reactions if 3 people have reacted successfully. We shall then move on
-      if (i >= 2) {
-        // Two cases : The player who said ta is human or not
-        if (playersToSatanas[1].human) {
-          // We are now going to take advantage of the fact that we already coded the part where we designate a new player for the konky tonk shot and use it instead od coding something specific
-          checkHumanDesignationOfANewPlayer("vade");
-        } else {
-          relaunchGameAfterVadeRetro(playersToSatanas[1]);
-        }
+      // The parameters of the hitOrMissHonkyTonk functions are booleans that tell us if the virtual player has successfully reacted to the honky tonk situation
+      // the booleans are true if a mistake has been committed and false otherwise
+      if (hitOrMissHonkyTonk(player, saying)) {
+        console.log(`${player.name} n'a pas réussi à faire "${saying}"`);
+        eventsdisplay.virtualPlayerMistakeWarning(player.name, saying);
+        mistakesWereMade(player);
       } else {
-        checkForSatanas(playersToSatanas[i + 1], sayings[i + 1], i + 1);
+        // Case where the player reacted successfully
+        console.log(`${player.name} a réussi à faire "${saying}"`);
+        eventsdisplay.virtualPlayerNoiseAnnouncement(player.name, saying);
+        // No need to carry on testing the reactions if 3 people have reacted successfully. We shall then move on
+        if (i >= 2) {
+          // Two cases : The player who said ta is human or not
+          if (playersToSatanas[1].human) {
+            // We are now going to take advantage of the fact that we already coded the part where we designate a new player for the konky tonk shot and use it instead od coding something specific
+            checkHumanDesignationOfANewPlayer("vade");
+          } else {
+            relaunchGameAfterVadeRetro(playersToSatanas[1]);
+          }
+        } else {
+          checkForSatanas(playersToSatanas[i + 1], sayings[i + 1], i + 1);
+        }
       }
     }
-  }
+  }, TIMEOUT - 1000);
 };
 
 ////////////////////////////////////////////////////////:///////////////////////////////////::
@@ -71,5 +76,5 @@ export const vadeRetroByVirtualPlayer = function () {
   );
 
   // Then we check if the virtual players involved managed to do Sa/Ta/Nas
-  checkForSatanas();
+  setTimeout(() => checkForSatanas(), TIMEOUT - 1000);
 };
