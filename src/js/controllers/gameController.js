@@ -8,6 +8,7 @@ import { honkyTonkByVirtualPlayer } from "./honkyController";
 import { vadeRetroByVirtualPlayer } from "./vadeRetroController";
 import { zapByVirtualPlayer } from "./zapController";
 import { endGameByVictory } from "./farewellController";
+import { TIMEOUT } from "../config";
 
 if (module.hot) {
   module.hot.accept();
@@ -194,7 +195,9 @@ export const initializeGame = function (name = model.humanPlayerName) {
   playersView.eraseEvents();
   eraseHumanCheck();
   model.createInitialListOfPlayers(name);
+  eventsDisplay.welcomeMessage(name);
   // The function to create the initial list of players is separated from startGame() so that we can use said function to restart a game after an elimination without re-creating a whole new array of players
-  startGame();
-  humanOrMachine();
+  // We use timeOuts to make for a better lisibility for the player
+  setTimeout(() => startGame(), 1500);
+  setTimeout(() => humanOrMachine(), 3500);
 };

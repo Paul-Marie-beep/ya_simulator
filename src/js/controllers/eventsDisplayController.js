@@ -1,8 +1,8 @@
 //These Functions make sure that the events that are occuring are properly displayed
 import playersView from "../views/playersView";
 
-export const welcomeMessage = function () {
-  playersView.renderEvents("Bonne chance Camille. Le jeu commence !!", "welcome");
+export const welcomeMessage = function (name) {
+  playersView.renderEvents(`Bonne chance ${name}. Le jeu commence !!`, "welcome");
 };
 
 export const gameStartAnnouncement = function (name) {

@@ -9,7 +9,7 @@ body {
   margin: 0px;
   min-height: 100%;
   overflow-x: hidden;
-  background-image: url(../../assets/bg-smoke-mobile.jpg);
+  background-image: url(../../assets/images/bg-smoke-mobile.jpg);
   background-size: cover;
   /* On met l'overflow x parce que sinon ont peu scorller et voir les autres photos */
 }
@@ -57,6 +57,9 @@ body {
     }
     &--validate {
       background-color: greenyellow;
+    }
+    &--welcome {
+      background-color: gold;
     }
   }
 }
@@ -259,10 +262,10 @@ body {
   justify-content: space-between;
   align-items: center;
   &--defeat {
-    background-image: url("../../assets/seppuku-japanese-history.jpg");
+    background-image: url("../../assets/images/seppuku-japanese-history.jpg");
   }
   &--victory {
-    background-image: url("../../assets/victory_image.jpeg");
+    background-image: url("../../assets/images/victory_image.jpeg");
   }
   &__text {
     height: 70%;
