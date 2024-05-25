@@ -73,11 +73,9 @@ export const mistakesWereMade = function (player = model.currentPlayer) {
 
     return;
   }
-  //We wait 4 seconds before re-starting the game
-  setTimeout(() => {
-    startGame();
-    humanOrMachine();
-  }, 4000);
+  //We wait a couple of seconds before re-starting the game
+  setTimeout(() => startGame(), TIMEOUT + 1000);
+  setTimeout(() => humanOrMachine(), TIMEOUT + 2000);
 };
 
 // This function will make the virtual player chooe between different shots depending on the players profile and then handles the various actions that will follow.
@@ -94,82 +92,94 @@ export const virtualPlayerChoice = function (player, zapPossible = true) {
     console.log(`${player.name} has chosen to hold down`);
     eventsDisplay.virtualPlayerShotAnnouncement(player.name, "Hold Down");
     model.changeDirectionAfterHoldDown();
-    // Guard to stop the game if a mistake has been committed
-    if (hasAPlayerCommitedAMistake(player, "hold down")) {
-      console.log(` 😡😡😡 ${player.name} has failed while trying to hold down. ${player.name} is eliminated 😡😡😡`);
-      eventsDisplay.virtualPlayerMistakeWarning(player.name, "Hold Down");
-      mistakesWereMade();
-      return;
-    }
-    model.changePlayer(player);
+    setTimeout(() => {
+      // Guard to stop the game if a mistake has been committed
+      if (hasAPlayerCommitedAMistake(player, "hold down")) {
+        console.log(` 😡😡😡 ${player.name} has failed while trying to hold down. ${player.name} is eliminated 😡😡😡`);
+        eventsDisplay.virtualPlayerMistakeWarning(player.name, "Hold Down");
+        mistakesWereMade();
+        return;
+      }
+      model.changePlayer(player);
+      // We go back to testing if the player is virtual or human and relaunch the game
+      humanOrMachine(model.currentPlayer);
+    }, TIMEOUT);
   } else if (randomNumber > 3 && randomNumber <= 6) {
     console.log(`${player.name} has chosen to honky tonk`);
     eventsDisplay.virtualPlayerShotAnnouncement(player.name, "Honky Tonk");
     setTimeout(() => {
       honkyTonkByVirtualPlayer();
-    }, 2000);
-    return;
+    }, TIMEOUT);
   } else if (randomNumber > 6 && randomNumber <= 10) {
     console.log(`${player.name} has chosen to ahi`);
     eventsDisplay.virtualPlayerShotAnnouncement(player.name, "Ahi");
+    setTimeout(() => {
+      if (hasAPlayerCommitedAMistake(player, "ahi")) {
+        console.log(` 😡😡😡 ${player.name} has failed while trying to ahi. ${player.name} is eliminated 😡😡😡`);
+        eventsDisplay.virtualPlayerMistakeWarning(player.name, "Ahi");
+        mistakesWereMade();
+        return;
+      }
+      console.log(`${player.name} a bien fait ahi`);
+      model.changePlayer(player, 2);
+      // We go back to testing if the player is virtual or human and relaunch the game
+      humanOrMachine(model.currentPlayer);
+    }, TIMEOUT);
     // Guard if a mistake has been committed
-    if (hasAPlayerCommitedAMistake(player, "ahi")) {
-      console.log(` 😡😡😡 ${player.name} has failed while trying to ahi. ${player.name} is eliminated 😡😡😡`);
-      eventsDisplay.virtualPlayerMistakeWarning(player.name, "Ahi");
-      mistakesWereMade();
-      return;
-    }
-    console.log(`${player.name} a bien fait ahi`);
-    model.changePlayer(player, 2);
   } else if (randomNumber > 10 && randomNumber <= 15) {
-    // Guard to prevent the game from continuing if the player who's trying to let commits a mistake while doing so
-    if (hasAPlayerCommitedAMistake(player, "let")) {
-      console.log(` 😡😡😡 ${player.name} has failed while trying to let. ${player.name} is eliminated 😡😡😡`);
-      eventsDisplay.virtualPlayerMistakeWarning(player.name, "Let");
-      mistakesWereMade();
-      return;
-    }
     console.log(`${player.name} has chosen to let`);
     eventsDisplay.virtualPlayerShotAnnouncement(player.name, "Je laisse.");
-    humanReactionToLet();
-    return;
+    setTimeout(() => {
+      // Guard to prevent the game from continuing if the player who's trying to let commits a mistake while doing so
+      if (hasAPlayerCommitedAMistake(player, "let")) {
+        console.log(` 😡😡😡 ${player.name} has failed while trying to let. ${player.name} is eliminated 😡😡😡`);
+        eventsDisplay.virtualPlayerMistakeWarning(player.name, "Let");
+        mistakesWereMade();
+        return;
+      }
+
+      humanReactionToLet();
+    }, TIMEOUT);
   } else if (randomNumber > 15 && randomNumber <= 18) {
     console.log(`${player.name} has chosen to Vade Retro`);
     eventsDisplay.virtualPlayerShotAnnouncement(player.name, "Vade Retro");
-    vadeRetroByVirtualPlayer();
-    return;
+    setTimeout(() => {
+      vadeRetroByVirtualPlayer();
+    }, TIMEOUT);
   } else if (randomNumber > 18 && randomNumber <= 25) {
     // condtionality to prevent a player who said "Je prends" after being zapped to zap afterwards
     if (zapPossible) {
       console.log(`${player.name} has chosen to Zap`);
       eventsDisplay.virtualPlayerShotAnnouncement(player.name, "Zap");
       // We shall aknowledge the fact that a zap sequence has been initiated
-      model.updateListOfZappedPlayers(player);
-      model.recordFirstPlayerToZap(player);
-      zapByVirtualPlayer(player);
-      return;
+      setTimeout(() => {
+        model.updateListOfZappedPlayers(player);
+        model.recordFirstPlayerToZap(player);
+        zapByVirtualPlayer(player);
+      }, TIMEOUT);
     } else {
       console.log("Zap denied");
-      virtualPlayerChoice(player, false);
-      return;
+      setTimeout(() => {
+        virtualPlayerChoice(player, false);
+      }, TIMEOUT);
     }
   } else {
     console.log(`${player.name} has chosen to ya`);
     eventsDisplay.virtualPlayerShotAnnouncement(player.name, "Ya");
 
-    // Guard to stop the game if a mistake has been committed
-    if (hasAPlayerCommitedAMistake(player, "ya")) {
-      console.log(`😡😡😡 ${player.name} has failed while trying to ya. ${player.name} is eliminated 😡😡😡`);
-      eventsDisplay.virtualPlayerMistakeWarning(player.name, "Ya");
-      mistakesWereMade();
-      return;
-    }
-
-    model.changePlayer(player);
+    setTimeout(() => {
+      // Guard to stop the game if a mistake has been committed
+      if (hasAPlayerCommitedAMistake(player, "ya")) {
+        console.log(`😡😡😡 ${player.name} has failed while trying to ya. ${player.name} is eliminated 😡😡😡`);
+        eventsDisplay.virtualPlayerMistakeWarning(player.name, "Ya");
+        mistakesWereMade();
+        return;
+      }
+      model.changePlayer(player);
+      // We go back to testing if the player is virtual or human and relaunch the game
+      humanOrMachine(model.currentPlayer);
+    }, TIMEOUT);
   }
-
-  // We go back to testing if the player is virtual or human and relaunch the game
-  setTimeout(() => humanOrMachine(model.currentPlayer), 2000);
 };
 
 export const humanOrMachine = function () {
