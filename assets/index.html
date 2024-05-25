@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/index.c36f3da9.css">
+    <title>Document</title>
+  </head>
+  <body>
+    <section class="game">
+      <div class="wrapper">
+        <div class="wrapper__show"></div>
+        <div class="wrapper__tell"></div>
+      </div>
+      <div class="commands__contextual"></div>
+    </section>
+    <div class="overlay"></div>
+    <section class="popups">
+      <div class="popup-instructions">
+        <div class="popup-instructions__container">
+          <div class="exit-button"></div>
+        </div>
+        <div class="popup-instructions__text">
+          <p>Appuyez sur la flèche qui va dans le sens du jeu sur votre clavier pour faire un "Ya" dans le bon sens.</p>
+          <p>Ou appuyez sur H pour faire un "Hold Down"</p>
+          <p>Ou appuyez sur O pour faire "Honky Tonk"</p>
+          <p>Ou appuyez sur A pour faire "Ahi"</p>
+          <p>Ou appuyez sur L pour "Je laisse"</p>
+          <p>Ou appuyez sur V pour "Vade Retro"</p>
+          <p>Ou cliquez sur le nom d'un autre joueur pour le zapper</p>
+        </div>
+      </div>
+      <div class="popup-welcome">
+        <div class="welcome-text">
+          <h1>Bienvenue sur le Ya Simulator</h1>
+          <p>Tu t'apprètes à relever un défi dont peu sont sortis vivants</p>
+        </div>
+        <form class="form">
+          <label class="form__label">Quel est ton nom, jeune fou ?</label>
+          <input class="form__input" placeholder="Enzo">
+        </form>
+        <div class="start">
+          <p class="start__text">Clique sur le bouton ci-dessous pour commencer ton aventure</p>
+          <div class="start__button">START !!</div>
+        </div>
+      </div>
+      <div class="popup-endgame popup-endgame--defeat">
+        <div class="popup-endgame__text">
+          <h2>Tu as perdu</h2>
+          <p>Sombre merde</p>
+          <p>Tu ne mérites même pas de vivre</p>
+        </div>
+        <div id="start-again-button-after-defeat" class="start__button start-again-button">START Again !!</div>
+      </div>
+      <div class="popup-endgame popup-endgame--victory">
+        <div class="popup-endgame__text">
+          <h2>Tu as gagné</h2>
+          <p>Conquérant de l'impossible</p>
+          <p>Le monde entier te congratule</p>
+        </div>
+        <div id="start-again-button-after-victory" class="start__button start-again-button">START Again !!</div>
+      </div>
+    </section>
+  </body>
+  <script src="/index.5baa4167.js" defer=""></script>
+</html>

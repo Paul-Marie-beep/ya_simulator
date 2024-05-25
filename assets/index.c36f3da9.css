@@ -1,0 +1,315 @@
+* {
+  box-sizing: border-box;
+}
+
+body {
+  background-image: url("bg-smoke-mobile.6b99c902.jpg");
+  background-size: cover;
+  min-height: 100%;
+  margin: 0;
+  overflow-x: hidden;
+}
+
+.wrapper {
+  justify-content: space-around;
+  width: 90%;
+  height: 30rem;
+  margin: 3rem auto auto;
+  display: flex;
+}
+
+.wrapper__show {
+  background-color: #73dd7c;
+  border: 1px solid #0ff;
+  grid-template-columns: repeat(5, 1fr);
+  grid-auto-rows: minmax(100px, auto);
+  width: 40%;
+  height: 100%;
+  display: grid;
+}
+
+.wrapper__tell {
+  color: #fff;
+  background-color: #c0f4f4;
+  border: 1px solid #0ff;
+  flex-direction: column-reverse;
+  width: 55%;
+  height: 100%;
+  font-family: Trebuchet MS, Lucida Sans Unicode, Lucida Grande, Lucida Sans, Arial, sans-serif;
+  display: flex;
+  overflow: auto;
+}
+
+.wrapper__tell--player-change {
+  background-color: #00bfff;
+}
+
+.wrapper__tell--event {
+  background-color: #04d5d5;
+}
+
+.wrapper__tell--warning {
+  background-color: orange;
+}
+
+.wrapper__tell--elimination {
+  background-color: red;
+}
+
+.wrapper__tell--attention {
+  background-color: purple;
+}
+
+.wrapper__tell--validate {
+  background-color: #adff2f;
+}
+
+.player {
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  display: flex;
+}
+
+.player__ball {
+  cursor: pointer;
+  background-color: #dcdcdc;
+  border-radius: 50px;
+  width: 1rem;
+  height: 1rem;
+}
+
+.player__name {
+  cursor: pointer;
+  font-family: Franklin Gothic Medium, Arial Narrow, Arial, sans-serif;
+  font-weight: bold;
+}
+
+.player--1 {
+  grid-area: 1 / 3;
+}
+
+.player--2 {
+  grid-area: 2 / 5;
+}
+
+.player--3 {
+  grid-area: 3 / 5;
+}
+
+.player--4 {
+  grid-area: 4 / 3;
+}
+
+.player--5 {
+  grid-area: 3 / 1;
+}
+
+.player--6 {
+  grid-area: 2 / 1;
+}
+
+.active {
+  background-color: #136b13;
+}
+
+.commands__contextual {
+  width: 90%;
+  margin: auto;
+}
+
+.commands__contextual p {
+  color: #fff;
+  text-align: center;
+  background-color: #1465b7;
+  width: 70%;
+  margin: 2rem auto auto;
+  padding-top: .5rem;
+  padding-bottom: .5rem;
+  font-family: Franklin Gothic Medium, Arial Narrow, Arial, sans-serif;
+  font-size: 2.5rem;
+  box-shadow: .2rem .2rem #00f;
+}
+
+.popup-instructions {
+  z-index: 2;
+  text-align: center;
+  color: wheat;
+  background-color: #5f9ea0;
+  border: 1px solid #f4a460;
+  border-radius: 10px;
+  flex-direction: column;
+  justify-content: space-between;
+  width: 70%;
+  height: 80%;
+  font-family: Lucida Sans, Lucida Sans Regular, Lucida Grande, Lucida Sans Unicode, Geneva, Verdana, sans-serif;
+  font-size: 1.5rem;
+  display: none;
+  position: fixed;
+  top: 3rem;
+  left: 15rem;
+}
+
+.popup-instructions__container {
+  justify-content: right;
+  height: 2rem;
+  margin-top: .5rem;
+  display: flex;
+}
+
+.popup-instructions__text {
+  flex-direction: column;
+  justify-content: space-around;
+  margin: auto;
+  display: flex;
+}
+
+.exit-button {
+  cursor: pointer;
+  background-color: red;
+  border-radius: 5px;
+  width: 2rem;
+  height: 2rem;
+  margin-right: .5rem;
+  position: relative;
+}
+
+.exit-button:before, .exit-button:after {
+  content: "";
+  background-color: #fff;
+  width: 60%;
+  height: 2px;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+}
+
+.exit-button:before {
+  transform: translate(-50%, -50%)rotate(45deg);
+}
+
+.exit-button:after {
+  transform: translate(-50%, -50%)rotate(-45deg);
+}
+
+.exit-button:hover {
+  background-color: #b90404;
+}
+
+.exit-button:active {
+  transform: scale(1.1);
+}
+
+.popup-welcome {
+  color: #fff;
+  z-index: 3;
+  text-align: center;
+  background: linear-gradient(70deg, #00f, #d6324e);
+  width: 100%;
+  height: 100%;
+  position: fixed;
+  top: 0;
+  left: 0;
+}
+
+.popup-welcome h1 {
+  margin: 5% auto auto;
+  font-size: 5rem;
+}
+
+.popup-welcome p {
+  font-size: 1.6rem;
+}
+
+.form {
+  margin-top: 10rem;
+}
+
+.form__input {
+  border-radius: 5px;
+}
+
+.start {
+  margin-top: 10rem;
+}
+
+.start__button {
+  color: #fff;
+  cursor: pointer;
+  background-color: #191970;
+  border-radius: 10px;
+  width: 10rem;
+  margin: 3rem auto auto;
+  padding-top: 1rem;
+  padding-bottom: 1rem;
+  font-size: 2rem;
+  font-weight: 800;
+  box-shadow: .1rem .1rem #000;
+}
+
+.start__button:hover {
+  background-color: red;
+  transform: scale(1.3);
+}
+
+.start__button:active {
+  transform: scale(1);
+}
+
+.popup-endgame {
+  color: #fff;
+  text-align: center;
+  z-index: 4;
+  background-size: cover;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  width: 50%;
+  height: 60%;
+  font-family: Impact, Haettenschweiler, Arial Narrow Bold, sans-serif;
+  display: none;
+  position: fixed;
+  top: 25%;
+  left: 25%;
+}
+
+.popup-endgame--defeat {
+  background-image: url("seppuku-japanese-history.75f261ab.jpg");
+}
+
+.popup-endgame--victory {
+  background-image: url("victory_image.6484da1c.jpeg");
+}
+
+.popup-endgame__text {
+  height: 70%;
+}
+
+.popup-endgame__text h2 {
+  font-size: 4rem;
+}
+
+.popup-endgame__text p {
+  font-size: 1.8rem;
+}
+
+.start-again-button {
+  width: -moz-fit-content;
+  width: fit-content;
+  margin: auto;
+  padding-left: .5rem;
+  padding-right: .5rem;
+}
+
+.overlay {
+  z-index: 3;
+  background-color: #000000d9;
+  width: 100%;
+  height: 100%;
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+}
+
+/*# sourceMappingURL=index.c36f3da9.css.map */
