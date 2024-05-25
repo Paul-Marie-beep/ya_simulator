@@ -18,6 +18,7 @@ import { letByVirtualPlayer } from "./letController.js";
 import { carryOnZapProcess, toZapOrNotToZap, eraseZapConditions, zapCounter, lastZap } from "./zapController.js";
 import { endGamebyDefeat } from "./farewellController.js";
 import { defineReactionTime } from "../helpers.js";
+import { TIMEOUT } from "../config.js";
 
 let virtualHouba;
 export let hasTheHumanPlayerTriedToTake;
@@ -31,12 +32,12 @@ const checkDirection = function (direction) {
     model.changePlayer(model.currentPlayer);
     setTimeout(() => {
       virtualPlayerChoice(model.currentPlayer);
-    }, 2000);
+    }, TIMEOUT);
   } else {
     //The player has lost the game
     eventsDisplay.humanPlayerMistakewarning("Ya");
     console.log("C'est la lose !!! 😵‍💫");
-    endGamebyDefeat();
+    setTimeout(() => endGamebyDefeat(), TIMEOUT + 1000);
   }
 };
 
@@ -58,7 +59,7 @@ const actIfAHumanPlayerHasZappedhimself = function () {
   eventsDisplay.humanPlayerMistakewarning("Zap");
   console.log("C'est la lose !!! 😵‍💫");
   eraseZapConditions();
-  endGamebyDefeat();
+  setTimeout(() => endGamebyDefeat(), TIMEOUT + 1000);
 };
 
 const checkHumanResponsesToShot = function (keyPressed, type) {
@@ -75,7 +76,7 @@ const checkHumanResponsesToShot = function (keyPressed, type) {
       model.changePlayer(model.currentPlayer);
       setTimeout(() => {
         virtualPlayerChoice(model.currentPlayer);
-      }, 2000);
+      }, TIMEOUT);
     } else if (keyPressed === "ArrowLeft") {
       const dir = "left";
       checkDirection(dir);
@@ -87,14 +88,14 @@ const checkHumanResponsesToShot = function (keyPressed, type) {
       eventsDisplay.humanPlayerValidation("Honky Tonk");
       setTimeout(() => {
         honkyTonkByVirtualPlayer();
-      }, 2000);
+      }, TIMEOUT);
     } else if (keyPressed === "a") {
       console.log("le joueur a fait un ahi");
       eventsDisplay.humanPlayerValidation("Ahi");
       model.changePlayer(model.currentPlayer, 2);
       setTimeout(() => {
         virtualPlayerChoice(model.currentPlayer);
-      }, 2000);
+      }, TIMEOUT);
     } else if (keyPressed === "l") {
       console.log("Le joueur a dit 'Je laisse'");
       eventsDisplay.humanPlayerValidation("Je laisse");
@@ -105,12 +106,12 @@ const checkHumanResponsesToShot = function (keyPressed, type) {
       eventsDisplay.humanPlayerValidation("Vade Retro");
       setTimeout(() => {
         vadeRetroByVirtualPlayer();
-      }, 2000);
+      }, TIMEOUT);
     } else {
       console.log(`Le joueur a commis une erreur en pressant ${keyPressed}`);
       eventsDisplay.humanTypingMistake(keyPressed);
       console.log("C'est la lose !!! 😵‍💫");
-      endGamebyDefeat();
+      setTimeout(() => endGamebyDefeat(), TIMEOUT + 1000);
     }
   } else if (type === "click") {
     console.log(`Vous avez choisi de zapper ${keyPressed}`);
@@ -128,7 +129,7 @@ const checkHumanResponsesToShot = function (keyPressed, type) {
     model.recordFirstPlayerToZap();
     setTimeout(() => {
       toZapOrNotToZap(playerZapped);
-    }, 2000);
+    }, TIMEOUT);
   }
 };
 
@@ -160,12 +161,12 @@ const checkHumanResponsesToHonkyTonk = function (keyPressed, playersToHoubaHouba
       );
       // If both players are succesful at houba houba then the second player shall choose a new player to continue the game
       if (playersToHoubaHouba[1].human) {
-        checkHumanDesignationOfANewPlayer("honky");
         // We take advantage of the test to provide the human player with the name of the virtual player that successfully said "Houba Houba"
         eventsDisplay.virtualPlayerNoiseAnnouncement(playersToHoubaHouba[0].name, "Houba Houba");
+        setTimeout(() => checkHumanDesignationOfANewPlayer("honky"), TIMEOUT - 1000);
       } else {
         eventsDisplay.virtualPlayerNoiseAnnouncement(playersToHoubaHouba[1].name, "Houba Houba");
-        relaunchGameAfterHoubaHouba(playersToHoubaHouba[1]);
+        setTimeout(() => relaunchGameAfterHoubaHouba(playersToHoubaHouba[1]), TIMEOUT - 1000);
       }
     } else if (virtualHouba) {
       // If the virtual player fails to Houba Houba
@@ -180,7 +181,7 @@ const checkHumanResponsesToHonkyTonk = function (keyPressed, playersToHoubaHouba
     console.log("Le joueur a mal fait Houba Houba");
     eventsDisplay.humanPlayerMistakewarning("Houba Houba");
     console.log("C'est la lose !!! 😵‍💫");
-    endGamebyDefeat();
+    setTimeout(() => endGamebyDefeat(), TIMEOUT + 1000);
   }
 };
 
@@ -217,7 +218,7 @@ const checkHumanResponsesToVadeRetro = function (keyPressed) {
     console.log("Le joueur a mal dit 'Sa', 'Ta' ou 'Nas'");
     eventsDisplay.humanPlayerMistakewarning("Sa, Ta ou Nas");
     console.log("C'est la lose !!! 😵‍💫");
-    endGamebyDefeat();
+    setTimeout(() => endGamebyDefeat(), TIMEOUT + 1000);
   }
 };
 
@@ -243,12 +244,12 @@ export const checkHumanDesignationOfANewPlayer = function (shot) {
 export const checkReactionToBeingCalled = function (boolean, noise) {
   buttonsView.clearCommands();
   if (boolean) {
-    handleHumanTurnToPlay();
+    setTimeout(() => handleHumanTurnToPlay(), TIMEOUT - 1000);
   } else {
     console.log(`Le joueur a mal dit ${noise}`);
     eventsDisplay.humanPlayerMistakewarning(noise);
     console.log("C'est la lose !!! 😵‍💫");
-    endGamebyDefeat();
+    setTimeout(() => endGamebyDefeat(), TIMEOUT + 1000);
   }
 };
 
@@ -269,12 +270,12 @@ export const checkHumanReactionToLet = function (key) {
     // We need to specify that the current player is now the human player (hardcoded for now)
     model.updateCurrentPlayer(`${model.humanPlayerName}`);
     console.log("test");
-    handleHumanTurnToPlay();
+    setTimeout(() => handleHumanTurnToPlay(), TIMEOUT - 1000);
   } else {
     console.log("Le joueur a mal dit 'Je prends'");
     eventsDisplay.humanPlayerMistakewarning("Je prends");
     console.log("C'est la lose !!! 😵‍💫");
-    endGamebyDefeat();
+    setTimeout(() => endGamebyDefeat(), TIMEOUT + 1000);
   }
 };
 
@@ -324,7 +325,7 @@ export const checkIfHumanZapGoneWell = function (name) {
     eventsDisplay.humanPlayerMistakewarning("Je prends");
     console.log("C'est la lose !!! 😵‍💫");
     eraseZapConditions();
-    endGamebyDefeat();
+    setTimeout(() => endGamebyDefeat(), TIMEOUT + 1000);
   } else {
     console.log(`${name} n'a pas encore été zappé`);
     eventsDisplay.serviceMessage("Vous avez zappé quelqu'un qui n'a pas encore été zappé");
@@ -333,6 +334,6 @@ export const checkIfHumanZapGoneWell = function (name) {
     carryOnZapProcess(playerZapped);
     setTimeout(() => {
       toZapOrNotToZap(playerZapped);
-    }, 2000);
+    }, TIMEOUT);
   }
 };

@@ -68,7 +68,7 @@ export const mistakesWereMade = function (player = model.currentPlayer) {
     );
     // The game ends here and the human player has won
     console.log("🥇🥇🥇 Bravo !! vous avez gagné 🥇🥇🥇");
-    endGameByVictory();
+    setTimeout(() => endGameByVictory(), TIMEOUT + 1000);
     //
 
     return;

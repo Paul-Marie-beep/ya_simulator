@@ -108,7 +108,7 @@ const reactionsToHonkyTonk = function (playersReactingToHonkyTonk) {
         mistakesWereMade(playersReactingToHonkyTonk[1]);
         eventsDisplay.virtualPlayerMistakeWarning(playersReactingToHonkyTonk[0].name, "Houba Houba");
         eventsDisplay.virtualPlayerMistakeWarning(playersReactingToHonkyTonk[1].name, "Houba Houba");
-      }, TIMEOUT - 1000);
+      }, TIMEOUT - 1500);
     } else if (!houba0 && !houba1) {
       // case where both players have successfully houba houba. We must then relauch the game by calling another player
       setTimeout(() => {
@@ -118,7 +118,7 @@ const reactionsToHonkyTonk = function (playersReactingToHonkyTonk) {
         eventsDisplay.virtualPlayerNoiseAnnouncement(playersReactingToHonkyTonk[0].name, "Houba Houba");
         eventsDisplay.virtualPlayerNoiseAnnouncement(playersReactingToHonkyTonk[1].name, "Houba Houba");
         relaunchGameAfterHoubaHouba(playersReactingToHonkyTonk[1]);
-      }, TIMEOUT - 1000);
+      }, TIMEOUT - 1500);
     } else if (houba0 && !houba1) {
       // The second player has been succesful at houba houba but the first has not
       setTimeout(() => {
@@ -128,7 +128,7 @@ const reactionsToHonkyTonk = function (playersReactingToHonkyTonk) {
         // Since a mistake has been committed, the elimination of the first player to houba houba is triggered
 
         mistakesWereMade(playersReactingToHonkyTonk[0]);
-      }, TIMEOUT - 1000);
+      }, TIMEOUT - 1500);
     } else if (!houba0 && houba1) {
       // The second player has committed a mistake and must be eliminated but the first player managed to do it
       setTimeout(() => {
