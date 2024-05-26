@@ -5,7 +5,7 @@ export const randomInt = function (min, max) {
 };
 
 export const defineMax = function (currentPlayer) {
-  if (currentPlayer.riskProfile === "cautious") return 50;
+  if (currentPlayer.riskProfile === "cautious") return 5;
   if (currentPlayer.riskProfile === "average") return 38;
   if (currentPlayer.riskProfile === "bold") return 30;
 };
@@ -13,36 +13,36 @@ export const defineMax = function (currentPlayer) {
 export const defineRandomNumberToGenerateMistakeChance = function (shotPlayed, currentPlayer) {
   if (shotPlayed === "ya" || shotPlayed === "let") {
     if (currentPlayer.skill === "low") {
-      return 80;
-    } else if (currentPlayer.skill === "average") {
       return 40;
+    } else if (currentPlayer.skill === "average") {
+      return 22;
     }
   } else if (currentPlayer.skill === "high") {
     return 21;
   }
   if (shotPlayed === "hold down" || shotPlayed === "ahi") {
     if (currentPlayer.skill === "low") {
-      return 90;
+      return 35;
     } else if (currentPlayer.skill === "average") {
-      return 45;
+      return 27;
     }
   } else if (currentPlayer.skill === "high") {
-    return 25;
+    return 22;
   }
   if (shotPlayed === "honky tonk") {
     if (currentPlayer.skill === "low") {
-      return 195;
+      return 40;
     } else if (currentPlayer.skill === "average") {
-      return 60;
+      return 30;
     } else if (currentPlayer.skill === "high") {
-      return 25;
+      return 23;
     }
   }
   if (shotPlayed === "reaction to honky tonk" || shotPlayed === "take") {
     if (currentPlayer.skill === "low") {
-      return 125;
+      return 35;
     } else if (currentPlayer.skill === "average") {
-      return 50;
+      return 28;
     }
   } else if (currentPlayer.skill === "high") {
     return 22;
