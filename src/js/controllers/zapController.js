@@ -72,6 +72,7 @@ export const lastZap = function (player, playerZapped) {
     eventsDisplay.lastZapOkAnnouncement(player.name, playerInitiatingAZap.name);
     // Back to a normal round
     updateCurrentPlayer(playerZapped.name);
+    eraseZapConditions();
     humanOrMachine();
   } else {
     // Case where the player fails to zap the first player to have zapped
