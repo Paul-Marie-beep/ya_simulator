@@ -31,7 +31,8 @@ class buttonsView {
   }
 
   showZapCommands() {
-    this.commandPanel.innerHTML = "<p>Cliquez sur le nom d'un joueur pour le zapper</p>";
+    this.commandPanel.innerHTML =
+      "<p>Cliquez sur le nom d'un joueur pour le zapper</p><p>Si vous avez envie de prendre : appuyez sur P pour dire 'Je prends'</p>";
   }
 
   handlePlayerResponseToHonkyTonk(handler, playersReactingToHonkyTonk) {

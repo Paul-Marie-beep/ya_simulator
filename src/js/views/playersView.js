@@ -45,20 +45,35 @@ class playersView {
   handleHumanChoiceOfANewPlayer(handler, shot) {
     //We want the human player to click on the new player with which he want to continue the game
     // We then want this view to return the name of the player who should carry on playing to the controller
+    //We also add an event listener for the key strokes in caxe there is a mistake.
 
-    const insideListener = function (event) {
+    const insideListenerKey = function (event) {
+      event.preventDefault();
+      if (event.key === "p") {
+        handler("take");
+      } else {
+        handler("mistake");
+      }
+      document.querySelector(".wrapper__show").removeEventListener("click", insideListenerClick);
+      document.removeEventListener("keydown", insideListenerKey);
+    };
+
+    const insideListenerClick = function (event) {
       event.preventDefault();
       if (event.target.classList.contains("player")) {
         handler(event.target.dataset.name, shot);
-        document.querySelector(".wrapper__show").removeEventListener("click", insideListener);
+        document.querySelector(".wrapper__show").removeEventListener("click", insideListenerClick);
+        document.removeEventListener("keydown", insideListenerKey);
       }
       //If the click is not on the name but on the ball, we still want the name of player to be sent back to the controller
       if (event.target.classList.contains("child")) {
         handler(event.target.parentNode.dataset.name, shot);
-        document.querySelector(".wrapper__show").removeEventListener("click", insideListener);
+        document.querySelector(".wrapper__show").removeEventListener("click", insideListenerClick);
+        document.removeEventListener("keydown", insideListenerKey);
       }
     };
-    document.querySelector(".wrapper__show").addEventListener("click", insideListener);
+    document.querySelector(".wrapper__show").addEventListener("click", insideListenerClick);
+    document.addEventListener("keydown", insideListenerKey);
   }
 }
 

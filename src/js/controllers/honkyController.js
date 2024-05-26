@@ -9,6 +9,7 @@ import { humanResponseToHonkyTonk, humanReactionToBeingCalledAfterHoubaHouba } f
 import playersView from "../views/playersView";
 import buttonsView from "../views/buttonsView";
 import { TIMEOUT } from "../config";
+import { endGamebyDefeat } from "./farewellController";
 
 // This function will define the players that will have to react to the honky tonk
 const WhoWillHoubaHouba = function () {
@@ -71,6 +72,12 @@ export const relaunchGameAfterHoubaHouba = function (playerToCallANewPlayer) {
 export const callPlayer = function (playerName, shot) {
   // We erase the order that was shown to players
   buttonsView.clearCommands();
+  // Guard function to end the game if a player has commited a mistake
+  if (playerName === "take" || playerName === "mistake") {
+    eventsDisplay.humanPlayerMistakewarning(shot);
+    setTimeout(() => endGamebyDefeat(), TIMEOUT - 1000);
+    return;
+  }
   // in the model, we set the new current  players
   const newPlayer = updateCurrentPlayer(playerName);
   console.log(newPlayer.name, "est le joueur qui a été choisi pour continuer le jeu");

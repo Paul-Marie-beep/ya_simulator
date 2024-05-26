@@ -244,6 +244,8 @@ export const checkHumanDesignationOfANewPlayer = function (shot) {
 export const checkReactionToBeingCalled = function (boolean, noise) {
   buttonsView.clearCommands();
   if (boolean) {
+    console.log(`"Le joueur a bien dit ${noise}`);
+    eventsDisplay.humanPlayerValidation(noise);
     setTimeout(() => handleHumanTurnToPlay(), TIMEOUT - 1000);
   } else {
     console.log(`Le joueur a mal dit ${noise}`);
@@ -291,13 +293,31 @@ export const humanReactionToLet = function () {
 
 export const humanResponseToZap = function () {
   buttonsView.showZapCommands();
-  playersView.handleHumanChoiceOfANewPlayer(checkIfHumanZapGoneWell);
+  playersView.handleHumanChoiceOfANewPlayer(lookForZapOrTake);
+};
+
+export const lookForZapOrTake = function (name) {
+  // Dont show the instructions any more
+  buttonsView.clearCommands();
+  if (name === "take") {
+    // The human player said "Je prends" successfully
+    eventsDisplay.humanPlayerValidation("Je prends");
+    eraseZapConditions();
+    setTimeout(() => handleHumanTurnToPlay(), TIMEOUT - 1000);
+  } else if (name === "mistake") {
+    // The human player did not say "Je prends" successfully
+    eventsDisplay.serviceMessage("Vous n'avez pas appuyer sur le bonne touche");
+    eventsDisplay.humanPlayerMistakewarning("Je prends");
+    console.log("C'est la lose !!! 😵‍💫");
+    eraseZapConditions();
+    setTimeout(() => endGamebyDefeat(), TIMEOUT + 1000);
+  } else {
+    // The human player chose to zap someone else.
+    checkIfHumanZapGoneWell(name);
+  }
 };
 
 export const checkIfHumanZapGoneWell = function (name) {
-  // Dont show the instructions any more
-  buttonsView.clearCommands();
-
   console.log(`Vous avez choisi de zapper ${name}`);
   eventsDisplay.serviceMessage(`Vous avez choisi de zapper ${name}`);
   // We shall convert the name we got from the click of the player in to an object from the model
