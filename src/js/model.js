@@ -2,22 +2,22 @@
 
 import { honkyTonkHelper, randomInt, vadeRetroHelper } from "./helpers";
 
-// const players = [
-//   { numero: 1, name: "Camille", human: true, zapped: false  },
-//   { numero: 2, name: "Patrick", riskProfile: "bold", skill: "low", human: false, zapped: false  },
-//   { numero: 3, name: "Jean-Claude", riskProfile: "cautious", skill: "low", human: false, zapped: false  },
-//   { numero: 4, name: "Claudine", riskProfile: "bold", skill: "average", human: false, zapped: false  },
-//   { numero: 5, name: "Martine", riskProfile: "average", skill: "average", human: false, zapped: false  },
-//   { numero: 6, name: "Michel", riskProfile: "average", skill: "high", human: false, zapped: false  },
-// ];
 const players = [
   { numero: 1, name: "", human: true, zapped: false },
-  { numero: 2, name: "Patrick", riskProfile: "bold", skill: "high", human: false, zapped: false },
-  { numero: 3, name: "Jean-Claude", riskProfile: "cautious", skill: "high", human: false, zapped: false },
-  { numero: 4, name: "Claudine", riskProfile: "bold", skill: "high", human: false, zapped: false },
-  { numero: 5, name: "Martine", riskProfile: "average", skill: "high", human: false, zapped: false },
+  { numero: 2, name: "Patrick", riskProfile: "bold", skill: "low", human: false, zapped: false },
+  { numero: 3, name: "Jean-Claude", riskProfile: "cautious", skill: "average", human: false, zapped: false },
+  { numero: 4, name: "Claudine", riskProfile: "bold", skill: "average", human: false, zapped: false },
+  { numero: 5, name: "Martine", riskProfile: "cautious", skill: "high", human: false, zapped: false },
   { numero: 6, name: "Michel", riskProfile: "average", skill: "high", human: false, zapped: false },
 ];
+// const players = [
+//   { numero: 1, name: "", human: true, zapped: false },
+//   { numero: 2, name: "Patrick", riskProfile: "bold", skill: "high", human: false, zapped: false },
+//   { numero: 3, name: "Jean-Claude", riskProfile: "cautious", skill: "high", human: false, zapped: false },
+//   { numero: 4, name: "Claudine", riskProfile: "bold", skill: "high", human: false, zapped: false },
+//   { numero: 5, name: "Martine", riskProfile: "average", skill: "high", human: false, zapped: false },
+//   { numero: 6, name: "Michel", riskProfile: "average", skill: "high", human: false, zapped: false },
+// ];
 
 export let currentPlayers;
 export let currentPlayer;

@@ -170,10 +170,11 @@ const checkHumanResponsesToHonkyTonk = function (keyPressed, playersToHoubaHouba
       }
     } else if (virtualHouba) {
       // If the virtual player fails to Houba Houba
-      console.log(`${playersToHoubaHouba[1].name} has failed to Houba Houba`);
-      console.log(`${playersToHoubaHouba[1].name} must go !!`);
-      eventsDisplay.virtualPlayerMistakeWarning(playersToHoubaHouba[1].name, "Houba Houba");
-      mistakesWereMade(playersToHoubaHouba[1]);
+      const virtualPlayerToKick = playersToHoubaHouba.find((pl) => pl.human === false);
+      console.log(`${virtualPlayerToKick.name} has failed to Houba Houba`);
+      console.log(`${virtualPlayerToKick.name} must go !!`);
+      eventsDisplay.virtualPlayerMistakeWarning(virtualPlayerToKick.name, "Houba Houba");
+      mistakesWereMade(virtualPlayerToKick);
       return;
     }
     // 2nd case, the player doesn't
@@ -306,7 +307,7 @@ export const lookForZapOrTake = function (name) {
     setTimeout(() => handleHumanTurnToPlay(), TIMEOUT - 1000);
   } else if (name === "mistake") {
     // The human player did not say "Je prends" successfully
-    eventsDisplay.serviceMessage("Vous n'avez pas appuyer sur le bonne touche");
+    eventsDisplay.serviceMessage("Vous n'avez pas appuyé sur le bonne touche");
     eventsDisplay.humanPlayerMistakewarning("Je prends");
     console.log("C'est la lose !!! 😵‍💫");
     eraseZapConditions();

@@ -110,7 +110,7 @@ export const virtualPlayerChoice = function (player, zapPossible = true) {
     setTimeout(() => {
       honkyTonkByVirtualPlayer();
     }, TIMEOUT);
-  } else if (randomNumber > 6 && randomNumber <= 10) {
+  } else if (randomNumber > 6 && randomNumber <= 12) {
     console.log(`${player.name} has chosen to ahi`);
     eventsDisplay.virtualPlayerShotAnnouncement(player.name, "Ahi");
     setTimeout(() => {
@@ -126,7 +126,7 @@ export const virtualPlayerChoice = function (player, zapPossible = true) {
       humanOrMachine(model.currentPlayer);
     }, TIMEOUT);
     // Guard if a mistake has been committed
-  } else if (randomNumber > 10 && randomNumber <= 15) {
+  } else if (randomNumber > 12 && randomNumber <= 15) {
     console.log(`${player.name} has chosen to let`);
     eventsDisplay.virtualPlayerShotAnnouncement(player.name, "Je laisse.");
     setTimeout(() => {
@@ -146,7 +146,7 @@ export const virtualPlayerChoice = function (player, zapPossible = true) {
     setTimeout(() => {
       vadeRetroByVirtualPlayer();
     }, TIMEOUT);
-  } else if (randomNumber > 18 && randomNumber <= 25) {
+  } else if (randomNumber > 18 && randomNumber <= 22) {
     // condtionality to prevent a player who said "Je prends" after being zapped to zap afterwards
     if (zapPossible) {
       console.log(`${player.name} has chosen to Zap`);

@@ -99,7 +99,7 @@ const reactionsToHonkyTonk = function (playersReactingToHonkyTonk) {
         ),
         playersReactingToHonkyTonk
       );
-    }, TIMEOUT);
+    }, TIMEOUT - (TIMEOUT * 2) / 3);
   } else {
     // Case where none of the players who have to say houba houba are human
 

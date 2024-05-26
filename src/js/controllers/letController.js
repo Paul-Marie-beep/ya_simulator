@@ -22,6 +22,7 @@ export const letByVirtualPlayer = function () {
     console.log(` 😡😡😡 ${newPlayer.name} n'a pas réussi à dire "Je prends" et est éliminé`);
     eventsDisplay.virtualPlayerMistakeWarning(newPlayer.name, "Je prends");
     mistakesWereMade();
+    return;
   }
 
   setTimeout(() => {
