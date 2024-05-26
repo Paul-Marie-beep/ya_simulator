@@ -5,7 +5,8 @@
   "main": "app.js",
   "scripts": {
     "sass": "sass --watch ./src/sass/main.scss:./public/css/style.css",
-    "start": "parcel index.html"
+    "start": "parcel index.html",
+    "build": "parcel build index.html"
   },
   "author": "",
   "license": "ISC",
